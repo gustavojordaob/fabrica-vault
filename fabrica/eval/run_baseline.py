@@ -3,10 +3,11 @@
 Harness de avaliação RAG — baseline contra golden-set.jsonl.
 
 Chama o retrieval atual via HTTP Chroma (porta 7332) e mede hit@1/3/5 + MRR.
-Não altera indexação nem retrieval.
+Suporta campo opcional `aceitaveis` no golden set (réguas v2+).
 
 Uso:
     python fabrica/eval/run_baseline.py
+    python fabrica/eval/run_baseline.py --regua v2
     python fabrica/eval/run_baseline.py --porta 7332 --top-k 5
 """
 
@@ -28,6 +29,8 @@ EVAL_DIR = FABRICA / "eval"
 GOLDEN_PATH = EVAL_DIR / "golden-set.jsonl"
 REPORT_MD = EVAL_DIR / "report-baseline.md"
 REPORT_JSON = EVAL_DIR / "report-baseline.json"
+REPORT_V2_MD = EVAL_DIR / "report-baseline-v2.md"
+REPORT_V2_JSON = EVAL_DIR / "report-baseline-v2.json"
 DEFAULT_PORT = 7332
 DEFAULT_TOP_K = 5
 
@@ -88,6 +91,10 @@ def validate_golden(pairs: list[dict], notas: set[str]) -> dict:
                 f"{par['id']}: esperado_nota '{par['esperado_nota']}' não existe em fabrica/"
             )
 
+        for alt in par.get("aceitaveis") or []:
+            if alt not in notas:
+                issues.append(f"{par['id']}: aceitavel '{alt}' não existe em fabrica/")
+
         if par.get("revisar"):
             revisar.append(par["id"])
 
@@ -125,23 +132,47 @@ def buscar_chroma(query: str, porta: int, top_k: int) -> list[dict]:
     return data
 
 
-def rank_of(arquivos: list[str], esperado: str) -> int | None:
+def notas_alvo(par: dict) -> list[str]:
+    """Notas que contam como hit (esperado + aceitaveis, sem duplicata)."""
+    alvo = [par["esperado_nota"]]
+    for nome in par.get("aceitaveis") or []:
+        if nome not in alvo:
+            alvo.append(nome)
+    return alvo
+
+
+def rank_of(arquivos: list[str], alvos: list[str]) -> int | None:
+    """Melhor rank entre todas as notas alvo (1 = melhor)."""
+    ranks = []
+    for alvo in alvos:
+        for i, nome in enumerate(arquivos, 1):
+            if nome == alvo:
+                ranks.append(i)
+                break
+    return min(ranks) if ranks else None
+
+
+def rank_estrito(arquivos: list[str], esperado: str) -> int | None:
     for i, nome in enumerate(arquivos, 1):
         if nome == esperado:
             return i
     return None
 
 
-def compute_metrics(results: list[dict]) -> dict:
+def compute_metrics(results: list[dict], rank_key: str = "rank") -> dict:
     n = len(results)
     if n == 0:
         return {"hit@1": 0.0, "hit@3": 0.0, "hit@5": 0.0, "mrr": 0.0, "n": 0}
 
-    hit1 = sum(1 for r in results if r["rank"] == 1) / n
-    hit3 = sum(1 for r in results if r["rank"] is not None and r["rank"] <= 3) / n
-    hit5 = sum(1 for r in results if r["rank"] is not None and r["rank"] <= 5) / n
+    hit1 = sum(1 for r in results if r.get(rank_key) == 1) / n
+    hit3 = sum(
+        1 for r in results if r.get(rank_key) is not None and r[rank_key] <= 3
+    ) / n
+    hit5 = sum(
+        1 for r in results if r.get(rank_key) is not None and r[rank_key] <= 5
+    ) / n
     mrr = sum(
-        (1.0 / r["rank"]) if r["rank"] is not None else 0.0 for r in results
+        (1.0 / r[rank_key]) if r.get(rank_key) is not None else 0.0 for r in results
     ) / n
 
     return {
@@ -153,40 +184,59 @@ def compute_metrics(results: list[dict]) -> dict:
     }
 
 
-def evaluate(pairs: list[dict], porta: int, top_k: int) -> tuple[list[dict], dict]:
-    per_query: list[dict] = []
+def build_summary(
+    pairs: list[dict],
+    per_query: list[dict],
+    porta: int,
+    top_k: int,
+    regua: str,
+) -> dict:
+    rank_key = "rank" if regua == "v2" else "rank_primario"
+    aggregate = compute_metrics(per_query, rank_key)
     by_tipo: defaultdict[str, list[dict]] = defaultdict(list)
+    for row in per_query:
+        by_tipo[row["tipo"]].append(row)
+    por_tipo = {
+        tipo: compute_metrics(rows, rank_key) for tipo, rows in sorted(by_tipo.items())
+    }
+    return {
+        "gerado_em": datetime.now(timezone.utc).isoformat(),
+        "porta_chroma": porta,
+        "top_k": top_k,
+        "total_pares": len(pairs),
+        "regua": regua,
+        "aggregate": aggregate,
+        "por_tipo": por_tipo,
+    }
+
+
+def evaluate(pairs: list[dict], porta: int, top_k: int) -> list[dict]:
+    per_query: list[dict] = []
 
     for par in pairs:
         hits = buscar_chroma(par["query"], porta, top_k)
         arquivos = [h.get("arquivo", "") for h in hits]
-        rank = rank_of(arquivos, par["esperado_nota"])
+        alvos = notas_alvo(par)
+        rank = rank_of(arquivos, alvos)
+        rank_primario = rank_estrito(arquivos, par["esperado_nota"])
         row = {
             "id": par["id"],
             "query": par["query"],
             "tipo": par["tipo"],
             "esperado_nota": par["esperado_nota"],
+            "aceitaveis": par.get("aceitaveis") or [],
+            "notas_alvo": alvos,
             "revisar": bool(par.get("revisar", False)),
             "rank": rank,
+            "rank_primario": rank_primario,
             "hit": rank is not None,
+            "hit_primario": rank_primario is not None,
             "top_k_arquivos": arquivos,
             "top_k_similaridade": [h.get("similaridade") for h in hits],
         }
         per_query.append(row)
-        by_tipo[par["tipo"]].append(row)
 
-    aggregate = compute_metrics(per_query)
-    por_tipo = {tipo: compute_metrics(rows) for tipo, rows in sorted(by_tipo.items())}
-
-    summary = {
-        "gerado_em": datetime.now(timezone.utc).isoformat(),
-        "porta_chroma": porta,
-        "top_k": top_k,
-        "total_pares": len(pairs),
-        "aggregate": aggregate,
-        "por_tipo": por_tipo,
-    }
-    return per_query, summary
+    return per_query
 
 
 def write_report_md(
@@ -194,17 +244,27 @@ def write_report_md(
     per_query: list[dict],
     summary: dict,
     path: Path,
+    titulo: str = "Baseline",
+    regua: str = "v1",
 ) -> None:
     agg = summary["aggregate"]
+    pares_aceitaveis = sum(1 for r in per_query if r.get("aceitaveis"))
     lines = [
-        "# RAG Eval — Baseline",
+        f"# RAG Eval — {titulo}",
         "",
         f"Gerado em: {summary['gerado_em']}",
         f"Servidor: `http://localhost:{summary['porta_chroma']}/buscar` · top-k={summary['top_k']}",
+        f"Régua: **{regua}**"
+        + (
+            " (hit se `esperado_nota` ou qualquer `aceitaveis` no top-k; MRR = melhor rank entre alvos)"
+            if regua == "v2"
+            else " (hit estrito em `esperado_nota` apenas)"
+        ),
         "",
         "## Auto-checagem do golden set",
         "",
         f"- Pares: **{validation['total']}**",
+        f"- Com `aceitaveis`: **{pares_aceitaveis}**",
         f"- Com `revisar: true`: **{validation['revisar_count']}** — {', '.join(validation['revisar_ids']) or '—'}",
         f"- Cobertura por tipo: `{validation['tipos']}`",
         "",
@@ -244,12 +304,19 @@ def write_report_md(
 
     lines.extend(["", "## Detalhe por query", ""])
     for row in per_query:
-        status = f"rank {row['rank']}" if row["rank"] else "MISS"
+        rank_key = "rank" if regua == "v2" else "rank_primario"
+        display_rank = row.get(rank_key)
+        status = f"rank {display_rank}" if display_rank else "MISS"
         rev = " ⚠️ revisar" if row["revisar"] else ""
+        aceit = ""
+        if row.get("aceitaveis"):
+            aceit = f"\n- **Aceitáveis:** {', '.join(f'`{a}`' for a in row['aceitaveis'])}"
+            if row.get("rank_primario") and row["rank_primario"] != row["rank"]:
+                aceit += f" (primário rank {row['rank_primario']})"
         lines.append(f"### {row['id']} — {status}{rev}")
         lines.append("")
         lines.append(f"- **Query:** {row['query']}")
-        lines.append(f"- **Esperado:** `{row['esperado_nota']}` ({row['tipo']})")
+        lines.append(f"- **Esperado:** `{row['esperado_nota']}` ({row['tipo']}){aceit}")
         lines.append(f"- **Top-{summary['top_k']}:** {', '.join(f'`{a}`' for a in row['top_k_arquivos'])}")
         lines.append("")
 
@@ -262,6 +329,12 @@ def main() -> None:
     parser.add_argument("--porta", type=int, default=DEFAULT_PORT)
     parser.add_argument("--top-k", type=int, default=DEFAULT_TOP_K)
     parser.add_argument("--golden", type=Path, default=GOLDEN_PATH)
+    parser.add_argument(
+        "--regua",
+        choices=("v1", "v2", "both"),
+        default="v1",
+        help="v1=estrito; v2=aceitaveis; both=gera report-baseline e report-baseline-v2",
+    )
     args = parser.parse_args()
 
     if not args.golden.is_file():
@@ -277,22 +350,31 @@ def main() -> None:
         for issue in validation["issues"]:
             print(f"   - {issue}")
 
-    per_query, summary = evaluate(pairs, args.porta, args.top_k)
-    summary["validacao"] = validation
-    summary["detalhe"] = per_query
+    per_query = evaluate(pairs, args.porta, args.top_k)
 
-    REPORT_JSON.write_text(
-        json.dumps(summary, ensure_ascii=False, indent=2),
-        encoding="utf-8",
-    )
-    write_report_md(validation, per_query, summary, REPORT_MD)
+    reguas = []
+    if args.regua in ("v1", "both"):
+        reguas.append(("v1", REPORT_MD, REPORT_JSON, "Baseline (estrito)"))
+    if args.regua in ("v2", "both"):
+        reguas.append(("v2", REPORT_V2_MD, REPORT_V2_JSON, "Baseline v2 (réguas justas)"))
 
-    agg = summary["aggregate"]
+    for regua_id, md_path, json_path, titulo in reguas:
+        summary = build_summary(pairs, per_query, args.porta, args.top_k, regua_id)
+        summary["validacao"] = validation
+        summary["detalhe"] = per_query
+        json_path.write_text(
+            json.dumps(summary, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        write_report_md(validation, per_query, summary, md_path, titulo, regua_id)
+
+    last = build_summary(pairs, per_query, args.porta, args.top_k, reguas[-1][0])
+    agg = last["aggregate"]
     print(
-        f"\nResultado: hit@1={agg['hit@1']:.1%} hit@3={agg['hit@3']:.1%} "
+        f"\nResultado ({reguas[-1][0]}): hit@1={agg['hit@1']:.1%} hit@3={agg['hit@3']:.1%} "
         f"hit@5={agg['hit@5']:.1%} MRR={agg['mrr']:.4f}"
     )
-    print(f"Relatórios: {REPORT_MD.name}, {REPORT_JSON.name}")
+    print("Relatórios:", ", ".join(p.name for _, p, _, _ in reguas))
 
 
 if __name__ == "__main__":
