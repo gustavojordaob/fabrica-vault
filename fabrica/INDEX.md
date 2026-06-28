@@ -39,6 +39,7 @@
 - [[react-native-calendars]] — lib calendário (Calendar, Agenda, markedDates) · `calendario`, `expo`
 - **SINAFLOR2** (`fabrica/sinaflor/`) — Angular 7 + Spring Boot legado IBAMA · ver [[sinaflor/INDEX]]
 - [[arquitetura-fabrica-ia]] — **como a fábrica funciona (doc canônico 100%)** · `fabrica`, `arquitetura`, `rag`
+- [[guia-completo-usuario-fabrica]] — **guia para humano: começar, arquitetura, adicionar especialidade (AWS/Postgres)** · `fabrica`, `guia`, `onboarding`
 
 ## Como usar no RAG
 
