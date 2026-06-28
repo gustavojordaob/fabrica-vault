@@ -259,6 +259,12 @@ Pasta `fabrica/eval/` **não** entra no índice (relatórios de eval).
 
 Dependência extra: `pip install rank-bm25`
 
+**Hot path (MCP):** `RAG_RERANK=0` (default) — denso + BM25 + RRF, **sem rerank**.  
+Servidor em `http://127.0.0.1:7332` (evitar `localhost` no Windows — delay IPv6 ~2s).  
+BM25 pré-construído na subida (`warmup_indices`); alvo **&lt;200 ms** por query (~50 ms medido).
+
+**Eval offline:** `RAG_RERANK=1` opcional para rerank completo.
+
 ### Harness de avaliação (baseline RAG)
 
 Golden set + script para medir retrieval **sem alterar** indexação nem ranking.

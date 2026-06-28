@@ -622,3 +622,13 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Gustavo + agente
 
 ---
+
+### 28/06/2026 — fabrica — Hot path RAG <200ms — BM25 pre-build + 127.0.0.1
+
+- **Decisão:** Hot path otimizado: BM25Okapi x2 pre-build na subida (default + demote_spec); singleton fixo; MCP/eval usam 127.0.0.1. Latencia quente ~47ms (max 52ms). Eval hotpath identico ao baseline (hit@1 52%, hit@3 92%). gs-025 fabrica caiu hit@1 (1->2) mas permanece top-3. Recomendado merge PR #2.
+- **Motivo:** Destravar merge: latencia real do hot path sem mascarar com timeout 120s.
+- **Alternativa rejeitada:** Manter localhost no MCP — Windows IPv6 adicionava ~2s por query apesar de buscar interno ~25ms.
+- **Impacto:** rag_retrieval.py, indexar_obsidian_chroma.py, run_baseline.py, fabrica-apps-mcp/server-v2.js (127.0.0.1, timeout 15s)
+- **Quem decidiu:** Gustavo + agente
+
+---

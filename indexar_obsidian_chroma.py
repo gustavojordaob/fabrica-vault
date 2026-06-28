@@ -57,18 +57,21 @@ def iniciar_servidor(collection, model, porta=7332):
                 self.send_response(400)
                 self.end_headers()
                 return
+            t0 = datetime.now()
             resultados = buscar(collection, model, query, n)
+            elapsed_ms = (datetime.now() - t0).total_seconds() * 1000
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("X-RAG-MS", f"{elapsed_ms:.1f}")
             self.end_headers()
             self.wfile.write(json.dumps(resultados, ensure_ascii=False).encode("utf-8"))
 
         def log_message(self, format, *args):
             print(f"  🌐  {datetime.now().strftime('%H:%M:%S')} {format % args}")
 
-    servidor = HTTPServer(("localhost", porta), RAGHandler)
-    print(f"🚀  Servidor RAG rodando em http://localhost:{porta}")
-    print(f"    Teste: http://localhost:{porta}/buscar?q=como+fazer+auth")
+    servidor = HTTPServer(("127.0.0.1", porta), RAGHandler)
+    print(f"🚀  Servidor RAG rodando em http://127.0.0.1:{porta}")
+    print(f"    Teste: http://127.0.0.1:{porta}/buscar?q=como+fazer+auth")
     print(f"    Ctrl+C para parar\n")
     sys.stdout.flush()
     try:
@@ -171,6 +174,13 @@ def main():
         return
 
     if args.server:
+        from rag_retrieval import warmup_indices
+
+        print("⏳  Pré-carregando corpus + BM25...")
+        sys.stdout.flush()
+        warmup_indices(collection, model)
+        print(f"✅  Índices BM25 prontos\n")
+        sys.stdout.flush()
         iniciar_servidor(collection, model, args.porta)
 
 

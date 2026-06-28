@@ -7,6 +7,7 @@ MCP rag_buscar / buscar_historico / buscar_solucao consomem o mesmo HTTP :7332.
 
 from __future__ import annotations
 
+import os
 import re
 from dataclasses import dataclass
 from typing import Any
@@ -16,6 +17,9 @@ POOL_DENSE = 40
 POOL_BM25 = 40
 RERANK_POOL = 20
 RERANK_MODEL = "BAAI/bge-reranker-v2-m3"
+
+# Hot path MCP (:7332): denso + BM25 + RRF. Rerank só se RAG_RERANK=1 (eval offline).
+RERANK_ENABLED = os.environ.get("RAG_RERANK", "0").strip().lower() in ("1", "true", "yes")
 
 _ERROR_MARKERS = (
     "erro", "bug", "permission", "undefined", "failed", "132001", "131030",
@@ -76,7 +80,10 @@ class HybridRetriever:
     def __init__(self, collection, embed_model):
         self.collection = collection
         self.embed_model = embed_model
-        self._bm25 = None
+        self._bm25_default = None
+        self._bm25_demote = None
+        self._corpus_default: list[ChunkHit] = []
+        self._corpus_demote: list[ChunkHit] = []
         self._corpus: list[ChunkHit] = []
         self._reranker = None
         self._ready = False
@@ -99,8 +106,20 @@ class HybridRetriever:
         if self._corpus:
             from rank_bm25 import BM25Okapi
 
-            tokenized = [_tokenize(c.document) for c in self._corpus]
-            self._bm25 = BM25Okapi(tokenized)
+            self._corpus_demote = [
+                c for c in self._corpus if not _is_excluded_doc(c.arquivo, c.metadata)
+            ]
+            self._corpus_default = [
+                c
+                for c in self._corpus
+                if infer_tipo_doc(c.arquivo, c.metadata) != "eval"
+            ]
+            self._bm25_demote = BM25Okapi(
+                [_tokenize(c.document) for c in self._corpus_demote]
+            )
+            self._bm25_default = BM25Okapi(
+                [_tokenize(c.document) for c in self._corpus_default]
+            )
         self._ready = True
 
     def _ensure_reranker(self):
@@ -151,22 +170,20 @@ class HybridRetriever:
         return filtered[:n]
 
     def _bm25_hits(self, query: str, n: int) -> list[ChunkHit]:
-        if not self._bm25 or not self._corpus:
+        if not self._corpus:
             return []
         tokens = _tokenize(query)
         if not tokens:
             return []
-        corpus = (
-            [c for c in self._corpus if not _is_excluded_doc(c.arquivo, c.metadata)]
-            if should_demote_spec(query)
-            else [c for c in self._corpus if infer_tipo_doc(c.arquivo, c.metadata) != "eval"]
-        )
-        if not corpus:
-            return []
-        from rank_bm25 import BM25Okapi
 
-        tokenized = [_tokenize(c.document) for c in corpus]
-        bm25 = BM25Okapi(tokenized)
+        if should_demote_spec(query):
+            bm25, corpus = self._bm25_demote, self._corpus_demote
+        else:
+            bm25, corpus = self._bm25_default, self._corpus_default
+
+        if not bm25 or not corpus:
+            return []
+
         scores = bm25.get_scores(tokens)
         ranked = sorted(
             range(len(scores)),
@@ -262,7 +279,10 @@ class HybridRetriever:
         bm25 = self._bm25_hits(query, POOL_BM25)
         fused = self._rrf_fuse(dense, bm25)
         filtered = self._demote_spec(fused, query)
-        final = self._rerank(query, filtered, n)
+        if RERANK_ENABLED:
+            final = self._rerank(query, filtered, n)
+        else:
+            final = filtered[:n]
 
         saida = []
         for h in final:
@@ -281,11 +301,7 @@ class HybridRetriever:
 
 def buscar_hibrido(collection, embed_model, query: str, n: int = 5) -> list[dict]:
     retriever = getattr(buscar_hibrido, "_singleton", None)
-    if (
-        retriever is None
-        or retriever.collection is not collection
-        or retriever.embed_model is not embed_model
-    ):
+    if retriever is None:
         retriever = HybridRetriever(collection, embed_model)
         buscar_hibrido._singleton = retriever  # type: ignore[attr-defined]
     return retriever.buscar(query, n)
@@ -294,6 +310,19 @@ def buscar_hibrido(collection, embed_model, query: str, n: int = 5) -> list[dict
 def reset_singleton() -> None:
     if hasattr(buscar_hibrido, "_singleton"):
         del buscar_hibrido._singleton  # type: ignore[attr-defined]
+
+
+def warmup_indices(collection, embed_model) -> None:
+    """Pré-carrega corpus + índices BM25 (subida do servidor ou pós-reindex)."""
+    reset_singleton()
+    retriever = HybridRetriever(collection, embed_model)
+    retriever._ensure_corpus()
+    buscar_hibrido._singleton = retriever  # type: ignore[attr-defined]
+
+
+def invalidate_indices() -> None:
+    """Chamar após reindex do vault (novo conteúdo no Chroma)."""
+    reset_singleton()
 
 
 def buscar_denso(collection, embed_model, query: str, n: int = 5) -> list[dict]:
