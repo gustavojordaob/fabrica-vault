@@ -1,0 +1,11 @@
+# .gitignore
+__pycache__/
+*.pyc
+.env
+*serviceAccount*.json
+service-account*.json
+chroma/
+chroma_db/
+*.sqlite3
+.obsidian/workspace.json
+.obsidian/cache
