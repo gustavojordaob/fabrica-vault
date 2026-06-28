@@ -632,3 +632,23 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Gustavo + agente
 
 ---
+
+### 28/06/2026 — fabrica — MCP hotpath align — 127.0.0.1 e sem fallback CLAUDE.md
+
+- **Decisão:** fabrica-apps-mcp branch feature/mcp-hotpath-align: buscarHistoricoRemoto e rag_buscar usam 127.0.0.1; rag_buscar offline retorna aviso (igual buscar_historico), sem TF-IDF legado; removidos carregarRAG/buscarRAG/RAG_INDEX. Smoke test: online ~92ms, offline mensagem correta.
+- **Motivo:** Alinhar MCP ao hot path RAG (<200ms, Chroma hibrido) e impedir respostas silenciosas do monolito CLAUDE.md.
+- **Alternativa rejeitada:** Manter fallback TF-IDF sobre CLAUDE.md/rag-index.json quando servidor 7332 offline — contradiz arquitetura (CLAUDE.md nao e KB).
+- **Impacto:** fabrica-apps-mcp/server-v2.js — requer restart MCP no Cursor para aplicar.
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 28/06/2026 — fabrica — RAG hot path hibrido + fallback honesto
+
+- **Decisão:** Retrieval do RAG passou a ser hibrido denso(Chroma)+BM25 com RRF, BM25 construido uma vez no boot/reindex. Reranker bge-reranker-v2-m3 e offline-only (flag de eval), nunca no hot path. rag_buscar e buscar_historico em 127.0.0.1:7332. Fallback do CLAUDE.md removido: servidor offline retorna aviso, nao busca degradada. Regua oficial de avaliacao: golden-set.jsonl v2 com campo aceitaveis, harness em fabrica/eval.
+- **Motivo:** Hibrido subiu hit@3 de 72% para 92% sem custo de latencia. Reranker dava +qualidade mas 10s/query, inaceitavel no dia a dia. Fallback do CLAUDE.md mascarava servidor caido com busca pior numa fonte abandonada.
+- **Alternativa rejeitada:** Reranker online (10s/query); manter fallback TF-IDF no CLAUDE.md
+- **Impacto:** Busca da fabrica mais precisa e ~80ms; falha de servidor agora e visivel
+- **Quem decidiu:** Ambos
+
+---

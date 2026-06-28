@@ -574,6 +574,7 @@ python C:/Users/gusta/obsidian/fabrica/eval/run_baseline.py
 
 ## Links internos
 
+- [[guia-completo-usuario-fabrica]] — **guia para você (onboarding + adicionar especialidade)**  
 - [[rag-protocolo-antes-de-codar]] — protocolo antes de codar libs/UI  
 - [[padroes-fabrica]] — padrões gerais  
 - [[mcps-cursor-padrao]] — qual MCP por tema  
