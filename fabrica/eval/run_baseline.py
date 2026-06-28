@@ -33,7 +33,10 @@ REPORT_V2_MD = EVAL_DIR / "report-baseline-v2.md"
 REPORT_V2_JSON = EVAL_DIR / "report-baseline-v2.json"
 REPORT_HYBRID_MD = EVAL_DIR / "report-hybrid.md"
 REPORT_HYBRID_JSON = EVAL_DIR / "report-hybrid.json"
+REPORT_HOTPATH_MD = EVAL_DIR / "report-hotpath.md"
+REPORT_HOTPATH_JSON = EVAL_DIR / "report-hotpath.json"
 REPORT_DELTA_MD = EVAL_DIR / "report-delta.md"
+DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 7332
 DEFAULT_TOP_K = 5
 
@@ -117,15 +120,15 @@ def validate_golden(pairs: list[dict], notas: set[str]) -> dict:
     }
 
 
-def buscar_chroma(query: str, porta: int, top_k: int) -> list[dict]:
+def buscar_chroma(query: str, host: str, porta: int, top_k: int) -> list[dict]:
     params = urllib.parse.urlencode({"q": query, "n": str(top_k)})
-    url = f"http://localhost:{porta}/buscar?{params}"
+    url = f"http://{host}:{porta}/buscar?{params}"
     try:
         with urllib.request.urlopen(url, timeout=120) as resp:
             data = json.loads(resp.read().decode("utf-8"))
     except urllib.error.URLError as exc:
         raise SystemExit(
-            f"Chroma indisponível em localhost:{porta} — "
+            f"Chroma indisponível em {host}:{porta} — "
             f"rode: python {ROOT / 'indexar_obsidian_chroma.py'} --server\n"
             f"Erro: {exc}"
         ) from exc
@@ -213,11 +216,11 @@ def build_summary(
     }
 
 
-def evaluate(pairs: list[dict], porta: int, top_k: int) -> list[dict]:
+def evaluate(pairs: list[dict], host: str, porta: int, top_k: int) -> list[dict]:
     per_query: list[dict] = []
 
     for par in pairs:
-        hits = buscar_chroma(par["query"], porta, top_k)
+        hits = buscar_chroma(par["query"], host, porta, top_k)
         arquivos = [h.get("arquivo", "") for h in hits]
         alvos = notas_alvo(par)
         rank = rank_of(arquivos, alvos)
@@ -256,7 +259,7 @@ def write_report_md(
         f"# RAG Eval — {titulo}",
         "",
         f"Gerado em: {summary['gerado_em']}",
-        f"Servidor: `http://localhost:{summary['porta_chroma']}/buscar` · top-k={summary['top_k']}",
+        f"Servidor: `http://127.0.0.1:{summary['porta_chroma']}/buscar` · top-k={summary['top_k']}",
         f"Régua: **{regua}**"
         + (
             " (hit se `esperado_nota` ou qualquer `aceitaveis` no top-k; MRR = melhor rank entre alvos)"
@@ -392,6 +395,7 @@ def write_delta_report(baseline_path: Path, hybrid_path: Path, out_path: Path) -
 def main() -> None:
     _configure_stdio()
     parser = argparse.ArgumentParser(description="Avalia retrieval RAG contra golden set")
+    parser.add_argument("--host", default=DEFAULT_HOST, help="Host RAG (use 127.0.0.1 no Windows)")
     parser.add_argument("--porta", type=int, default=DEFAULT_PORT)
     parser.add_argument("--top-k", type=int, default=DEFAULT_TOP_K)
     parser.add_argument("--golden", type=Path, default=GOLDEN_PATH)
@@ -403,9 +407,9 @@ def main() -> None:
     )
     parser.add_argument(
         "--tag",
-        choices=("default", "hybrid"),
+        choices=("default", "hybrid", "hotpath"),
         default="default",
-        help="hybrid=grava report-hybrid.* em vez de report-baseline-v2.*",
+        help="hybrid=report-hybrid (com rerank); hotpath=RRF sem rerank (MCP)",
     )
     parser.add_argument(
         "--compare-to",
@@ -428,13 +432,15 @@ def main() -> None:
         for issue in validation["issues"]:
             print(f"   - {issue}")
 
-    per_query = evaluate(pairs, args.porta, args.top_k)
+    per_query = evaluate(pairs, args.host, args.porta, args.top_k)
 
     reguas = []
     if args.regua in ("v1", "both"):
         reguas.append(("v1", REPORT_MD, REPORT_JSON, "Baseline (estrito)"))
     if args.regua in ("v2", "both"):
-        if args.tag == "hybrid":
+        if args.tag == "hotpath":
+            reguas.append(("v2", REPORT_HOTPATH_MD, REPORT_HOTPATH_JSON, "Hot path (RRF, sem rerank)"))
+        elif args.tag == "hybrid":
             reguas.append(("v2", REPORT_HYBRID_MD, REPORT_HYBRID_JSON, "Retrieval híbrido (v2)"))
         else:
             reguas.append(("v2", REPORT_V2_MD, REPORT_V2_JSON, "Baseline v2 (réguas justas)"))
@@ -458,8 +464,12 @@ def main() -> None:
     print("Relatórios:", ", ".join(p.name for _, p, _, _ in reguas))
 
     if args.compare_to:
-        hybrid_json = REPORT_HYBRID_JSON if args.tag == "hybrid" else reguas[-1][2]
-        write_delta_report(args.compare_to, hybrid_json, REPORT_DELTA_MD)
+        cmp_json = (
+            REPORT_HOTPATH_JSON
+            if args.tag == "hotpath"
+            else (REPORT_HYBRID_JSON if args.tag == "hybrid" else reguas[-1][2])
+        )
+        write_delta_report(args.compare_to, cmp_json, REPORT_DELTA_MD)
 
 
 if __name__ == "__main__":
