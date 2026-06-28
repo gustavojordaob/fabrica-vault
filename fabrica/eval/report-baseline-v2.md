@@ -1,6 +1,6 @@
 # RAG Eval — Baseline v2 (réguas justas)
 
-Gerado em: 2026-06-28T19:11:01.460878+00:00
+Gerado em: 2026-06-28T19:17:37.068464+00:00
 Servidor: `http://localhost:7332/buscar` · top-k=5
 Régua: **v2** (hit se `esperado_nota` ou qualquer `aceitaveis` no top-k; MRR = melhor rank entre alvos)
 
@@ -8,7 +8,7 @@ Régua: **v2** (hit se `esperado_nota` ou qualquer `aceitaveis` no top-k; MRR = 
 
 - Pares: **25**
 - Com `aceitaveis`: **3**
-- Com `revisar: true`: **5** — gs-002, gs-009, gs-011, gs-014, gs-019
+- Com `revisar: true`: **3** — gs-002, gs-009, gs-011
 - Cobertura por tipo: `{'padrao': 5, 'solucao': 6, 'integracao': 4, 'fluxo': 4, 'fabrica': 6}`
 
 Validação: **OK** (todos os `esperado_nota` existem, sem queries duplicadas).
@@ -115,10 +115,10 @@ Validação: **OK** (todos os `esperado_nota` existem, sem queries duplicadas).
 - **Esperado:** `cloud-functions-patterns.md` (fluxo)
 - **Top-5:** `checklists-deploy.md`, `cloud-functions-patterns.md`, `arquitetura-fabrica-ia.md`, `cloud-functions-patterns.md`, `arquitetura-fabrica-ia.md`
 
-### gs-014 — MISS ⚠️ revisar
+### gs-014 — MISS
 
 - **Query:** checklist antes de rodar firebase deploy
-- **Esperado:** `checklists-deploy.md` (fluxo)
+- **Esperado:** `firebase-deploy-checklist-padrao.md` (fluxo)
 - **Top-5:** `arquitetura-fabrica-ia.md`, `arquitetura-fabrica-ia.md`, `report-baseline.md`, `mcps-cursor-padrao.md`, `arquitetura-fabrica-ia.md`
 
 ### gs-015 — MISS
@@ -145,7 +145,7 @@ Validação: **OK** (todos os `esperado_nota` existem, sem queries duplicadas).
 - **Esperado:** `arquitetura-fabrica-ia.md` (fabrica)
 - **Top-5:** `arquitetura-fabrica-ia.md`, `whatsapp-salao-expo-padrao.md`, `erros-e-solucoes.md`, `auth-patterns.md`, `auth-patterns.md`
 
-### gs-019 — rank 1 ⚠️ revisar
+### gs-019 — rank 1
 
 - **Query:** servidor rag fecha depois de carregar modelo chroma
 - **Esperado:** `erros-e-solucoes.md` (solucao)

@@ -31,6 +31,9 @@ REPORT_MD = EVAL_DIR / "report-baseline.md"
 REPORT_JSON = EVAL_DIR / "report-baseline.json"
 REPORT_V2_MD = EVAL_DIR / "report-baseline-v2.md"
 REPORT_V2_JSON = EVAL_DIR / "report-baseline-v2.json"
+REPORT_HYBRID_MD = EVAL_DIR / "report-hybrid.md"
+REPORT_HYBRID_JSON = EVAL_DIR / "report-hybrid.json"
+REPORT_DELTA_MD = EVAL_DIR / "report-delta.md"
 DEFAULT_PORT = 7332
 DEFAULT_TOP_K = 5
 
@@ -323,6 +326,69 @@ def write_report_md(
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
+def write_delta_report(baseline_path: Path, hybrid_path: Path, out_path: Path) -> None:
+    if not baseline_path.is_file() or not hybrid_path.is_file():
+        print(f"⚠️  Delta ignorado — falta {baseline_path.name} ou {hybrid_path.name}")
+        return
+    base = json.loads(baseline_path.read_text(encoding="utf-8"))
+    hybrid = json.loads(hybrid_path.read_text(encoding="utf-8"))
+    ba, ha = base["aggregate"], hybrid["aggregate"]
+    tipos = sorted(set(base.get("por_tipo", {})) | set(hybrid.get("por_tipo", {})))
+
+    def delta(a: float, b: float) -> str:
+        d = b - a
+        sign = "+" if d >= 0 else ""
+        return f"{sign}{d:.1%}" if abs(d) < 1 else f"{sign}{d:.4f}"
+
+    lines = [
+        "# RAG Eval — Delta (híbrido vs baseline v2)",
+        "",
+        f"Baseline: `{baseline_path.name}` · Híbrido: `{hybrid_path.name}`",
+        "",
+        "## Agregado",
+        "",
+        "| Métrica | v2 | híbrido | Δ |",
+        "|---------|-----|---------|---|",
+        f"| hit@1 | {ba['hit@1']:.1%} | {ha['hit@1']:.1%} | {delta(ba['hit@1'], ha['hit@1'])} |",
+        f"| hit@3 | {ba['hit@3']:.1%} | {ha['hit@3']:.1%} | {delta(ba['hit@3'], ha['hit@3'])} |",
+        f"| hit@5 | {ba['hit@5']:.1%} | {ha['hit@5']:.1%} | {delta(ba['hit@5'], ha['hit@5'])} |",
+        f"| MRR | {ba['mrr']:.4f} | {ha['mrr']:.4f} | {delta(ba['mrr'], ha['mrr'])} |",
+        "",
+        "## Por tipo",
+        "",
+        "| tipo | v2 hit@1 | híbrido hit@1 | Δ hit@1 | v2 MRR | híbrido MRR | Δ MRR |",
+        "|------|----------|---------------|---------|--------|-------------|-------|",
+    ]
+    for tipo in tipos:
+        bm = base.get("por_tipo", {}).get(tipo, {})
+        hm = hybrid.get("por_tipo", {}).get(tipo, {})
+        lines.append(
+            f"| {tipo} | {bm.get('hit@1', 0):.1%} | {hm.get('hit@1', 0):.1%} | "
+            f"{delta(bm.get('hit@1', 0), hm.get('hit@1', 0))} | "
+            f"{bm.get('mrr', 0):.4f} | {hm.get('mrr', 0):.4f} | "
+            f"{delta(bm.get('mrr', 0), hm.get('mrr', 0))} |"
+        )
+
+    padrao_up = (
+        hybrid.get("por_tipo", {}).get("padrao", {}).get("hit@1", 0)
+        > base.get("por_tipo", {}).get("padrao", {}).get("hit@1", 0)
+    )
+    integr_up = (
+        hybrid.get("por_tipo", {}).get("integracao", {}).get("hit@1", 0)
+        > base.get("por_tipo", {}).get("integracao", {}).get("hit@1", 0)
+    )
+    lines.extend([
+        "",
+        "## Gate PR (B4)",
+        "",
+        f"- padrao hit@1 melhorou: **{'sim' if padrao_up else 'NÃO'}**",
+        f"- integracao hit@1 melhorou: **{'sim' if integr_up else 'NÃO'}**",
+        f"- Merge recomendado: **{'sim' if padrao_up and integr_up else 'não — revisar retrieval'}**",
+    ])
+    out_path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"Delta: {out_path.name}")
+
+
 def main() -> None:
     _configure_stdio()
     parser = argparse.ArgumentParser(description="Avalia retrieval RAG contra golden set")
@@ -334,6 +400,18 @@ def main() -> None:
         choices=("v1", "v2", "both"),
         default="v1",
         help="v1=estrito; v2=aceitaveis; both=gera report-baseline e report-baseline-v2",
+    )
+    parser.add_argument(
+        "--tag",
+        choices=("default", "hybrid"),
+        default="default",
+        help="hybrid=grava report-hybrid.* em vez de report-baseline-v2.*",
+    )
+    parser.add_argument(
+        "--compare-to",
+        type=Path,
+        default=None,
+        help="Gera report-delta.md comparando com JSON baseline (ex.: report-baseline-v2.json)",
     )
     args = parser.parse_args()
 
@@ -356,7 +434,10 @@ def main() -> None:
     if args.regua in ("v1", "both"):
         reguas.append(("v1", REPORT_MD, REPORT_JSON, "Baseline (estrito)"))
     if args.regua in ("v2", "both"):
-        reguas.append(("v2", REPORT_V2_MD, REPORT_V2_JSON, "Baseline v2 (réguas justas)"))
+        if args.tag == "hybrid":
+            reguas.append(("v2", REPORT_HYBRID_MD, REPORT_HYBRID_JSON, "Retrieval híbrido (v2)"))
+        else:
+            reguas.append(("v2", REPORT_V2_MD, REPORT_V2_JSON, "Baseline v2 (réguas justas)"))
 
     for regua_id, md_path, json_path, titulo in reguas:
         summary = build_summary(pairs, per_query, args.porta, args.top_k, regua_id)
@@ -375,6 +456,10 @@ def main() -> None:
         f"hit@5={agg['hit@5']:.1%} MRR={agg['mrr']:.4f}"
     )
     print("Relatórios:", ", ".join(p.name for _, p, _, _ in reguas))
+
+    if args.compare_to:
+        hybrid_json = REPORT_HYBRID_JSON if args.tag == "hybrid" else reguas[-1][2]
+        write_delta_report(args.compare_to, hybrid_json, REPORT_DELTA_MD)
 
 
 if __name__ == "__main__":

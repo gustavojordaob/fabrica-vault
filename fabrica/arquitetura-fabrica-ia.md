@@ -224,7 +224,8 @@ Eu escrevo (ou a IA documenta depois) coisas que **não quero repetir erro**:
 | Script | Função |
 |--------|--------|
 | `indexar_rapido.py` | **Único** que indexa o vault no Chroma |
-| `indexar_obsidian_chroma.py --server` | Só sobe HTTP na porta 7332 (não indexa) |
+| `indexar_obsidian_chroma.py --server` | HTTP híbrido na porta 7332 (não indexa) |
+| `rag_retrieval.py` | Denso + BM25 → RRF → rerank `bge-reranker-v2-m3` |
 
 ```powershell
 # Depois de conteúdo novo (decisões, erros, padrões) — ORDEM OBRIGATÓRIA:
@@ -241,7 +242,22 @@ O MCP expõe três buscas:
 |------------|----------|
 | `rag_buscar` | Todo vault indexado (semântico) |
 | `buscar_historico` | Decisões e padrões anteriores |
-| `buscar_solucao` | Erros já resolvidos |
+| `buscar_solucao` | Erros já resolvidos (+ trecho RAG via `:7332`) |
+
+### Retrieval híbrido (jun/2026)
+
+Pipeline em `rag_retrieval.py`, exposto pelo HTTP `:7332` (MCP `rag_buscar`, `buscar_historico` e parte RAG de `buscar_solucao`):
+
+1. **Denso** — Chroma + `paraphrase-multilingual-MiniLM-L12-v2`
+2. **BM25** — `rank_bm25` nos mesmos chunks
+3. **RRF** — fusão Reciprocal Rank Fusion (denso com peso 1.5×)
+4. **Filtro PRD** — `*-prd.md` excluídos em queries de padrão/fluxo/deploy (`tipo_doc: spec`)
+5. **Rerank** — `BAAI/bge-reranker-v2-m3` no top-20; rank 1 preservado do RRF
+
+Metadados de indexação (`indexar_rapido.py`): `tipo_doc` = `padrao` | `spec` | `solucao` | `eval`.  
+Pasta `fabrica/eval/` **não** entra no índice (relatórios de eval).
+
+Dependência extra: `pip install rank-bm25`
 
 ### Harness de avaliação (baseline RAG)
 
@@ -249,21 +265,20 @@ Golden set + script para medir retrieval **sem alterar** indexação nem ranking
 
 | Artefato | Função |
 |----------|--------|
-| `fabrica/eval/golden-set.jsonl` | ~25 pares query → nota esperada (pt-BR, tipos: padrao, integracao, fluxo, solucao, fabrica) |
-| `fabrica/eval/run_baseline.py` | Chama `http://localhost:7332/buscar` e calcula hit@1/3/5 + MRR |
-| `fabrica/eval/report-baseline.md` | Relatório legível (baseline atual) |
-| `fabrica/eval/report-baseline.json` | Métricas agregadas + detalhe por query |
+| `fabrica/eval/golden-set.jsonl` | ~25 pares; campo opcional `aceitaveis` (réguas v2) |
+| `fabrica/eval/run_baseline.py` | `--regua v2` baseline · `--tag hybrid` pós-retrieval |
+| `fabrica/eval/report-baseline-v2.md` | **Baseline oficial** (réguas justas) |
+| `fabrica/eval/report-hybrid.md` | Eval do retrieval híbrido |
+| `fabrica/eval/report-delta.md` | Delta híbrido vs v2 |
 
 ```powershell
-# Pré-requisito: servidor Chroma rodando
 python C:/Users/gusta/obsidian/indexar_obsidian_chroma.py --server
-
-# Rodar eval (outro terminal)
-python C:/Users/gusta/obsidian/fabrica/eval/run_baseline.py
+python C:/Users/gusta/obsidian/fabrica/eval/run_baseline.py --regua v2
+python C:/Users/gusta/obsidian/fabrica/eval/run_baseline.py --regua v2 --tag hybrid --compare-to fabrica/eval/report-baseline-v2.json
 ```
 
-**Baseline jun/2026 (25 pares):** hit@1 40% · hit@3 60% · hit@5 72% · MRR 0.52.  
-PRs futuros que mexam em chunking/ranking devem re-rodar o harness e comparar.
+**Baseline v2 (denso, jun/2026):** hit@1 48% · hit@3 72% · hit@5 76% · MRR 0.59.  
+**Híbrido (jun/2026):** hit@1 56% · hit@3 80% · hit@5 84% · MRR 0.68 — integracao +25pp hit@1; padrao hit@1 flat (40%).
 
 ---
 

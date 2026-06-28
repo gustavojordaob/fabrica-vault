@@ -1,43 +1,43 @@
 {
-  "gerado_em": "2026-06-28T19:17:37.068464+00:00",
+  "gerado_em": "2026-06-28T19:44:52.300686+00:00",
   "porta_chroma": 7332,
   "top_k": 5,
   "total_pares": 25,
   "regua": "v2",
   "aggregate": {
-    "hit@1": 0.48,
-    "hit@3": 0.72,
-    "hit@5": 0.76,
-    "mrr": 0.5947,
+    "hit@1": 0.56,
+    "hit@3": 0.8,
+    "hit@5": 0.84,
+    "mrr": 0.6813,
     "n": 25
   },
   "por_tipo": {
     "fabrica": {
       "hit@1": 0.6667,
       "hit@3": 0.6667,
-      "hit@5": 0.6667,
-      "mrr": 0.6667,
+      "hit@5": 0.8333,
+      "mrr": 0.7,
       "n": 6
     },
     "fluxo": {
-      "hit@1": 0.25,
-      "hit@3": 0.5,
-      "hit@5": 0.5,
-      "mrr": 0.375,
+      "hit@1": 0.5,
+      "hit@3": 0.75,
+      "hit@5": 0.75,
+      "mrr": 0.625,
       "n": 4
     },
     "integracao": {
-      "hit@1": 0.25,
+      "hit@1": 0.5,
       "hit@3": 0.75,
-      "hit@5": 1.0,
-      "mrr": 0.55,
+      "hit@5": 0.75,
+      "mrr": 0.625,
       "n": 4
     },
     "padrao": {
       "hit@1": 0.4,
-      "hit@3": 0.6,
-      "hit@5": 0.6,
-      "mrr": 0.4667,
+      "hit@3": 0.8,
+      "hit@5": 0.8,
+      "mrr": 0.6,
       "n": 5
     },
     "solucao": {
@@ -82,18 +82,18 @@
       "hit": false,
       "hit_primario": false,
       "top_k_arquivos": [
-        "cortejo-prd.md",
+        "lashmatch-mercadopago-assinatura.md",
         "erros-e-solucoes.md",
-        "cortejo-prd.md",
-        "cortejo-prd.md",
-        "cortejo-prd.md"
+        "excluir-conta-app-expo-padrao.md",
+        "decisoes.md",
+        "whatsapp-salao-expo-padrao.md"
       ],
       "top_k_similaridade": [
-        0.482,
-        0.458,
-        0.45,
-        0.436,
-        0.409
+        0.041,
+        0.588,
+        0.438,
+        0.383,
+        0.268
       ]
     },
     {
@@ -110,23 +110,23 @@
         "firebase-setup-patterns.md"
       ],
       "revisar": true,
-      "rank": 3,
-      "rank_primario": null,
+      "rank": 2,
+      "rank_primario": 2,
       "hit": true,
-      "hit_primario": false,
+      "hit_primario": true,
       "top_k_arquivos": [
-        "report-baseline.md",
         "padroes-fabrica.md",
+        "lashmatch-schemas.md",
         "firebase-setup-patterns.md",
-        "lashmatch-prd.md",
-        "whatsapp-salao-expo-padrao.md"
+        "excluir-conta-app-expo-padrao.md",
+        "arquitetura-fabrica-ia.md"
       ],
       "top_k_similaridade": [
-        0.784,
-        0.657,
-        0.636,
-        0.633,
-        0.624
+        0.041,
+        0.985,
+        0.96,
+        0.932,
+        0.891
       ]
     },
     {
@@ -139,23 +139,23 @@
         "erros-e-solucoes.md"
       ],
       "revisar": false,
-      "rank": 3,
-      "rank_primario": 3,
+      "rank": 1,
+      "rank_primario": 1,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "cortejo-prd.md",
-        "decisoes.md",
+        "erros-e-solucoes.md",
         "erros-e-solucoes.md",
         "cortejo-prd.md",
-        "mercadopago-integration.md"
+        "erros-e-solucoes.md",
+        "cortejo-prd.md"
       ],
       "top_k_similaridade": [
-        0.474,
-        0.455,
-        0.426,
-        0.413,
-        0.405
+        0.039,
+        0.184,
+        0.1,
+        0.062,
+        0.059
       ]
     },
     {
@@ -174,17 +174,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "auth-patterns.md",
-        "whatsapp-salao-expo-padrao.md",
+        "cortejo-web-desktop.md",
+        "mercadopago-assinatura-ota-padroes.md",
         "auth-patterns.md",
-        "whatsapp-salao-expo-padrao.md",
         "auth-patterns.md"
       ],
       "top_k_similaridade": [
-        0.528,
-        0.502,
-        0.489,
-        0.481,
-        0.471
+        0.049,
+        0.201,
+        0.095,
+        0.053,
+        0.031
       ]
     },
     {
@@ -203,17 +203,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "auth-patterns.md",
-        "decisoes.md",
         "auth-patterns.md",
-        "whatsapp-salao-expo-padrao.md",
+        "decisoes.md",
+        "checklists-deploy.md",
         "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.615,
-        0.605,
-        0.573,
-        0.516,
-        0.515
+        0.047,
+        0.969,
+        0.555,
+        0.293,
+        0.223
       ]
     },
     {
@@ -226,23 +226,23 @@
         "erros-e-solucoes.md"
       ],
       "revisar": false,
-      "rank": 1,
-      "rank_primario": 1,
+      "rank": 2,
+      "rank_primario": 2,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "erros-e-solucoes.md",
+        "auth-patterns.md",
         "erros-e-solucoes.md",
         "decisoes.md",
-        "auth-patterns.md",
+        "erros-e-solucoes.md",
         "auth-patterns.md"
       ],
       "top_k_similaridade": [
-        0.707,
-        0.663,
-        0.653,
-        0.553,
-        0.541
+        0.046,
+        0.993,
+        0.942,
+        0.844,
+        0.428
       ]
     },
     {
@@ -255,23 +255,23 @@
         "whatsapp-business-api.md"
       ],
       "revisar": false,
-      "rank": 2,
-      "rank_primario": 2,
+      "rank": 1,
+      "rank_primario": 1,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "decisoes.md",
         "whatsapp-business-api.md",
-        "modulo-ajuda-suporte-expo.md",
-        "lashmatch-prd.md",
-        "whatsapp-business-api.md"
+        "whatsapp-business-api.md",
+        "whatsapp-business-api.md",
+        "decisoes.md",
+        "whatsapp-salao-expo-padrao.md"
       ],
       "top_k_similaridade": [
-        0.656,
-        0.632,
-        0.624,
-        0.611,
-        0.609
+        0.039,
+        0.864,
+        0.855,
+        0.715,
+        0.343
       ]
     },
     {
@@ -291,16 +291,16 @@
       "top_k_arquivos": [
         "erros-e-solucoes.md",
         "erros-e-solucoes.md",
-        "decisoes.md",
         "erros-e-solucoes.md",
-        "whatsapp-business-api.md"
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.613,
-        0.592,
-        0.591,
-        0.586,
-        0.58
+        0.039,
+        0.973,
+        0.24,
+        0.182,
+        0.162
       ]
     },
     {
@@ -324,16 +324,16 @@
       "top_k_arquivos": [
         "whatsapp-salao-expo-padrao.md",
         "whatsapp-salao-expo-padrao.md",
-        "whatsapp-business-api.md",
+        "whatsapp-salao-expo-padrao.md",
         "whatsapp-salao-expo-padrao.md",
         "whatsapp-salao-expo-padrao.md"
       ],
       "top_k_similaridade": [
-        0.689,
-        0.657,
-        0.652,
-        0.632,
-        0.632
+        0.039,
+        0.965,
+        0.673,
+        0.288,
+        0.126
       ]
     },
     {
@@ -346,23 +346,23 @@
         "mercadopago-integration.md"
       ],
       "revisar": false,
-      "rank": 2,
-      "rank_primario": 2,
-      "hit": true,
-      "hit_primario": true,
+      "rank": null,
+      "rank_primario": null,
+      "hit": false,
+      "hit_primario": false,
       "top_k_arquivos": [
-        "cortejo-prd.md",
-        "mercadopago-integration.md",
         "mercadopago-assinatura-ota-padroes.md",
-        "lashmatch-modulos-assinatura-jun2026.md",
-        "lashmatch-prd.md"
+        "mercadopago-assinatura-ota-padroes.md",
+        "cortejo-prd.md",
+        "mercadopago-assinatura-ota-padroes.md",
+        "lashmatch-mercadopago-assinatura.md"
       ],
       "top_k_similaridade": [
-        0.574,
-        0.55,
-        0.549,
-        0.505,
-        0.493
+        0.039,
+        0.882,
+        0.792,
+        0.693,
+        0.502
       ]
     },
     {
@@ -379,23 +379,23 @@
         "cloud-functions-patterns.md"
       ],
       "revisar": true,
-      "rank": 5,
-      "rank_primario": 5,
+      "rank": 2,
+      "rank_primario": 2,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
         "outros.md",
-        "cortejo-prd.md",
-        "lashmatch-prd.md",
-        "report-baseline.md",
-        "mercadopago-integration.md"
+        "mercadopago-integration.md",
+        "mercadopago-assinatura-ota-padroes.md",
+        "mercadopago-integration.md",
+        "lashmatch-prd.md"
       ],
       "top_k_similaridade": [
-        0.631,
-        0.602,
-        0.59,
-        0.557,
-        0.549
+        0.041,
+        0.933,
+        0.835,
+        0.817,
+        0.695
       ]
     },
     {
@@ -408,23 +408,23 @@
         "erros-e-solucoes.md"
       ],
       "revisar": false,
-      "rank": 2,
-      "rank_primario": 2,
+      "rank": 3,
+      "rank_primario": 3,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
         "mercadopago-assinatura-ota-padroes.md",
-        "erros-e-solucoes.md",
         "mercadopago-integration.md",
         "erros-e-solucoes.md",
-        "mercadopago-assinatura-ota-padroes.md"
+        "mercadopago-assinatura-ota-padroes.md",
+        "cortejo-modulos-jun2026-padrao.md"
       ],
       "top_k_similaridade": [
-        0.673,
-        0.667,
-        0.658,
-        0.613,
-        0.611
+        0.04,
+        0.971,
+        0.942,
+        0.7,
+        0.375
       ]
     },
     {
@@ -442,18 +442,18 @@
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "checklists-deploy.md",
+        "firebase-deploy-checklist-padrao.md",
         "cloud-functions-patterns.md",
-        "arquitetura-fabrica-ia.md",
         "cloud-functions-patterns.md",
-        "arquitetura-fabrica-ia.md"
+        "cloud-functions-patterns.md",
+        "whatsapp-salao-expo-padrao.md"
       ],
       "top_k_similaridade": [
-        0.688,
-        0.674,
-        0.605,
-        0.599,
-        0.597
+        0.04,
+        0.955,
+        0.938,
+        0.936,
+        0.846
       ]
     },
     {
@@ -466,23 +466,23 @@
         "firebase-deploy-checklist-padrao.md"
       ],
       "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
       "top_k_arquivos": [
+        "firebase-deploy-checklist-padrao.md",
         "arquitetura-fabrica-ia.md",
-        "arquitetura-fabrica-ia.md",
-        "report-baseline.md",
-        "mcps-cursor-padrao.md",
+        "firebase-deploy-checklist-padrao.md",
+        "firebase-deploy-checklist-padrao.md",
         "arquitetura-fabrica-ia.md"
       ],
       "top_k_similaridade": [
-        0.763,
-        0.673,
-        0.618,
-        0.591,
-        0.558
+        0.04,
+        0.989,
+        0.974,
+        0.903,
+        0.858
       ]
     },
     {
@@ -500,18 +500,18 @@
       "hit": false,
       "hit_primario": false,
       "top_k_arquivos": [
-        "expo-router-navegacao.md",
         "lashmatch-web-plataforma.md",
-        "report-baseline.md",
-        "cortejo-modulos-jun2026-padrao.md",
-        "lashmatch-web-plataforma.md"
+        "agenda-salao-expo-padrao.md",
+        "expo-router-navegacao.md",
+        "firebase-deploy-checklist-padrao.md",
+        "expo-router-navegacao.md"
       ],
       "top_k_similaridade": [
-        0.791,
-        0.757,
-        0.714,
-        0.711,
-        0.673
+        0.04,
+        0.983,
+        0.974,
+        0.956,
+        0.954
       ]
     },
     {
@@ -531,16 +531,16 @@
       "top_k_arquivos": [
         "arquitetura-fabrica-ia.md",
         "arquitetura-fabrica-ia.md",
-        "erros-e-solucoes.md",
+        "mcps-cursor-padrao.md",
         "arquitetura-fabrica-ia.md",
         "arquitetura-fabrica-ia.md"
       ],
       "top_k_similaridade": [
-        0.537,
-        0.527,
-        0.501,
-        0.485,
-        0.482
+        0.04,
+        0.968,
+        0.896,
+        0.402,
+        0.343
       ]
     },
     {
@@ -558,18 +558,18 @@
       "hit": false,
       "hit_primario": false,
       "top_k_arquivos": [
-        "decisoes.md",
-        "decisoes.md",
         "erros-e-solucoes.md",
+        "decisoes.md",
+        "arquitetura-fabrica-ia.md",
         "decisoes.md",
         "decisoes.md"
       ],
       "top_k_similaridade": [
-        0.426,
-        0.411,
-        0.39,
-        0.354,
-        0.341
+        0.038,
+        0.817,
+        0.523,
+        0.502,
+        0.368
       ]
     },
     {
@@ -588,17 +588,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "arquitetura-fabrica-ia.md",
-        "whatsapp-salao-expo-padrao.md",
+        "arquitetura-fabrica-ia.md",
+        "decisoes.md",
         "erros-e-solucoes.md",
-        "auth-patterns.md",
-        "auth-patterns.md"
+        "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.422,
-        0.415,
-        0.414,
-        0.413,
-        0.407
+        0.04,
+        0.808,
+        0.073,
+        0.039,
+        0.011
       ]
     },
     {
@@ -617,17 +617,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "erros-e-solucoes.md",
-        "arquitetura-fabrica-ia.md",
-        "spring-backend.md",
         "erros-e-solucoes.md",
-        "arquitetura-fabrica-ia.md"
+        "decisoes.md",
+        "decisoes.md",
+        "decisoes.md"
       ],
       "top_k_similaridade": [
-        0.515,
-        0.487,
-        0.446,
-        0.437,
-        0.433
+        0.04,
+        0.181,
+        0.111,
+        0.072,
+        0.038
       ]
     },
     {
@@ -640,23 +640,23 @@
         "mcps-cursor-padrao.md"
       ],
       "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
+      "rank": 5,
+      "rank_primario": 5,
+      "hit": true,
+      "hit_primario": true,
       "top_k_arquivos": [
+        "mercadopago-integration.md",
+        "cortejo-modulos-jun2026-padrao.md",
+        "lashmatch-modulos-assinatura-jun2026.md",
         "decisoes.md",
-        "decisoes.md",
-        "decisoes.md",
-        "decisoes.md",
-        "firestore-schemas.md"
+        "mcps-cursor-padrao.md"
       ],
       "top_k_similaridade": [
-        0.595,
-        0.58,
-        0.558,
-        0.535,
-        0.533
+        0.038,
+        0.974,
+        0.952,
+        0.929,
+        0.912
       ]
     },
     {
@@ -675,17 +675,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "erros-e-solucoes.md",
-        "cloud-functions-patterns.md",
-        "whatsapp-business-api.md",
-        "outros.md",
-        "outros.md"
+        "rag-protocolo-antes-de-codar.md",
+        "decisoes.md",
+        "rag-protocolo-antes-de-codar.md",
+        "rag-protocolo-antes-de-codar.md"
       ],
       "top_k_similaridade": [
-        0.554,
-        0.504,
-        0.469,
-        0.468,
-        0.455
+        0.041,
+        0.81,
+        0.575,
+        0.052,
+        0.023
       ]
     },
     {
@@ -704,17 +704,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "arquitetura-fabrica-ia.md",
-        "firestore-schemas.md",
-        "context-api-estado.md",
-        "sinaflor-prd.md",
-        "features-pendentes.md"
+        "arquitetura-fabrica-ia.md",
+        "features-pendentes.md",
+        "arquitetura-fabrica-ia.md",
+        "firestore-schemas.md"
       ],
       "top_k_similaridade": [
-        0.506,
-        0.503,
-        0.471,
-        0.457,
-        0.456
+        0.037,
+        0.376,
+        0.022,
+        0.002,
+        0.001
       ]
     },
     {
@@ -727,23 +727,23 @@
         "cadastro-clientes-salao-expo.md"
       ],
       "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
+      "rank": 2,
+      "rank_primario": 2,
+      "hit": true,
+      "hit_primario": true,
       "top_k_arquivos": [
+        "cortejo-schemas.md",
+        "cadastro-clientes-salao-expo.md",
+        "decisoes.md",
         "erros-e-solucoes.md",
-        "erros-e-solucoes.md",
-        "cortejo-prd.md",
-        "erros-e-solucoes.md",
-        "decisoes.md"
+        "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.578,
-        0.566,
-        0.543,
-        0.517,
-        0.472
+        0.045,
+        0.483,
+        0.483,
+        0.417,
+        0.397
       ]
     },
     {
@@ -762,17 +762,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "arquitetura-fabrica-ia.md",
-        "erros-e-solucoes.md",
-        "decisoes.md",
-        "arquitetura-fabrica-ia.md",
-        "report-baseline.md"
+        "mcps-cursor-padrao.md",
+        "rag-protocolo-antes-de-codar.md",
+        "mcps-cursor-padrao.md",
+        "cortejo-project.md"
       ],
       "top_k_similaridade": [
-        0.517,
-        0.498,
-        0.494,
-        0.482,
-        0.473
+        0.04,
+        0.886,
+        0.737,
+        0.693,
+        0.624
       ]
     },
     {
@@ -791,17 +791,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "arquitetura-fabrica-ia.md",
+        "expo-router-navegacao.md",
         "arquitetura-fabrica-ia.md",
-        "checklists-deploy.md",
-        "erros-e-solucoes.md",
-        "firebase-setup-patterns.md"
+        "firebase-deploy-checklist-padrao.md",
+        "expo-router-navegacao.md"
       ],
       "top_k_similaridade": [
-        0.7,
-        0.674,
-        0.626,
-        0.598,
-        0.583
+        0.038,
+        0.716,
+        0.542,
+        0.36,
+        0.186
       ]
     }
   ]

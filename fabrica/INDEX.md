@@ -7,6 +7,7 @@
 
 - [[auth-patterns]] — 10 seção(ões) · `firebase`, `auth`, `seguranca`
 - [[checklists-deploy]] — 11 seção(ões) · `checklist`, `deploy`, `qualidade`
+- [[firebase-deploy-checklist-padrao]] — **checklist Firebase deploy (functions/rules/hosting)** · `firebase`, `deploy`, `fluxo`
 - [[cloud-functions-patterns]] — 12 seção(ões) · `firebase`, `functions`, `backend`
 - [[componentes-reutilizaveis]] — 13 seção(ões) · `componentes`, `reutilizacao`, `ui`
 - [[context-api-estado]] — 6 seção(ões) · `estado`, `context`, `react`

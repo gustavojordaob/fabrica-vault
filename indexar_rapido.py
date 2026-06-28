@@ -21,6 +21,26 @@ MODEL_NAME    = "paraphrase-multilingual-MiniLM-L12-v2"
 CHUNK_SIZE    = 500
 OVERLAP       = 100
 
+def infer_tipo_doc(md: Path) -> str:
+    nome = md.name.lower()
+    rel = md.relative_to(VAULT_PATH) if md.is_relative_to(VAULT_PATH) else md
+    if "eval" in rel.parts:
+        return "eval"
+    if nome.endswith("-prd.md") or nome.endswith("prd.md"):
+        return "spec"
+    if md.parent.name == "projetos":
+        return "spec"
+    if nome == "erros-e-solucoes.md":
+        return "solucao"
+    return "padrao"
+
+def should_index(md: Path) -> bool:
+    try:
+        rel = md.relative_to(VAULT_PATH)
+    except ValueError:
+        return True
+    return "eval" not in rel.parts
+
 def chunks(texto, arquivo):
     partes, inicio, idx = [], 0, 0
     while inicio < len(texto):
@@ -64,7 +84,7 @@ def indexar_arquivo(col, model, md: Path) -> int:
             documents=[txt],
             embeddings=[emb],
             ids=[cid],
-            metadatas=[{"arquivo": md.name, "chunk": idx}],
+            metadatas=[{"arquivo": md.name, "chunk": idx, "tipo_doc": infer_tipo_doc(md)}],
         )
     return len(chks)
 
@@ -127,7 +147,9 @@ def main():
             print(f"[{i}/{len(arquivos)}] {md.name} — {n} chunks ✅")
     else:
         col.delete(where={"arquivo": {"$ne": ""}}) if col.count() > 0 else None
-        arquivos = list(VAULT_PATH.rglob("*.md")) + list(PROJETOS_PATH.rglob("*.md"))
+        arquivos = [
+            md for md in VAULT_PATH.rglob("*.md") if should_index(md)
+        ] + list(PROJETOS_PATH.rglob("*.md"))
         print(f"{len(arquivos)} arquivos encontrados (indexação completa — demora)\n")
         for i, md in enumerate(arquivos, 1):
             n = indexar_arquivo(col, model, md)

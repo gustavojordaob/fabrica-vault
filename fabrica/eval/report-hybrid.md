@@ -1,0 +1,188 @@
+# RAG Eval — Retrieval híbrido (v2)
+
+Gerado em: 2026-06-28T19:44:52.300686+00:00
+Servidor: `http://localhost:7332/buscar` · top-k=5
+Régua: **v2** (hit se `esperado_nota` ou qualquer `aceitaveis` no top-k; MRR = melhor rank entre alvos)
+
+## Auto-checagem do golden set
+
+- Pares: **25**
+- Com `aceitaveis`: **3**
+- Com `revisar: true`: **3** — gs-002, gs-009, gs-011
+- Cobertura por tipo: `{'padrao': 5, 'solucao': 6, 'integracao': 4, 'fluxo': 4, 'fabrica': 6}`
+
+Validação: **OK** (todos os `esperado_nota` existem, sem queries duplicadas).
+
+## Métricas agregadas
+
+| Métrica | Valor |
+|---------|-------|
+| hit@1 | 56.0% |
+| hit@3 | 80.0% |
+| hit@5 | 84.0% |
+| MRR | 0.6813 |
+
+## Por tipo
+
+| tipo | n | hit@1 | hit@3 | hit@5 | MRR |
+|------|---|-------|-------|-------|-----|
+| fabrica | 6 | 66.7% | 66.7% | 83.3% | 0.7000 |
+| fluxo | 4 | 50.0% | 75.0% | 75.0% | 0.6250 |
+| integracao | 4 | 50.0% | 75.0% | 75.0% | 0.6250 |
+| padrao | 5 | 40.0% | 80.0% | 80.0% | 0.6000 |
+| solucao | 6 | 66.7% | 100.0% | 100.0% | 0.8056 |
+
+## Detalhe por query
+
+### gs-001 — MISS
+
+- **Query:** como modelar salão e members no firestore multi-tenant?
+- **Esperado:** `cortejo-schemas.md` (padrao)
+- **Top-5:** `lashmatch-mercadopago-assinatura.md`, `erros-e-solucoes.md`, `excluir-conta-app-expo-padrao.md`, `decisoes.md`, `whatsapp-salao-expo-padrao.md`
+
+### gs-002 — rank 2 ⚠️ revisar
+
+- **Query:** qual path artifacts appId users uid no firestore?
+- **Esperado:** `lashmatch-schemas.md` (padrao)
+- **Aceitáveis:** `lashmatch-schemas.md`, `firebase-setup-patterns.md`
+- **Top-5:** `padroes-fabrica.md`, `lashmatch-schemas.md`, `firebase-setup-patterns.md`, `excluir-conta-app-expo-padrao.md`, `arquitetura-fabrica-ia.md`
+
+### gs-003 — rank 1
+
+- **Query:** permission-denied ao criar conta do salão no onboarding
+- **Esperado:** `erros-e-solucoes.md` (solucao)
+- **Top-5:** `erros-e-solucoes.md`, `erros-e-solucoes.md`, `cortejo-prd.md`, `erros-e-solucoes.md`, `cortejo-prd.md`
+
+### gs-004 — rank 1
+
+- **Query:** login email e senha com firebase no expo
+- **Esperado:** `auth-patterns.md` (padrao)
+- **Top-5:** `auth-patterns.md`, `cortejo-web-desktop.md`, `mercadopago-assinatura-ota-padroes.md`, `auth-patterns.md`, `auth-patterns.md`
+
+### gs-005 — rank 1
+
+- **Query:** google sign in no expo go qual pacote usar?
+- **Esperado:** `auth-patterns.md` (padrao)
+- **Top-5:** `auth-patterns.md`, `auth-patterns.md`, `decisoes.md`, `checklists-deploy.md`, `erros-e-solucoes.md`
+
+### gs-006 — rank 2
+
+- **Query:** androidClientId must be defined google auth expo
+- **Esperado:** `erros-e-solucoes.md` (solucao)
+- **Top-5:** `auth-patterns.md`, `erros-e-solucoes.md`, `decisoes.md`, `erros-e-solucoes.md`, `auth-patterns.md`
+
+### gs-007 — rank 1
+
+- **Query:** como enviar template whatsapp pela meta cloud api?
+- **Esperado:** `whatsapp-business-api.md` (integracao)
+- **Top-5:** `whatsapp-business-api.md`, `whatsapp-business-api.md`, `whatsapp-business-api.md`, `decisoes.md`, `whatsapp-salao-expo-padrao.md`
+
+### gs-008 — rank 1
+
+- **Query:** whatsapp erro 132001 template não existe
+- **Esperado:** `erros-e-solucoes.md` (solucao)
+- **Top-5:** `erros-e-solucoes.md`, `erros-e-solucoes.md`, `erros-e-solucoes.md`, `erros-e-solucoes.md`, `erros-e-solucoes.md`
+
+### gs-009 — rank 1 ⚠️ revisar
+
+- **Query:** webhook whatsapp multi-tenant phoneNumberId roteamento
+- **Esperado:** `whatsapp-salao-expo-padrao.md` (integracao)
+- **Aceitáveis:** `whatsapp-salao-expo-padrao.md`, `whatsapp-business-api.md`
+- **Top-5:** `whatsapp-salao-expo-padrao.md`, `whatsapp-salao-expo-padrao.md`, `whatsapp-salao-expo-padrao.md`, `whatsapp-salao-expo-padrao.md`, `whatsapp-salao-expo-padrao.md`
+
+### gs-010 — MISS
+
+- **Query:** assinatura recorrente mercado pago preapproval cartão tokenizado
+- **Esperado:** `mercadopago-integration.md` (integracao)
+- **Top-5:** `mercadopago-assinatura-ota-padroes.md`, `mercadopago-assinatura-ota-padroes.md`, `cortejo-prd.md`, `mercadopago-assinatura-ota-padroes.md`, `lashmatch-mercadopago-assinatura.md`
+
+### gs-011 — rank 2 ⚠️ revisar
+
+- **Query:** webhook mercado pago confirma pagamento cloud function
+- **Esperado:** `mercadopago-integration.md` (integracao)
+- **Aceitáveis:** `mercadopago-integration.md`, `cloud-functions-patterns.md`
+- **Top-5:** `outros.md`, `mercadopago-integration.md`, `mercadopago-assinatura-ota-padroes.md`, `mercadopago-integration.md`, `lashmatch-prd.md`
+
+### gs-012 — rank 3
+
+- **Query:** cancelou assinatura no app mas mp continuou cobrando
+- **Esperado:** `erros-e-solucoes.md` (solucao)
+- **Top-5:** `mercadopago-assinatura-ota-padroes.md`, `mercadopago-integration.md`, `erros-e-solucoes.md`, `mercadopago-assinatura-ota-padroes.md`, `cortejo-modulos-jun2026-padrao.md`
+
+### gs-013 — rank 2
+
+- **Query:** deploy só cloud functions firebase build antes
+- **Esperado:** `cloud-functions-patterns.md` (fluxo)
+- **Top-5:** `firebase-deploy-checklist-padrao.md`, `cloud-functions-patterns.md`, `cloud-functions-patterns.md`, `cloud-functions-patterns.md`, `whatsapp-salao-expo-padrao.md`
+
+### gs-014 — rank 1
+
+- **Query:** checklist antes de rodar firebase deploy
+- **Esperado:** `firebase-deploy-checklist-padrao.md` (fluxo)
+- **Top-5:** `firebase-deploy-checklist-padrao.md`, `arquitetura-fabrica-ia.md`, `firebase-deploy-checklist-padrao.md`, `firebase-deploy-checklist-padrao.md`, `arquitetura-fabrica-ia.md`
+
+### gs-015 — MISS
+
+- **Query:** expo export web e deploy firebase hosting
+- **Esperado:** `firebase-setup-patterns.md` (fluxo)
+- **Top-5:** `lashmatch-web-plataforma.md`, `agenda-salao-expo-padrao.md`, `expo-router-navegacao.md`, `firebase-deploy-checklist-padrao.md`, `expo-router-navegacao.md`
+
+### gs-016 — rank 1
+
+- **Query:** gate bloqueia write até chamar rag_buscar
+- **Esperado:** `arquitetura-fabrica-ia.md` (fabrica)
+- **Top-5:** `arquitetura-fabrica-ia.md`, `arquitetura-fabrica-ia.md`, `mcps-cursor-padrao.md`, `arquitetura-fabrica-ia.md`, `arquitetura-fabrica-ia.md`
+
+### gs-017 — MISS
+
+- **Query:** dev pediu lib externa devo consultar rag antes?
+- **Esperado:** `rag-protocolo-antes-de-codar.md` (fabrica)
+- **Top-5:** `erros-e-solucoes.md`, `decisoes.md`, `arquitetura-fabrica-ia.md`, `decisoes.md`, `decisoes.md`
+
+### gs-018 — rank 1
+
+- **Query:** como subir servidor chroma rag porta 7332?
+- **Esperado:** `arquitetura-fabrica-ia.md` (fabrica)
+- **Top-5:** `arquitetura-fabrica-ia.md`, `arquitetura-fabrica-ia.md`, `decisoes.md`, `erros-e-solucoes.md`, `erros-e-solucoes.md`
+
+### gs-019 — rank 1
+
+- **Query:** servidor rag fecha depois de carregar modelo chroma
+- **Esperado:** `erros-e-solucoes.md` (solucao)
+- **Top-5:** `erros-e-solucoes.md`, `erros-e-solucoes.md`, `decisoes.md`, `decisoes.md`, `decisoes.md`
+
+### gs-020 — rank 5
+
+- **Query:** mercado pago ou revenuecat qual mcp usar?
+- **Esperado:** `mcps-cursor-padrao.md` (fabrica)
+- **Top-5:** `mercadopago-integration.md`, `cortejo-modulos-jun2026-padrao.md`, `lashmatch-modulos-assinatura-jun2026.md`, `decisoes.md`, `mcps-cursor-padrao.md`
+
+### gs-021 — rank 1
+
+- **Query:** agente codou calendário sem buscar no rag
+- **Esperado:** `erros-e-solucoes.md` (solucao)
+- **Top-5:** `erros-e-solucoes.md`, `rag-protocolo-antes-de-codar.md`, `decisoes.md`, `rag-protocolo-antes-de-codar.md`, `rag-protocolo-antes-de-codar.md`
+
+### gs-022 — rank 1
+
+- **Query:** fluxo criar feature branch e abrir pr na fabrica
+- **Esperado:** `arquitetura-fabrica-ia.md` (fluxo)
+- **Top-5:** `arquitetura-fabrica-ia.md`, `arquitetura-fabrica-ia.md`, `features-pendentes.md`, `arquitetura-fabrica-ia.md`, `firestore-schemas.md`
+
+### gs-023 — rank 2
+
+- **Query:** cadastro de clientes do salão regra isMember firestore
+- **Esperado:** `cadastro-clientes-salao-expo.md` (padrao)
+- **Top-5:** `cortejo-schemas.md`, `cadastro-clientes-salao-expo.md`, `decisoes.md`, `erros-e-solucoes.md`, `erros-e-solucoes.md`
+
+### gs-024 — rank 1
+
+- **Query:** diferença rag_buscar buscar_historico buscar_solucao
+- **Esperado:** `arquitetura-fabrica-ia.md` (fabrica)
+- **Top-5:** `arquitetura-fabrica-ia.md`, `mcps-cursor-padrao.md`, `rag-protocolo-antes-de-codar.md`, `mcps-cursor-padrao.md`, `cortejo-project.md`
+
+### gs-025 — rank 1
+
+- **Query:** deploy firebase no projeto errado como evitar
+- **Esperado:** `arquitetura-fabrica-ia.md` (fabrica)
+- **Top-5:** `arquitetura-fabrica-ia.md`, `expo-router-navegacao.md`, `arquitetura-fabrica-ia.md`, `firebase-deploy-checklist-padrao.md`, `expo-router-navegacao.md`
