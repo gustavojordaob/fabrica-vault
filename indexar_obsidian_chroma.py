@@ -1,11 +1,11 @@
 """
 indexar_obsidian_chroma.py
-Sobe o servidor HTTP RAG (ChromaDB) — NÃO indexa.
+Sobe o servidor HTTP RAG (ChromaDB + híbrido BM25/RRF/rerank) — NÃO indexa.
 
 Indexação: use somente indexar_rapido.py
 
 Instalar dependências:
-    pip install chromadb sentence-transformers
+    pip install chromadb sentence-transformers rank-bm25
 
 Uso:
     python indexar_rapido.py                              # indexa o vault
@@ -34,29 +34,9 @@ MAX_RESULTS = 5
 
 
 def buscar(collection, model, query, n=MAX_RESULTS):
-    cnt = collection.count()
-    if cnt == 0:
-        return []
-    k = max(1, min(n, cnt))
-    embedding = model.encode(
-        [query],
-        show_progress_bar=False,
-        convert_to_numpy=True,
-        normalize_embeddings=True,
-    )[0].tolist()
-    res = collection.query(
-        query_embeddings=[embedding],
-        n_results=k,
-        include=["documents", "metadatas", "distances"],
-    )
-    saida = []
-    for i, doc in enumerate(res["documents"][0]):
-        saida.append({
-            "conteudo": doc,
-            "arquivo": res["metadatas"][0][i]["arquivo"],
-            "similaridade": round(1 - res["distances"][0][i], 3),
-        })
-    return saida
+    from rag_retrieval import buscar_hibrido
+
+    return buscar_hibrido(collection, model, query, n)
 
 
 def iniciar_servidor(collection, model, porta=7332):
@@ -166,7 +146,7 @@ def main():
         return
 
     print("\n╔══════════════════════════════════════╗")
-    print("║  RAG Local — Servidor Chroma         ║")
+    print("║  RAG Local — Híbrido (Chroma+BM25)   ║")
     print("╚══════════════════════════════════════╝\n")
 
     if args.doctor:

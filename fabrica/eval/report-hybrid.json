@@ -1,0 +1,808 @@
+{
+  "gerado_em": "2026-06-28T19:44:52.300686+00:00",
+  "porta_chroma": 7332,
+  "top_k": 5,
+  "total_pares": 25,
+  "regua": "v2",
+  "aggregate": {
+    "hit@1": 0.56,
+    "hit@3": 0.8,
+    "hit@5": 0.84,
+    "mrr": 0.6813,
+    "n": 25
+  },
+  "por_tipo": {
+    "fabrica": {
+      "hit@1": 0.6667,
+      "hit@3": 0.6667,
+      "hit@5": 0.8333,
+      "mrr": 0.7,
+      "n": 6
+    },
+    "fluxo": {
+      "hit@1": 0.5,
+      "hit@3": 0.75,
+      "hit@5": 0.75,
+      "mrr": 0.625,
+      "n": 4
+    },
+    "integracao": {
+      "hit@1": 0.5,
+      "hit@3": 0.75,
+      "hit@5": 0.75,
+      "mrr": 0.625,
+      "n": 4
+    },
+    "padrao": {
+      "hit@1": 0.4,
+      "hit@3": 0.8,
+      "hit@5": 0.8,
+      "mrr": 0.6,
+      "n": 5
+    },
+    "solucao": {
+      "hit@1": 0.6667,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "mrr": 0.8056,
+      "n": 6
+    }
+  },
+  "validacao": {
+    "total": 25,
+    "tipos": {
+      "padrao": 5,
+      "solucao": 6,
+      "integracao": 4,
+      "fluxo": 4,
+      "fabrica": 6
+    },
+    "revisar_ids": [
+      "gs-002",
+      "gs-009",
+      "gs-011"
+    ],
+    "revisar_count": 3,
+    "issues": [],
+    "valido": true
+  },
+  "detalhe": [
+    {
+      "id": "gs-001",
+      "query": "como modelar salão e members no firestore multi-tenant?",
+      "tipo": "padrao",
+      "esperado_nota": "cortejo-schemas.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "cortejo-schemas.md"
+      ],
+      "revisar": false,
+      "rank": null,
+      "rank_primario": null,
+      "hit": false,
+      "hit_primario": false,
+      "top_k_arquivos": [
+        "lashmatch-mercadopago-assinatura.md",
+        "erros-e-solucoes.md",
+        "excluir-conta-app-expo-padrao.md",
+        "decisoes.md",
+        "whatsapp-salao-expo-padrao.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.588,
+        0.438,
+        0.383,
+        0.268
+      ]
+    },
+    {
+      "id": "gs-002",
+      "query": "qual path artifacts appId users uid no firestore?",
+      "tipo": "padrao",
+      "esperado_nota": "lashmatch-schemas.md",
+      "aceitaveis": [
+        "lashmatch-schemas.md",
+        "firebase-setup-patterns.md"
+      ],
+      "notas_alvo": [
+        "lashmatch-schemas.md",
+        "firebase-setup-patterns.md"
+      ],
+      "revisar": true,
+      "rank": 2,
+      "rank_primario": 2,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "padroes-fabrica.md",
+        "lashmatch-schemas.md",
+        "firebase-setup-patterns.md",
+        "excluir-conta-app-expo-padrao.md",
+        "arquitetura-fabrica-ia.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.985,
+        0.96,
+        0.932,
+        0.891
+      ]
+    },
+    {
+      "id": "gs-003",
+      "query": "permission-denied ao criar conta do salão no onboarding",
+      "tipo": "solucao",
+      "esperado_nota": "erros-e-solucoes.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erros-e-solucoes.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md",
+        "cortejo-prd.md",
+        "erros-e-solucoes.md",
+        "cortejo-prd.md"
+      ],
+      "top_k_similaridade": [
+        0.039,
+        0.184,
+        0.1,
+        0.062,
+        0.059
+      ]
+    },
+    {
+      "id": "gs-004",
+      "query": "login email e senha com firebase no expo",
+      "tipo": "padrao",
+      "esperado_nota": "auth-patterns.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "auth-patterns.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "auth-patterns.md",
+        "cortejo-web-desktop.md",
+        "mercadopago-assinatura-ota-padroes.md",
+        "auth-patterns.md",
+        "auth-patterns.md"
+      ],
+      "top_k_similaridade": [
+        0.049,
+        0.201,
+        0.095,
+        0.053,
+        0.031
+      ]
+    },
+    {
+      "id": "gs-005",
+      "query": "google sign in no expo go qual pacote usar?",
+      "tipo": "padrao",
+      "esperado_nota": "auth-patterns.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "auth-patterns.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "auth-patterns.md",
+        "auth-patterns.md",
+        "decisoes.md",
+        "checklists-deploy.md",
+        "erros-e-solucoes.md"
+      ],
+      "top_k_similaridade": [
+        0.047,
+        0.969,
+        0.555,
+        0.293,
+        0.223
+      ]
+    },
+    {
+      "id": "gs-006",
+      "query": "androidClientId must be defined google auth expo",
+      "tipo": "solucao",
+      "esperado_nota": "erros-e-solucoes.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erros-e-solucoes.md"
+      ],
+      "revisar": false,
+      "rank": 2,
+      "rank_primario": 2,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "auth-patterns.md",
+        "erros-e-solucoes.md",
+        "decisoes.md",
+        "erros-e-solucoes.md",
+        "auth-patterns.md"
+      ],
+      "top_k_similaridade": [
+        0.046,
+        0.993,
+        0.942,
+        0.844,
+        0.428
+      ]
+    },
+    {
+      "id": "gs-007",
+      "query": "como enviar template whatsapp pela meta cloud api?",
+      "tipo": "integracao",
+      "esperado_nota": "whatsapp-business-api.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "whatsapp-business-api.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "whatsapp-business-api.md",
+        "whatsapp-business-api.md",
+        "whatsapp-business-api.md",
+        "decisoes.md",
+        "whatsapp-salao-expo-padrao.md"
+      ],
+      "top_k_similaridade": [
+        0.039,
+        0.864,
+        0.855,
+        0.715,
+        0.343
+      ]
+    },
+    {
+      "id": "gs-008",
+      "query": "whatsapp erro 132001 template não existe",
+      "tipo": "solucao",
+      "esperado_nota": "erros-e-solucoes.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erros-e-solucoes.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md"
+      ],
+      "top_k_similaridade": [
+        0.039,
+        0.973,
+        0.24,
+        0.182,
+        0.162
+      ]
+    },
+    {
+      "id": "gs-009",
+      "query": "webhook whatsapp multi-tenant phoneNumberId roteamento",
+      "tipo": "integracao",
+      "esperado_nota": "whatsapp-salao-expo-padrao.md",
+      "aceitaveis": [
+        "whatsapp-salao-expo-padrao.md",
+        "whatsapp-business-api.md"
+      ],
+      "notas_alvo": [
+        "whatsapp-salao-expo-padrao.md",
+        "whatsapp-business-api.md"
+      ],
+      "revisar": true,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "whatsapp-salao-expo-padrao.md",
+        "whatsapp-salao-expo-padrao.md",
+        "whatsapp-salao-expo-padrao.md",
+        "whatsapp-salao-expo-padrao.md",
+        "whatsapp-salao-expo-padrao.md"
+      ],
+      "top_k_similaridade": [
+        0.039,
+        0.965,
+        0.673,
+        0.288,
+        0.126
+      ]
+    },
+    {
+      "id": "gs-010",
+      "query": "assinatura recorrente mercado pago preapproval cartão tokenizado",
+      "tipo": "integracao",
+      "esperado_nota": "mercadopago-integration.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "mercadopago-integration.md"
+      ],
+      "revisar": false,
+      "rank": null,
+      "rank_primario": null,
+      "hit": false,
+      "hit_primario": false,
+      "top_k_arquivos": [
+        "mercadopago-assinatura-ota-padroes.md",
+        "mercadopago-assinatura-ota-padroes.md",
+        "cortejo-prd.md",
+        "mercadopago-assinatura-ota-padroes.md",
+        "lashmatch-mercadopago-assinatura.md"
+      ],
+      "top_k_similaridade": [
+        0.039,
+        0.882,
+        0.792,
+        0.693,
+        0.502
+      ]
+    },
+    {
+      "id": "gs-011",
+      "query": "webhook mercado pago confirma pagamento cloud function",
+      "tipo": "integracao",
+      "esperado_nota": "mercadopago-integration.md",
+      "aceitaveis": [
+        "mercadopago-integration.md",
+        "cloud-functions-patterns.md"
+      ],
+      "notas_alvo": [
+        "mercadopago-integration.md",
+        "cloud-functions-patterns.md"
+      ],
+      "revisar": true,
+      "rank": 2,
+      "rank_primario": 2,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "outros.md",
+        "mercadopago-integration.md",
+        "mercadopago-assinatura-ota-padroes.md",
+        "mercadopago-integration.md",
+        "lashmatch-prd.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.933,
+        0.835,
+        0.817,
+        0.695
+      ]
+    },
+    {
+      "id": "gs-012",
+      "query": "cancelou assinatura no app mas mp continuou cobrando",
+      "tipo": "solucao",
+      "esperado_nota": "erros-e-solucoes.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erros-e-solucoes.md"
+      ],
+      "revisar": false,
+      "rank": 3,
+      "rank_primario": 3,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "mercadopago-assinatura-ota-padroes.md",
+        "mercadopago-integration.md",
+        "erros-e-solucoes.md",
+        "mercadopago-assinatura-ota-padroes.md",
+        "cortejo-modulos-jun2026-padrao.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.971,
+        0.942,
+        0.7,
+        0.375
+      ]
+    },
+    {
+      "id": "gs-013",
+      "query": "deploy só cloud functions firebase build antes",
+      "tipo": "fluxo",
+      "esperado_nota": "cloud-functions-patterns.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "cloud-functions-patterns.md"
+      ],
+      "revisar": false,
+      "rank": 2,
+      "rank_primario": 2,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "firebase-deploy-checklist-padrao.md",
+        "cloud-functions-patterns.md",
+        "cloud-functions-patterns.md",
+        "cloud-functions-patterns.md",
+        "whatsapp-salao-expo-padrao.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.955,
+        0.938,
+        0.936,
+        0.846
+      ]
+    },
+    {
+      "id": "gs-014",
+      "query": "checklist antes de rodar firebase deploy",
+      "tipo": "fluxo",
+      "esperado_nota": "firebase-deploy-checklist-padrao.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "firebase-deploy-checklist-padrao.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "firebase-deploy-checklist-padrao.md",
+        "arquitetura-fabrica-ia.md",
+        "firebase-deploy-checklist-padrao.md",
+        "firebase-deploy-checklist-padrao.md",
+        "arquitetura-fabrica-ia.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.989,
+        0.974,
+        0.903,
+        0.858
+      ]
+    },
+    {
+      "id": "gs-015",
+      "query": "expo export web e deploy firebase hosting",
+      "tipo": "fluxo",
+      "esperado_nota": "firebase-setup-patterns.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "firebase-setup-patterns.md"
+      ],
+      "revisar": false,
+      "rank": null,
+      "rank_primario": null,
+      "hit": false,
+      "hit_primario": false,
+      "top_k_arquivos": [
+        "lashmatch-web-plataforma.md",
+        "agenda-salao-expo-padrao.md",
+        "expo-router-navegacao.md",
+        "firebase-deploy-checklist-padrao.md",
+        "expo-router-navegacao.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.983,
+        0.974,
+        0.956,
+        0.954
+      ]
+    },
+    {
+      "id": "gs-016",
+      "query": "gate bloqueia write até chamar rag_buscar",
+      "tipo": "fabrica",
+      "esperado_nota": "arquitetura-fabrica-ia.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "arquitetura-fabrica-ia.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "arquitetura-fabrica-ia.md",
+        "arquitetura-fabrica-ia.md",
+        "mcps-cursor-padrao.md",
+        "arquitetura-fabrica-ia.md",
+        "arquitetura-fabrica-ia.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.968,
+        0.896,
+        0.402,
+        0.343
+      ]
+    },
+    {
+      "id": "gs-017",
+      "query": "dev pediu lib externa devo consultar rag antes?",
+      "tipo": "fabrica",
+      "esperado_nota": "rag-protocolo-antes-de-codar.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "rag-protocolo-antes-de-codar.md"
+      ],
+      "revisar": false,
+      "rank": null,
+      "rank_primario": null,
+      "hit": false,
+      "hit_primario": false,
+      "top_k_arquivos": [
+        "erros-e-solucoes.md",
+        "decisoes.md",
+        "arquitetura-fabrica-ia.md",
+        "decisoes.md",
+        "decisoes.md"
+      ],
+      "top_k_similaridade": [
+        0.038,
+        0.817,
+        0.523,
+        0.502,
+        0.368
+      ]
+    },
+    {
+      "id": "gs-018",
+      "query": "como subir servidor chroma rag porta 7332?",
+      "tipo": "fabrica",
+      "esperado_nota": "arquitetura-fabrica-ia.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "arquitetura-fabrica-ia.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "arquitetura-fabrica-ia.md",
+        "arquitetura-fabrica-ia.md",
+        "decisoes.md",
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.808,
+        0.073,
+        0.039,
+        0.011
+      ]
+    },
+    {
+      "id": "gs-019",
+      "query": "servidor rag fecha depois de carregar modelo chroma",
+      "tipo": "solucao",
+      "esperado_nota": "erros-e-solucoes.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erros-e-solucoes.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md",
+        "decisoes.md",
+        "decisoes.md",
+        "decisoes.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.181,
+        0.111,
+        0.072,
+        0.038
+      ]
+    },
+    {
+      "id": "gs-020",
+      "query": "mercado pago ou revenuecat qual mcp usar?",
+      "tipo": "fabrica",
+      "esperado_nota": "mcps-cursor-padrao.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "mcps-cursor-padrao.md"
+      ],
+      "revisar": false,
+      "rank": 5,
+      "rank_primario": 5,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "mercadopago-integration.md",
+        "cortejo-modulos-jun2026-padrao.md",
+        "lashmatch-modulos-assinatura-jun2026.md",
+        "decisoes.md",
+        "mcps-cursor-padrao.md"
+      ],
+      "top_k_similaridade": [
+        0.038,
+        0.974,
+        0.952,
+        0.929,
+        0.912
+      ]
+    },
+    {
+      "id": "gs-021",
+      "query": "agente codou calendário sem buscar no rag",
+      "tipo": "solucao",
+      "esperado_nota": "erros-e-solucoes.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erros-e-solucoes.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erros-e-solucoes.md",
+        "rag-protocolo-antes-de-codar.md",
+        "decisoes.md",
+        "rag-protocolo-antes-de-codar.md",
+        "rag-protocolo-antes-de-codar.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.81,
+        0.575,
+        0.052,
+        0.023
+      ]
+    },
+    {
+      "id": "gs-022",
+      "query": "fluxo criar feature branch e abrir pr na fabrica",
+      "tipo": "fluxo",
+      "esperado_nota": "arquitetura-fabrica-ia.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "arquitetura-fabrica-ia.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "arquitetura-fabrica-ia.md",
+        "arquitetura-fabrica-ia.md",
+        "features-pendentes.md",
+        "arquitetura-fabrica-ia.md",
+        "firestore-schemas.md"
+      ],
+      "top_k_similaridade": [
+        0.037,
+        0.376,
+        0.022,
+        0.002,
+        0.001
+      ]
+    },
+    {
+      "id": "gs-023",
+      "query": "cadastro de clientes do salão regra isMember firestore",
+      "tipo": "padrao",
+      "esperado_nota": "cadastro-clientes-salao-expo.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "cadastro-clientes-salao-expo.md"
+      ],
+      "revisar": false,
+      "rank": 2,
+      "rank_primario": 2,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "cortejo-schemas.md",
+        "cadastro-clientes-salao-expo.md",
+        "decisoes.md",
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md"
+      ],
+      "top_k_similaridade": [
+        0.045,
+        0.483,
+        0.483,
+        0.417,
+        0.397
+      ]
+    },
+    {
+      "id": "gs-024",
+      "query": "diferença rag_buscar buscar_historico buscar_solucao",
+      "tipo": "fabrica",
+      "esperado_nota": "arquitetura-fabrica-ia.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "arquitetura-fabrica-ia.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "arquitetura-fabrica-ia.md",
+        "mcps-cursor-padrao.md",
+        "rag-protocolo-antes-de-codar.md",
+        "mcps-cursor-padrao.md",
+        "cortejo-project.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.886,
+        0.737,
+        0.693,
+        0.624
+      ]
+    },
+    {
+      "id": "gs-025",
+      "query": "deploy firebase no projeto errado como evitar",
+      "tipo": "fabrica",
+      "esperado_nota": "arquitetura-fabrica-ia.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "arquitetura-fabrica-ia.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "arquitetura-fabrica-ia.md",
+        "expo-router-navegacao.md",
+        "arquitetura-fabrica-ia.md",
+        "firebase-deploy-checklist-padrao.md",
+        "expo-router-navegacao.md"
+      ],
+      "top_k_similaridade": [
+        0.038,
+        0.716,
+        0.542,
+        0.36,
+        0.186
+      ]
+    }
+  ]
+}

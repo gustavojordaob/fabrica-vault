@@ -602,3 +602,23 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Gustavo
 
 ---
+
+### 28/06/2026 — fabrica — Baseline RAG eval harness (PR1)
+
+- **Decisão:** Criado golden set (25 pares em fabrica/eval/golden-set.jsonl) + harness run_baseline.py contra Chroma :7332. Baseline jun/2026: hit@1=40%, hit@3=60%, hit@5=72%, MRR=0.5233. PR1 não altera indexação/retrieval — só mede estado atual.
+- **Motivo:** Medir qualidade do retrieval antes de otimizar chunking/ranking; evitar regressões em PRs futuros.
+- **Alternativa rejeitada:** Avaliar só via MCP rag_buscar manual — não escala e mistura camada MCP com Chroma puro.
+- **Impacto:** fabrica/eval/*, arquitetura-fabrica-ia.md, branch feature/rag-eval-harness
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 28/06/2026 — fabrica — Retrieval hibrido RAG + golden v2 + checklist deploy
+
+- **Decisão:** Retrieval hibrido: denso+BM25+RRF+rerank bge-reranker-v2-m3; filtro tipo_doc spec/eval; golden v2 com aceitaveis; nova nota firebase-deploy-checklist-padrao.md. Delta vs v2: hit@1 +8pp (48→56%), integracao +25pp hit@1, padrao hit@1 flat (40%). Gate merge: integracao OK, padrao hit@1 nao subiu.
+- **Motivo:** Melhorar recall em integracao/fluxo e reduzir PRD nos top-1 de queries de padrao; medir com harness v2.
+- **Alternativa rejeitada:** Só denso Chroma — padrao empacava em 40% hit@1 por dominacao de PRD e BM25 puro sem rerank.
+- **Impacto:** rag_retrieval.py, indexar_rapido.py, indexar_obsidian_chroma.py, fabrica/eval/*, firebase-deploy-checklist-padrao.md, arquitetura-fabrica-ia.md; MCP timeout 120s em server-v2.js
+- **Quem decidiu:** Gustavo + agente
+
+---
