@@ -602,3 +602,13 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Gustavo
 
 ---
+
+### 28/06/2026 — fabrica — Baseline RAG eval harness (PR1)
+
+- **Decisão:** Criado golden set (25 pares em fabrica/eval/golden-set.jsonl) + harness run_baseline.py contra Chroma :7332. Baseline jun/2026: hit@1=40%, hit@3=60%, hit@5=72%, MRR=0.5233. PR1 não altera indexação/retrieval — só mede estado atual.
+- **Motivo:** Medir qualidade do retrieval antes de otimizar chunking/ranking; evitar regressões em PRs futuros.
+- **Alternativa rejeitada:** Avaliar só via MCP rag_buscar manual — não escala e mistura camada MCP com Chroma puro.
+- **Impacto:** fabrica/eval/*, arquitetura-fabrica-ia.md, branch feature/rag-eval-harness
+- **Quem decidiu:** Gustavo + agente
+
+---

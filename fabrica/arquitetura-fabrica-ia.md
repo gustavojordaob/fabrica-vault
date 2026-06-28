@@ -7,7 +7,7 @@ tags:
   - mcp
   - rag
   - obsidian
-atualizado_em: 2026-06-09
+atualizado_em: 2026-06-28
 autor: Gustavo
 status: documentacao-completa
 ---
@@ -242,6 +242,28 @@ O MCP expõe três buscas:
 | `rag_buscar` | Todo vault indexado (semântico) |
 | `buscar_historico` | Decisões e padrões anteriores |
 | `buscar_solucao` | Erros já resolvidos |
+
+### Harness de avaliação (baseline RAG)
+
+Golden set + script para medir retrieval **sem alterar** indexação nem ranking.
+
+| Artefato | Função |
+|----------|--------|
+| `fabrica/eval/golden-set.jsonl` | ~25 pares query → nota esperada (pt-BR, tipos: padrao, integracao, fluxo, solucao, fabrica) |
+| `fabrica/eval/run_baseline.py` | Chama `http://localhost:7332/buscar` e calcula hit@1/3/5 + MRR |
+| `fabrica/eval/report-baseline.md` | Relatório legível (baseline atual) |
+| `fabrica/eval/report-baseline.json` | Métricas agregadas + detalhe por query |
+
+```powershell
+# Pré-requisito: servidor Chroma rodando
+python C:/Users/gusta/obsidian/indexar_obsidian_chroma.py --server
+
+# Rodar eval (outro terminal)
+python C:/Users/gusta/obsidian/fabrica/eval/run_baseline.py
+```
+
+**Baseline jun/2026 (25 pares):** hit@1 40% · hit@3 60% · hit@5 72% · MRR 0.52.  
+PRs futuros que mexam em chunking/ranking devem re-rodar o harness e comparar.
 
 ---
 
@@ -505,6 +527,7 @@ python C:/Users/gusta/obsidian/indexar_rapido.py   # se editou Obsidian
 ```text
 MCP rag_buscar("arquitetura fabrica rag universal")
 MCP status_fabrica
+python C:/Users/gusta/obsidian/fabrica/eval/run_baseline.py
 ```
 
 ---
