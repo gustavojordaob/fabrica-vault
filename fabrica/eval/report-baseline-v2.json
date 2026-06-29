@@ -1,58 +1,58 @@
 {
-  "gerado_em": "2026-06-28T19:17:37.068464+00:00",
+  "gerado_em": "2026-06-29T13:24:11.750777+00:00",
   "porta_chroma": 7332,
   "top_k": 5,
-  "total_pares": 25,
+  "total_pares": 56,
   "regua": "v2",
   "aggregate": {
-    "hit@1": 0.48,
-    "hit@3": 0.72,
-    "hit@5": 0.76,
-    "mrr": 0.5947,
-    "n": 25
+    "hit@1": 0.6607,
+    "hit@3": 0.875,
+    "hit@5": 0.9107,
+    "mrr": 0.7571,
+    "n": 56
   },
   "por_tipo": {
     "fabrica": {
-      "hit@1": 0.6667,
-      "hit@3": 0.6667,
-      "hit@5": 0.6667,
-      "mrr": 0.6667,
+      "hit@1": 0.5,
+      "hit@3": 0.8333,
+      "hit@5": 0.8333,
+      "mrr": 0.6389,
       "n": 6
     },
     "fluxo": {
-      "hit@1": 0.25,
-      "hit@3": 0.5,
-      "hit@5": 0.5,
-      "mrr": 0.375,
+      "hit@1": 0.5,
+      "hit@3": 0.75,
+      "hit@5": 0.75,
+      "mrr": 0.625,
       "n": 4
     },
     "integracao": {
-      "hit@1": 0.25,
-      "hit@3": 0.75,
+      "hit@1": 0.75,
+      "hit@3": 1.0,
       "hit@5": 1.0,
-      "mrr": 0.55,
+      "mrr": 0.8333,
       "n": 4
     },
     "padrao": {
-      "hit@1": 0.4,
-      "hit@3": 0.6,
-      "hit@5": 0.6,
-      "mrr": 0.4667,
-      "n": 5
+      "hit@1": 0.697,
+      "hit@3": 0.8788,
+      "hit@5": 0.9091,
+      "mrr": 0.7788,
+      "n": 33
     },
     "solucao": {
       "hit@1": 0.6667,
-      "hit@3": 1.0,
+      "hit@3": 0.8889,
       "hit@5": 1.0,
-      "mrr": 0.8056,
-      "n": 6
+      "mrr": 0.7815,
+      "n": 9
     }
   },
   "validacao": {
-    "total": 25,
+    "total": 56,
     "tipos": {
-      "padrao": 5,
-      "solucao": 6,
+      "padrao": 33,
+      "solucao": 9,
       "integracao": 4,
       "fluxo": 4,
       "fabrica": 6
@@ -82,18 +82,18 @@
       "hit": false,
       "hit_primario": false,
       "top_k_arquivos": [
-        "cortejo-prd.md",
         "erros-e-solucoes.md",
-        "cortejo-prd.md",
-        "cortejo-prd.md",
-        "cortejo-prd.md"
+        "lashmatch-mercadopago-assinatura.md",
+        "erp-postgres-schema.md",
+        "excluir-conta-app-expo-padrao.md",
+        "whatsapp-salao-expo-padrao.md"
       ],
       "top_k_similaridade": [
-        0.482,
-        0.458,
-        0.45,
-        0.436,
-        0.409
+        0.04,
+        0.04,
+        0.037,
+        0.036,
+        0.035
       ]
     },
     {
@@ -110,23 +110,23 @@
         "firebase-setup-patterns.md"
       ],
       "revisar": true,
-      "rank": 3,
+      "rank": 2,
       "rank_primario": null,
       "hit": true,
       "hit_primario": false,
       "top_k_arquivos": [
-        "report-baseline.md",
         "padroes-fabrica.md",
         "firebase-setup-patterns.md",
-        "lashmatch-prd.md",
-        "whatsapp-salao-expo-padrao.md"
+        "whatsapp-salao-expo-padrao.md",
+        "cloud-functions-patterns.md",
+        "arquitetura-fabrica-ia.md"
       ],
       "top_k_similaridade": [
-        0.784,
-        0.657,
-        0.636,
-        0.633,
-        0.624
+        0.041,
+        0.041,
+        0.034,
+        0.032,
+        0.029
       ]
     },
     {
@@ -139,23 +139,23 @@
         "erros-e-solucoes.md"
       ],
       "revisar": false,
-      "rank": 3,
-      "rank_primario": 3,
+      "rank": 1,
+      "rank_primario": 1,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "cortejo-prd.md",
-        "decisoes.md",
         "erros-e-solucoes.md",
+        "decisoes.md",
         "cortejo-prd.md",
-        "mercadopago-integration.md"
+        "setmatch-prd.md",
+        "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.474,
-        0.455,
-        0.426,
-        0.413,
-        0.405
+        0.039,
+        0.039,
+        0.037,
+        0.036,
+        0.035
       ]
     },
     {
@@ -174,17 +174,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "auth-patterns.md",
-        "whatsapp-salao-expo-padrao.md",
         "auth-patterns.md",
-        "whatsapp-salao-expo-padrao.md",
-        "auth-patterns.md"
+        "erp-auth-login.md",
+        "erp-auth-login.md",
+        "erp-auth-login.md"
       ],
       "top_k_similaridade": [
-        0.528,
-        0.502,
-        0.489,
-        0.481,
-        0.471
+        0.041,
+        0.039,
+        0.035,
+        0.034,
+        0.033
       ]
     },
     {
@@ -197,23 +197,23 @@
         "auth-patterns.md"
       ],
       "revisar": false,
-      "rank": 1,
-      "rank_primario": 1,
+      "rank": 2,
+      "rank_primario": 2,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "auth-patterns.md",
         "decisoes.md",
         "auth-patterns.md",
-        "whatsapp-salao-expo-padrao.md",
-        "erros-e-solucoes.md"
+        "auth-patterns.md",
+        "erros-e-solucoes.md",
+        "expo-router-navegacao.md"
       ],
       "top_k_similaridade": [
-        0.615,
-        0.605,
-        0.573,
-        0.516,
-        0.515
+        0.04,
+        0.039,
+        0.039,
+        0.038,
+        0.036
       ]
     },
     {
@@ -238,11 +238,11 @@
         "auth-patterns.md"
       ],
       "top_k_similaridade": [
-        0.707,
-        0.663,
-        0.653,
-        0.553,
-        0.541
+        0.041,
+        0.04,
+        0.039,
+        0.038,
+        0.038
       ]
     },
     {
@@ -255,23 +255,23 @@
         "whatsapp-business-api.md"
       ],
       "revisar": false,
-      "rank": 2,
-      "rank_primario": 2,
+      "rank": 1,
+      "rank_primario": 1,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "decisoes.md",
         "whatsapp-business-api.md",
-        "modulo-ajuda-suporte-expo.md",
-        "lashmatch-prd.md",
-        "whatsapp-business-api.md"
+        "whatsapp-business-api.md",
+        "whatsapp-business-api.md",
+        "decisoes.md",
+        "whatsapp-salao-expo-padrao.md"
       ],
       "top_k_similaridade": [
-        0.656,
-        0.632,
-        0.624,
-        0.611,
-        0.609
+        0.039,
+        0.039,
+        0.038,
+        0.037,
+        0.037
       ]
     },
     {
@@ -291,16 +291,16 @@
       "top_k_arquivos": [
         "erros-e-solucoes.md",
         "erros-e-solucoes.md",
-        "decisoes.md",
         "erros-e-solucoes.md",
-        "whatsapp-business-api.md"
+        "decisoes.md",
+        "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.613,
-        0.592,
-        0.591,
-        0.586,
-        0.58
+        0.04,
+        0.039,
+        0.039,
+        0.037,
+        0.037
       ]
     },
     {
@@ -324,16 +324,16 @@
       "top_k_arquivos": [
         "whatsapp-salao-expo-padrao.md",
         "whatsapp-salao-expo-padrao.md",
-        "whatsapp-business-api.md",
         "whatsapp-salao-expo-padrao.md",
+        "decisoes.md",
         "whatsapp-salao-expo-padrao.md"
       ],
       "top_k_similaridade": [
-        0.689,
-        0.657,
-        0.652,
-        0.632,
-        0.632
+        0.039,
+        0.039,
+        0.037,
+        0.035,
+        0.035
       ]
     },
     {
@@ -346,23 +346,23 @@
         "mercadopago-integration.md"
       ],
       "revisar": false,
-      "rank": 2,
-      "rank_primario": 2,
+      "rank": 3,
+      "rank_primario": 3,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "cortejo-prd.md",
-        "mercadopago-integration.md",
         "mercadopago-assinatura-ota-padroes.md",
-        "lashmatch-modulos-assinatura-jun2026.md",
-        "lashmatch-prd.md"
+        "lashmatch-mercadopago-assinatura.md",
+        "mercadopago-integration.md",
+        "mercadopago-integration.md",
+        "mercadopago-assinatura-ota-padroes.md"
       ],
       "top_k_similaridade": [
-        0.574,
-        0.55,
-        0.549,
-        0.505,
-        0.493
+        0.039,
+        0.038,
+        0.037,
+        0.036,
+        0.036
       ]
     },
     {
@@ -379,23 +379,23 @@
         "cloud-functions-patterns.md"
       ],
       "revisar": true,
-      "rank": 5,
-      "rank_primario": 5,
+      "rank": 1,
+      "rank_primario": 1,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "outros.md",
+        "mercadopago-integration.md",
+        "mercadopago-integration.md",
         "cortejo-prd.md",
-        "lashmatch-prd.md",
-        "report-baseline.md",
-        "mercadopago-integration.md"
+        "mercadopago-integration.md",
+        "mercadopago-assinatura-ota-padroes.md"
       ],
       "top_k_similaridade": [
-        0.631,
-        0.602,
-        0.59,
-        0.557,
-        0.549
+        0.039,
+        0.039,
+        0.037,
+        0.037,
+        0.036
       ]
     },
     {
@@ -408,23 +408,23 @@
         "erros-e-solucoes.md"
       ],
       "revisar": false,
-      "rank": 2,
-      "rank_primario": 2,
+      "rank": 3,
+      "rank_primario": 3,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
         "mercadopago-assinatura-ota-padroes.md",
-        "erros-e-solucoes.md",
         "mercadopago-integration.md",
         "erros-e-solucoes.md",
-        "mercadopago-assinatura-ota-padroes.md"
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.673,
-        0.667,
-        0.658,
-        0.613,
-        0.611
+        0.04,
+        0.039,
+        0.038,
+        0.037,
+        0.037
       ]
     },
     {
@@ -442,18 +442,18 @@
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "checklists-deploy.md",
+        "firebase-deploy-checklist-padrao.md",
         "cloud-functions-patterns.md",
-        "arquitetura-fabrica-ia.md",
         "cloud-functions-patterns.md",
-        "arquitetura-fabrica-ia.md"
+        "whatsapp-salao-expo-padrao.md",
+        "cloud-functions-patterns.md"
       ],
       "top_k_similaridade": [
-        0.688,
-        0.674,
-        0.605,
-        0.599,
-        0.597
+        0.04,
+        0.04,
+        0.039,
+        0.038,
+        0.037
       ]
     },
     {
@@ -466,23 +466,23 @@
         "firebase-deploy-checklist-padrao.md"
       ],
       "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
       "top_k_arquivos": [
+        "firebase-deploy-checklist-padrao.md",
+        "firebase-deploy-checklist-padrao.md",
         "arquitetura-fabrica-ia.md",
         "arquitetura-fabrica-ia.md",
-        "report-baseline.md",
-        "mcps-cursor-padrao.md",
         "arquitetura-fabrica-ia.md"
       ],
       "top_k_similaridade": [
-        0.763,
-        0.673,
-        0.618,
-        0.591,
-        0.558
+        0.04,
+        0.04,
+        0.04,
+        0.039,
+        0.037
       ]
     },
     {
@@ -500,18 +500,18 @@
       "hit": false,
       "hit_primario": false,
       "top_k_arquivos": [
+        "lashmatch-web-plataforma.md",
+        "expo-router-navegacao.md",
         "expo-router-navegacao.md",
         "lashmatch-web-plataforma.md",
-        "report-baseline.md",
-        "cortejo-modulos-jun2026-padrao.md",
-        "lashmatch-web-plataforma.md"
+        "expo-router-navegacao.md"
       ],
       "top_k_similaridade": [
-        0.791,
-        0.757,
-        0.714,
-        0.711,
-        0.673
+        0.04,
+        0.038,
+        0.038,
+        0.038,
+        0.037
       ]
     },
     {
@@ -531,16 +531,16 @@
       "top_k_arquivos": [
         "arquitetura-fabrica-ia.md",
         "arquitetura-fabrica-ia.md",
-        "erros-e-solucoes.md",
         "arquitetura-fabrica-ia.md",
-        "arquitetura-fabrica-ia.md"
+        "arquitetura-fabrica-ia.md",
+        "mcps-cursor-padrao.md"
       ],
       "top_k_similaridade": [
-        0.537,
-        0.527,
-        0.501,
-        0.485,
-        0.482
+        0.04,
+        0.039,
+        0.039,
+        0.035,
+        0.035
       ]
     },
     {
@@ -553,23 +553,23 @@
         "rag-protocolo-antes-de-codar.md"
       ],
       "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
+      "rank": 2,
+      "rank_primario": 2,
+      "hit": true,
+      "hit_primario": true,
       "top_k_arquivos": [
-        "decisoes.md",
-        "decisoes.md",
         "erros-e-solucoes.md",
-        "decisoes.md",
-        "decisoes.md"
+        "rag-protocolo-antes-de-codar.md",
+        "arquitetura-fabrica-ia.md",
+        "rag-protocolo-antes-de-codar.md",
+        "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.426,
-        0.411,
-        0.39,
-        0.354,
-        0.341
+        0.038,
+        0.037,
+        0.036,
+        0.033,
+        0.033
       ]
     },
     {
@@ -582,23 +582,23 @@
         "arquitetura-fabrica-ia.md"
       ],
       "revisar": false,
-      "rank": 1,
-      "rank_primario": 1,
-      "hit": true,
-      "hit_primario": true,
+      "rank": null,
+      "rank_primario": null,
+      "hit": false,
+      "hit_primario": false,
       "top_k_arquivos": [
-        "arquitetura-fabrica-ia.md",
-        "whatsapp-salao-expo-padrao.md",
-        "erros-e-solucoes.md",
-        "auth-patterns.md",
-        "auth-patterns.md"
+        "decisoes.md",
+        "decisoes.md",
+        "guia-completo-usuario-fabrica.md",
+        "guia-completo-usuario-fabrica.md",
+        "guia-completo-usuario-fabrica.md"
       ],
       "top_k_similaridade": [
-        0.422,
-        0.415,
-        0.414,
-        0.413,
-        0.407
+        0.039,
+        0.038,
+        0.038,
+        0.038,
+        0.038
       ]
     },
     {
@@ -611,23 +611,23 @@
         "erros-e-solucoes.md"
       ],
       "revisar": false,
-      "rank": 1,
-      "rank_primario": 1,
+      "rank": 2,
+      "rank_primario": 2,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
+        "decisoes.md",
         "erros-e-solucoes.md",
+        "decisoes.md",
         "arquitetura-fabrica-ia.md",
-        "spring-backend.md",
-        "erros-e-solucoes.md",
-        "arquitetura-fabrica-ia.md"
+        "guia-completo-usuario-fabrica.md"
       ],
       "top_k_similaridade": [
-        0.515,
-        0.487,
-        0.446,
-        0.437,
-        0.433
+        0.04,
+        0.039,
+        0.038,
+        0.038,
+        0.035
       ]
     },
     {
@@ -640,23 +640,23 @@
         "mcps-cursor-padrao.md"
       ],
       "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
+      "rank": 3,
+      "rank_primario": 3,
+      "hit": true,
+      "hit_primario": true,
       "top_k_arquivos": [
+        "mercadopago-integration.md",
         "decisoes.md",
-        "decisoes.md",
-        "decisoes.md",
-        "decisoes.md",
-        "firestore-schemas.md"
+        "mcps-cursor-padrao.md",
+        "lashmatch-revenuecat-assinatura.md",
+        "lashmatch-modulos-assinatura-jun2026.md"
       ],
       "top_k_similaridade": [
-        0.595,
-        0.58,
-        0.558,
-        0.535,
-        0.533
+        0.038,
+        0.034,
+        0.033,
+        0.033,
+        0.032
       ]
     },
     {
@@ -675,17 +675,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "erros-e-solucoes.md",
-        "cloud-functions-patterns.md",
-        "whatsapp-business-api.md",
-        "outros.md",
-        "outros.md"
+        "rag-protocolo-antes-de-codar.md",
+        "decisoes.md",
+        "rag-protocolo-antes-de-codar.md",
+        "agenda-salao-expo-padrao.md"
       ],
       "top_k_similaridade": [
-        0.554,
-        0.504,
-        0.469,
-        0.468,
-        0.455
+        0.041,
+        0.035,
+        0.033,
+        0.031,
+        0.026
       ]
     },
     {
@@ -704,17 +704,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "arquitetura-fabrica-ia.md",
-        "firestore-schemas.md",
-        "context-api-estado.md",
-        "sinaflor-prd.md",
-        "features-pendentes.md"
+        "arquitetura-fabrica-ia.md",
+        "guia-completo-usuario-fabrica.md",
+        "arquitetura-fabrica-ia.md",
+        "arquitetura-fabrica-ia.md"
       ],
       "top_k_similaridade": [
-        0.506,
-        0.503,
-        0.471,
-        0.457,
-        0.456
+        0.04,
+        0.039,
+        0.038,
+        0.036,
+        0.031
       ]
     },
     {
@@ -727,23 +727,23 @@
         "cadastro-clientes-salao-expo.md"
       ],
       "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
       "top_k_arquivos": [
+        "cadastro-clientes-salao-expo.md",
         "erros-e-solucoes.md",
-        "erros-e-solucoes.md",
-        "cortejo-prd.md",
-        "erros-e-solucoes.md",
-        "decisoes.md"
+        "decisoes.md",
+        "mercadopago-assinatura-ota-padroes.md",
+        "cortejo-schemas.md"
       ],
       "top_k_similaridade": [
-        0.578,
-        0.566,
-        0.543,
-        0.517,
-        0.472
+        0.039,
+        0.037,
+        0.036,
+        0.033,
+        0.033
       ]
     },
     {
@@ -762,17 +762,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "arquitetura-fabrica-ia.md",
-        "erros-e-solucoes.md",
-        "decisoes.md",
         "arquitetura-fabrica-ia.md",
-        "report-baseline.md"
+        "mcps-cursor-padrao.md",
+        "arquitetura-fabrica-ia.md",
+        "mcps-cursor-padrao.md"
       ],
       "top_k_similaridade": [
-        0.517,
-        0.498,
-        0.494,
-        0.482,
-        0.473
+        0.041,
+        0.039,
+        0.036,
+        0.035,
+        0.033
       ]
     },
     {
@@ -791,17 +791,918 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "arquitetura-fabrica-ia.md",
-        "arquitetura-fabrica-ia.md",
-        "checklists-deploy.md",
-        "erros-e-solucoes.md",
-        "firebase-setup-patterns.md"
+        "firebase-deploy-checklist-padrao.md",
+        "expo-router-navegacao.md",
+        "firebase-setup-patterns.md",
+        "checklists-deploy.md"
       ],
       "top_k_similaridade": [
-        0.7,
-        0.674,
-        0.626,
-        0.598,
-        0.583
+        0.039,
+        0.038,
+        0.037,
+        0.036,
+        0.036
+      ]
+    },
+    {
+      "id": "erp-auth-01",
+      "query": "como faz login multi tenant jwt erp",
+      "tipo": "padrao",
+      "esperado_nota": "erp-auth-login.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-auth-login.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-auth-login.md",
+        "erp-auth-login.md",
+        "erp-multitenancy-spring.md",
+        "erp-auth-login.md",
+        "erp-auth-login.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.04,
+        0.038,
+        0.038,
+        0.037
+      ]
+    },
+    {
+      "id": "erp-auth-02",
+      "query": "onde fica a tabela de usuario tenant ou master",
+      "tipo": "padrao",
+      "esperado_nota": "erp-auth-login.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-auth-login.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-auth-login.md",
+        "erp-postgres-schema.md",
+        "erp-auth-login.md",
+        "erp-postgres-schema.md",
+        "erp-multitenancy-spring.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.038,
+        0.037,
+        0.036,
+        0.036
+      ]
+    },
+    {
+      "id": "erp-auth-03",
+      "query": "como o tenant entra no token jwt",
+      "tipo": "padrao",
+      "esperado_nota": "erp-auth-login.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-auth-login.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-auth-login.md",
+        "erp-auth-login.md",
+        "erp-angular-estrutura.md",
+        "erp-auth-login.md",
+        "erp-auth-login.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.039,
+        0.038,
+        0.038,
+        0.038
+      ]
+    },
+    {
+      "id": "erp-auth-04",
+      "query": "recuperar senha esqueci senha seguro",
+      "tipo": "solucao",
+      "esperado_nota": "erp-auth-login.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-auth-login.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-auth-login.md",
+        "erp-auth-login.md",
+        "setmatch-prd.md",
+        "erp-auth-login.md",
+        "erp-auth-login.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.038,
+        0.037,
+        0.034,
+        0.034
+      ]
+    },
+    {
+      "id": "erp-auth-05",
+      "query": "lembrar-me refresh token quanto tempo",
+      "tipo": "padrao",
+      "esperado_nota": "erp-auth-login.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-auth-login.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-auth-login.md",
+        "erp-auth-login.md",
+        "erp-auth-login.md",
+        "erp-auth-login.md",
+        "erp-auth-login.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.037,
+        0.035,
+        0.035,
+        0.033
+      ]
+    },
+    {
+      "id": "erp-auth-06",
+      "query": "ordem filtro jwt tenant spring security",
+      "tipo": "solucao",
+      "esperado_nota": "erp-auth-login.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-auth-login.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-auth-login.md",
+        "erp-auth-login.md",
+        "erp-auth-login.md",
+        "erp-auth-login.md",
+        "erp-multitenancy-spring.md"
+      ],
+      "top_k_similaridade": [
+        0.039,
+        0.039,
+        0.038,
+        0.037,
+        0.037
+      ]
+    },
+    {
+      "id": "sinaflor-be-01",
+      "query": "sinaflor backend java 11 spring boot 2.2 regras legado",
+      "tipo": "padrao",
+      "esperado_nota": "spring-backend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "spring-backend.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "spring-backend.md",
+        "INDEX.md",
+        "spring-backend.md",
+        "erp-spring-camadas.md",
+        "testes-backend.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.04,
+        0.039,
+        0.038,
+        0.037
+      ]
+    },
+    {
+      "id": "sinaflor-be-02",
+      "query": "jhipster entity repository service sinaflor padrao",
+      "tipo": "padrao",
+      "esperado_nota": "spring-backend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "spring-backend.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "spring-backend.md",
+        "erp-spring-camadas.md",
+        "mapeamento-frontend-backend.md",
+        "regras-gerais.md",
+        "testes-backend.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.033,
+        0.032,
+        0.032,
+        0.031
+      ]
+    },
+    {
+      "id": "sinaflor-be-03",
+      "query": "jasper reports backend sinaflor como gerar pdf",
+      "tipo": "padrao",
+      "esperado_nota": "spring-backend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "spring-backend.md"
+      ],
+      "revisar": false,
+      "rank": 2,
+      "rank_primario": 2,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "mapeamento-frontend-backend.md",
+        "spring-backend.md",
+        "testes-backend.md",
+        "INDEX.md",
+        "spring-backend.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.04,
+        0.038,
+        0.038,
+        0.038
+      ]
+    },
+    {
+      "id": "sinaflor-ng-01",
+      "query": "sinaflor angular 7 primeng modulo legado",
+      "tipo": "padrao",
+      "esperado_nota": "angular-frontend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "angular-frontend.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "angular-frontend.md",
+        "sinaflor-prd.md",
+        "regras-gerais.md",
+        "INDEX.md",
+        "angular-frontend.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.039,
+        0.039,
+        0.038,
+        0.038
+      ]
+    },
+    {
+      "id": "sinaflor-ng-02",
+      "query": "rxjs observable subscribe sinaflor frontend padrao",
+      "tipo": "padrao",
+      "esperado_nota": "angular-frontend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "angular-frontend.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "angular-frontend.md",
+        "mapeamento-frontend-backend.md",
+        "spring-backend.md",
+        "testes-backend.md",
+        "testes-frontend.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.04,
+        0.039,
+        0.038,
+        0.038
+      ]
+    },
+    {
+      "id": "sinaflor-ng-03",
+      "query": "http interceptor angular 7 sinaflor autenticacao",
+      "tipo": "padrao",
+      "esperado_nota": "angular-frontend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "angular-frontend.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "angular-frontend.md",
+        "angular-frontend.md",
+        "sinaflor-prd.md",
+        "testes-frontend.md",
+        "spring-backend.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.039,
+        0.039,
+        0.039,
+        0.037
+      ]
+    },
+    {
+      "id": "sinaflor-test-be-01",
+      "query": "teste unitario junit 5 mockito sinaflor sem spring context",
+      "tipo": "padrao",
+      "esperado_nota": "testes-backend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "testes-backend.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "testes-backend.md",
+        "testes-backend.md",
+        "INDEX.md",
+        "testes-frontend.md",
+        "spring-backend.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.04,
+        0.037,
+        0.037,
+        0.037
+      ]
+    },
+    {
+      "id": "sinaflor-test-be-02",
+      "query": "mockito when thenreturn repository sinaflor legado",
+      "tipo": "padrao",
+      "esperado_nota": "testes-backend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "testes-backend.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "testes-backend.md",
+        "regras-gerais.md",
+        "spring-backend.md",
+        "mapeamento-frontend-backend.md",
+        "sinaflor-prd.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.037,
+        0.037,
+        0.036,
+        0.036
+      ]
+    },
+    {
+      "id": "sinaflor-test-be-03",
+      "query": "erp testcontainers postgres spring boot teste integracao",
+      "tipo": "padrao",
+      "esperado_nota": "erp-testes-backend.md",
+      "aceitaveis": [
+        "erp-testes-backend.md"
+      ],
+      "notas_alvo": [
+        "erp-testes-backend.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-testes-backend.md",
+        "erp-testes-backend.md",
+        "erp-testes-backend.md",
+        "erp-testes-backend.md",
+        "erp-testes-backend.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.04,
+        0.038,
+        0.036,
+        0.036
+      ]
+    },
+    {
+      "id": "sinaflor-test-fe-01",
+      "query": "jasmine karma teste componente angular 7 sinaflor",
+      "tipo": "padrao",
+      "esperado_nota": "testes-frontend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "testes-frontend.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "testes-frontend.md",
+        "testes-frontend.md",
+        "INDEX.md",
+        "angular-frontend.md",
+        "erp-angular-estrutura.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.04,
+        0.038,
+        0.036,
+        0.036
+      ]
+    },
+    {
+      "id": "sinaflor-test-fe-02",
+      "query": "testbed configuretestingmodule sinaflor frontend",
+      "tipo": "padrao",
+      "esperado_nota": "testes-frontend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "testes-frontend.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "testes-frontend.md",
+        "testes-backend.md",
+        "testes-frontend.md",
+        "testes-frontend.md",
+        "angular-frontend.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.04,
+        0.039,
+        0.038,
+        0.038
+      ]
+    },
+    {
+      "id": "sinaflor-test-fe-03",
+      "query": "debug element nativeelement query sinaflor spec",
+      "tipo": "padrao",
+      "esperado_nota": "testes-frontend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "testes-frontend.md"
+      ],
+      "revisar": false,
+      "rank": 3,
+      "rank_primario": 3,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "testes-backend.md",
+        "sinaflor-prd.md",
+        "testes-frontend.md",
+        "angular-frontend.md",
+        "INDEX.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.039,
+        0.039,
+        0.039,
+        0.039
+      ]
+    },
+    {
+      "id": "sinaflor-map-01",
+      "query": "service angular chama qual endpoint resource sinaflor",
+      "tipo": "padrao",
+      "esperado_nota": "mapeamento-frontend-backend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "mapeamento-frontend-backend.md"
+      ],
+      "revisar": false,
+      "rank": null,
+      "rank_primario": null,
+      "hit": false,
+      "hit_primario": false,
+      "top_k_arquivos": [
+        "sinaflor-prd.md",
+        "erp-angular-estrutura.md",
+        "sinaflor-prd.md",
+        "angular-frontend.md",
+        "erp-angular-estrutura.md"
+      ],
+      "top_k_similaridade": [
+        0.036,
+        0.035,
+        0.034,
+        0.034,
+        0.034
+      ]
+    },
+    {
+      "id": "sinaflor-map-02",
+      "query": "mapeamento frontend backend ibama sinaflor2 monorepo",
+      "tipo": "padrao",
+      "esperado_nota": "mapeamento-frontend-backend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "mapeamento-frontend-backend.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "mapeamento-frontend-backend.md",
+        "sinaflor-prd.md",
+        "angular-frontend.md",
+        "INDEX.md",
+        "spring-backend.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.04,
+        0.039,
+        0.039,
+        0.038
+      ]
+    },
+    {
+      "id": "sinaflor-map-03",
+      "query": "dto request response entre angular e spring sinaflor",
+      "tipo": "padrao",
+      "esperado_nota": "mapeamento-frontend-backend.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "mapeamento-frontend-backend.md"
+      ],
+      "revisar": false,
+      "rank": null,
+      "rank_primario": null,
+      "hit": false,
+      "hit_primario": false,
+      "top_k_arquivos": [
+        "sinaflor-prd.md",
+        "erp-stack.md",
+        "angular-frontend.md",
+        "erp-angular-estrutura.md",
+        "testes-frontend.md"
+      ],
+      "top_k_similaridade": [
+        0.038,
+        0.037,
+        0.036,
+        0.036,
+        0.035
+      ]
+    },
+    {
+      "id": "sinaflor-regras-01",
+      "query": "sinaflor legado o que nao fazer modernizar",
+      "tipo": "padrao",
+      "esperado_nota": "regras-gerais.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "regras-gerais.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "regras-gerais.md",
+        "testes-backend.md",
+        "INDEX.md",
+        "mapeamento-frontend-backend.md",
+        "angular-frontend.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.039,
+        0.039,
+        0.039,
+        0.038
+      ]
+    },
+    {
+      "id": "sinaflor-regras-02",
+      "query": "regra fabrica projeto sinaflor2 angular 7 java 11",
+      "tipo": "padrao",
+      "esperado_nota": "regras-gerais.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "regras-gerais.md"
+      ],
+      "revisar": false,
+      "rank": 5,
+      "rank_primario": 5,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "angular-frontend.md",
+        "angular-frontend.md",
+        "INDEX.md",
+        "spring-backend.md",
+        "regras-gerais.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.039,
+        0.038,
+        0.038,
+        0.038
+      ]
+    },
+    {
+      "id": "sinaflor-regras-03",
+      "query": "posso usar java 17 records no sinaflor",
+      "tipo": "solucao",
+      "esperado_nota": "regras-gerais.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "regras-gerais.md"
+      ],
+      "revisar": false,
+      "rank": 5,
+      "rank_primario": 5,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "spring-backend.md",
+        "testes-backend.md",
+        "testes-frontend.md",
+        "mapeamento-frontend-backend.md",
+        "regras-gerais.md"
+      ],
+      "top_k_similaridade": [
+        0.039,
+        0.039,
+        0.037,
+        0.036,
+        0.036
+      ]
+    },
+    {
+      "id": "erp-cam-01",
+      "query": "controller service repository dto erp onde fica regra",
+      "tipo": "padrao",
+      "esperado_nota": "erp-spring-camadas.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-spring-camadas.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-spring-camadas.md",
+        "erp-spring-camadas.md",
+        "erp-spring-camadas.md",
+        "erp-spring-camadas.md",
+        "erp-transacao-dominio.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.04,
+        0.039,
+        0.037,
+        0.036
+      ]
+    },
+    {
+      "id": "erp-cam-02",
+      "query": "retornar entidade jpa na api erp",
+      "tipo": "padrao",
+      "esperado_nota": "erp-spring-camadas.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-spring-camadas.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-spring-camadas.md",
+        "erp-auth-login.md",
+        "erp-auth-login.md",
+        "decisoes.md",
+        "erp-spring-camadas.md"
+      ],
+      "top_k_similaridade": [
+        0.032,
+        0.025,
+        0.024,
+        0.024,
+        0.023
+      ]
+    },
+    {
+      "id": "erp-mt-04",
+      "query": "hibernate troca schema tenant threadlocal",
+      "tipo": "padrao",
+      "esperado_nota": "erp-multitenancy-spring.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-multitenancy-spring.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-multitenancy-spring.md",
+        "erp-multitenancy-spring.md",
+        "erp-multitenancy-spring.md",
+        "erp-multitenancy-spring.md",
+        "erp-multitenancy-spring.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.04,
+        0.04,
+        0.038,
+        0.037
+      ]
+    },
+    {
+      "id": "erp-ng-01",
+      "query": "angular 21 standalone signals erp",
+      "tipo": "padrao",
+      "esperado_nota": "erp-angular-estrutura.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-angular-estrutura.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-angular-estrutura.md",
+        "erp-angular-estrutura.md",
+        "erp-angular-estrutura.md",
+        "erp-angular-estrutura.md",
+        "angular-frontend.md"
+      ],
+      "top_k_similaridade": [
+        0.041,
+        0.04,
+        0.039,
+        0.039,
+        0.038
+      ]
+    },
+    {
+      "id": "erp-ng-02",
+      "query": "anexar jwt interceptor angular erp",
+      "tipo": "padrao",
+      "esperado_nota": "erp-angular-estrutura.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-angular-estrutura.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-angular-estrutura.md",
+        "erp-stack.md",
+        "erp-stack.md",
+        "erp-angular-estrutura.md",
+        "sinaflor-prd.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.038,
+        0.038,
+        0.038,
+        0.035
+      ]
+    },
+    {
+      "id": "erp-stack-01",
+      "query": "qual stack java spring postgres angular erp",
+      "tipo": "padrao",
+      "esperado_nota": "erp-stack.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-stack.md"
+      ],
+      "revisar": false,
+      "rank": 3,
+      "rank_primario": 3,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-angular-estrutura.md",
+        "sinaflor-prd.md",
+        "erp-stack.md",
+        "erp-stack.md",
+        "erp-angular-estrutura.md"
+      ],
+      "top_k_similaridade": [
+        0.038,
+        0.038,
+        0.037,
+        0.037,
+        0.036
+      ]
+    },
+    {
+      "id": "erp-stack-02",
+      "query": "erp usa firestore ou postgres",
+      "tipo": "padrao",
+      "esperado_nota": "erp-stack.md",
+      "aceitaveis": [],
+      "notas_alvo": [
+        "erp-stack.md"
+      ],
+      "revisar": false,
+      "rank": 3,
+      "rank_primario": 3,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "erp-aws-rds.md",
+        "erp-postgres-schema.md",
+        "erp-stack.md",
+        "erp-aws-rds.md",
+        "erp-multitenancy-spring.md"
+      ],
+      "top_k_similaridade": [
+        0.04,
+        0.039,
+        0.039,
+        0.037,
+        0.037
       ]
     }
   ]

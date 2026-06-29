@@ -23,3 +23,34 @@
 {"id": "gs-023", "query": "cadastro de clientes do salão regra isMember firestore", "esperado_nota": "cadastro-clientes-salao-expo.md", "esperado_secao": "Schema + regras Firestore", "tipo": "padrao", "revisar": false}
 {"id": "gs-024", "query": "diferença rag_buscar buscar_historico buscar_solucao", "esperado_nota": "arquitetura-fabrica-ia.md", "esperado_secao": "Memória: Obsidian + RAG", "tipo": "fabrica", "revisar": false}
 {"id": "gs-025", "query": "deploy firebase no projeto errado como evitar", "esperado_nota": "arquitetura-fabrica-ia.md", "esperado_secao": "Falhas comuns e como a fábrica evita", "tipo": "fabrica", "revisar": false}
+{"id":"erp-auth-01","query":"como faz login multi tenant jwt erp","esperado_nota":"erp-auth-login.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"erp-auth-02","query":"onde fica a tabela de usuario tenant ou master","esperado_nota":"erp-auth-login.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"erp-auth-03","query":"como o tenant entra no token jwt","esperado_nota":"erp-auth-login.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"erp-auth-04","query":"recuperar senha esqueci senha seguro","esperado_nota":"erp-auth-login.md","esperado_secao":null,"tipo":"solucao"}
+{"id":"erp-auth-05","query":"lembrar-me refresh token quanto tempo","esperado_nota":"erp-auth-login.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"erp-auth-06","query":"ordem filtro jwt tenant spring security","esperado_nota":"erp-auth-login.md","esperado_secao":null,"tipo":"solucao"}
+{"id":"sinaflor-be-01","query":"sinaflor backend java 11 spring boot 2.2 regras legado","esperado_nota":"spring-backend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-be-02","query":"jhipster entity repository service sinaflor padrao","esperado_nota":"spring-backend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-be-03","query":"jasper reports backend sinaflor como gerar pdf","esperado_nota":"spring-backend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-ng-01","query":"sinaflor angular 7 primeng modulo legado","esperado_nota":"angular-frontend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-ng-02","query":"rxjs observable subscribe sinaflor frontend padrao","esperado_nota":"angular-frontend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-ng-03","query":"http interceptor angular 7 sinaflor autenticacao","esperado_nota":"angular-frontend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-test-be-01","query":"teste unitario junit 5 mockito sinaflor sem spring context","esperado_nota":"testes-backend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-test-be-02","query":"mockito when thenreturn repository sinaflor legado","esperado_nota":"testes-backend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-test-be-03","query":"erp testcontainers postgres spring boot teste integracao","esperado_nota":"erp-testes-backend.md","esperado_secao":null,"tipo":"padrao","aceitaveis":["erp-testes-backend.md"]}
+{"id":"sinaflor-test-fe-01","query":"jasmine karma teste componente angular 7 sinaflor","esperado_nota":"testes-frontend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-test-fe-02","query":"testbed configuretestingmodule sinaflor frontend","esperado_nota":"testes-frontend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-test-fe-03","query":"debug element nativeelement query sinaflor spec","esperado_nota":"testes-frontend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-map-01","query":"service angular chama qual endpoint resource sinaflor","esperado_nota":"mapeamento-frontend-backend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-map-02","query":"mapeamento frontend backend ibama sinaflor2 monorepo","esperado_nota":"mapeamento-frontend-backend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-map-03","query":"dto request response entre angular e spring sinaflor","esperado_nota":"mapeamento-frontend-backend.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-regras-01","query":"sinaflor legado o que nao fazer modernizar","esperado_nota":"regras-gerais.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-regras-02","query":"regra fabrica projeto sinaflor2 angular 7 java 11","esperado_nota":"regras-gerais.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"sinaflor-regras-03","query":"posso usar java 17 records no sinaflor","esperado_nota":"regras-gerais.md","esperado_secao":null,"tipo":"solucao"}
+{"id":"erp-cam-01","query":"controller service repository dto erp onde fica regra","esperado_nota":"erp-spring-camadas.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"erp-cam-02","query":"retornar entidade jpa na api erp","esperado_nota":"erp-spring-camadas.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"erp-mt-04","query":"hibernate troca schema tenant threadlocal","esperado_nota":"erp-multitenancy-spring.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"erp-ng-01","query":"angular 21 standalone signals erp","esperado_nota":"erp-angular-estrutura.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"erp-ng-02","query":"anexar jwt interceptor angular erp","esperado_nota":"erp-angular-estrutura.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"erp-stack-01","query":"qual stack java spring postgres angular erp","esperado_nota":"erp-stack.md","esperado_secao":null,"tipo":"padrao"}
+{"id":"erp-stack-02","query":"erp usa firestore ou postgres","esperado_nota":"erp-stack.md","esperado_secao":null,"tipo":"padrao"}

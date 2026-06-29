@@ -39,7 +39,11 @@ def should_index(md: Path) -> bool:
         rel = md.relative_to(VAULT_PATH)
     except ValueError:
         return True
-    return "eval" not in rel.parts
+    if "eval" in rel.parts:
+        return False
+    if md.name == "outros.md":
+        return False
+    return True
 
 def chunks(texto, arquivo):
     partes, inicio, idx = [], 0, 0

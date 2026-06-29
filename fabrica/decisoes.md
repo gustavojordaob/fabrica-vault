@@ -662,3 +662,23 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
+
+### 29/06/2026 — fabrica — Limpeza de indice RAG e cobertura ERP/SINAFLOR no eval
+
+- **Decisão:** outros.md (monolito CLAUDE residual, 127 chunks) removido do indice via should_index em indexar_rapido.py (arquivo fica no disco). Golden set expandido de 31 para 56 pares cobrindo ERP e SINAFLOR. Indice usa basename como esperado_nota (nao path). Resultado regua v2: hit@1 66.1%, hit@3 87.5%.
+- **Motivo:** outros.md poluia o top-5 em varios pares (mesmo problema do monolito). Pares novos dao medicao aos dominios ERP e SINAFLOR que estavam sem cobertura. Ganho de +6pp no hit@1 sem tocar nenhuma nota de conhecimento.
+- **Alternativa rejeitada:** Mexer em decisoes.md, indexar_rapido.py (path relativo) e consolidar notas agora — adiado para Ondas 2/3 por risco a buscar_historico e ao conhecimento canonico
+- **Impacto:** Dividas conhecidas e isoladas no plano-consolidacao.md: decisoes.md como log (Onda 2), metadado de dominio + consolidacao G1-G9 (Onda 3), gs-001 schema dominado por PRD.
+- **Quem decidiu:** Ambos
+
+---
+
+### 29/06/2026 — fabrica — Limpeza de indice RAG e cobertura ERP/SINAFLOR no eval
+
+- **Decisão:** outros.md (monolito CLAUDE residual, 127 chunks) removido do indice via should_index em indexar_rapido.py (arquivo fica no disco). Golden set expandido de 31 para 56 pares cobrindo ERP e SINAFLOR. Indice usa basename como esperado_nota (nao path). Resultado regua v2: hit@1 66.1%, hit@3 87.5%.
+- **Motivo:** outros.md poluia o top-5 em varios pares (mesmo problema do monolito). Pares novos dao medicao aos dominios ERP e SINAFLOR que estavam sem cobertura. Ganho de +6pp no hit@1 sem tocar nenhuma nota de conhecimento.
+- **Alternativa rejeitada:** Mexer em decisoes.md, indexar_rapido.py (path relativo) e consolidar notas agora — adiado para Ondas 2/3 por risco a buscar_historico e ao conhecimento canonico
+- **Impacto:** Dividas conhecidas e isoladas no plano-consolidacao.md: decisoes.md como log (Onda 2), metadado de dominio + consolidacao G1-G9 (Onda 3), gs-001 schema dominado por PRD.
+- **Quem decidiu:** Ambos
+
+---
