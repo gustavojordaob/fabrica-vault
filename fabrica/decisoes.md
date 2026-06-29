@@ -652,3 +652,13 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
+
+### 28/06/2026 — ERP — Stack e multi-tenancy do ERP web
+
+- **Decisão:** ERP web sério: Spring Boot + Angular + PostgreSQL. Multi-tenant por SCHEMA (um banco, um schema por cliente + schema master de catálogo). Troca de schema via Hibernate multi-tenancy (MultiTenantConnectionProvider + CurrentTenantIdentifierResolver). Migrations com Flyway orquestrado por schema. Provisionamento de tenant = CREATE SCHEMA + baseline de migrations + registro no master.
+- **Motivo:** ERP transacional sério pede ACID e regra de negócio densa, onde Spring é mais adequado que serverless. Gustavo já domina Spring/Angular (acquirer SIPPE) e ERP por background SAP. Schema-por-tenant dá isolamento forte (modelo mandante/client do SAP) sem o custo operacional de banco-por-tenant (N pools, N backups, migration em N bancos).
+- **Alternativa rejeitada:** Next.js+Supabase (serverless fraco pra transação ERP); banco-por-tenant (custo operacional alto); discriminador tenant_id (isolamento mais fraco)
+- **Impacto:** Define schema, roteamento de conexão e processo de onboarding de cliente. Fábrica vira copiloto de conhecimento (RAG/memória/gate/PR) em vez de linha de montagem, já que scaffold é RN-specific.
+- **Quem decidiu:** Ambos
+
+---
