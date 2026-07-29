@@ -1,0 +1,25 @@
+# Copie para terraform.tfvars e ajuste
+
+# App Runner NAO existe em sa-east-1. Use us-east-1 (ou outra regiao com App Runner).
+aws_region   = "us-east-1"
+project_name = "fabrica"
+image_tag    = "latest"
+
+# 1 vCPU + 4 GB — folga pro MiniLM + Chroma (~US$ 15–30/mês ocioso)
+cpu    = "1024"
+memory = "4096"
+
+ecr_force_delete = true
+
+# Opcional: defina sua chave; senão o Terraform gera
+# rag_api_key = "troque-por-uma-chave-forte"
+
+project_name = "fabrica"
+image_tag    = "latest"
+
+# 1 vCPU + 4 GB — folga pro MiniLM + Chroma (~US$ 15–30/mês ocioso)
+cpu    = "1024"
+memory = "4096"
+
+# Opcional: defina sua chave; senão o Terraform gera
+# rag_api_key = "troque-por-uma-chave-forte"
