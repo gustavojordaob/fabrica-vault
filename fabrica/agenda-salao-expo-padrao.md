@@ -9,7 +9,7 @@ tags:
   - lashmatch
 fonte: implementação Cortejo (jun/2026)
 referencia_repo: cortejo
-atualizado_em: 2026-06-09
+atualizado_em: 2026-07-29
 links:
   - "[[react-native-calendars]]"
   - "[[lashmatch-schemas]]"
@@ -25,7 +25,8 @@ links:
 > 3. Ler **[[react-native-calendars]]** (componente e tema)
 > 4. Ler **[[rag-protocolo-antes-de-codar]]** (nunca implementar calendário às cegas)
 >
-> **Referência de código:** repo `cortejo` — branch main, pasta `components/agenda/`, `utils/timeSlots.ts`, `app/(tabs)/index.tsx`.
+> **Referência de código:** repo `cortejo` — `components/agenda/`, `utils/timeSlots.ts`, `app/(tabs)/index.tsx`.  
+> **LashMatch (jul/2026):** mesma UI dia/mês em `app/(tabs)/agendamentos.tsx` + rota `app/agendamento/[id].tsx`; `slotStepMin` em `usuarios/{uid}`; create público via CF `publicBooking` (rules fechadas).
 
 ---
 
@@ -34,7 +35,7 @@ links:
 Padrão reutilizável para apps de **salão de beleza** com:
 - aba Agenda (calendário + dia + lista)
 - fluxo **Novo agendamento** (cliente → serviço → profissional → data → horários)
-- slots **30 em 30 min** respeitando duração do serviço, profissional e horário do salão
+- slots com **passo configurável** (`salon.slotStepMin`, padrão **30 min**, faixa 5–60) respeitando duração do serviço, profissional e horário do salão
 - cadastro/perfil do salão com campos LashMatch (telefone, endereço ViaCEP)
 
 ---
@@ -52,26 +53,38 @@ Padrão reutilizável para apps de **salão de beleza** com:
 
 ## 1. Layout da aba Agenda (UI)
 
-### Estrutura visual (não usar faixa branca solta)
+### Duas visões (Cortejo jul/2026)
 
-Um **único card** (`agendaBlock`) contém:
-1. Calendário compacto (`AgendaCalendar` com `compact` + `embedded`)
-2. Barra do dia (`dayBar`): data formatada pt-BR + chip **+ Novo** (primary)
-3. Abaixo do card: lista `FlatList` com `flex: 1` (fundo `colors.bg`)
+| Modo | Padrão? | Conteúdo |
+|------|---------|----------|
+| **Dia** (`viewMode: 'day'`) | Sim | `DayStrip` (faixa horizontal de dias) + `DayHourTimeline` (grade com slots vazios + blocos) |
+| **Mês** (`viewMode: 'month'`) | Não | `AgendaCalendar` + `DayScheduleList` (lista como antes) |
+
+Toggle: ícone calendário / lista no `dayBar`. Botão **Hoje** absoluto. Swipe horizontal na timeline troca o dia.
+
+Grade do dia: `utils/dayHourGrid.ts` + `salon.slotStepMin` + `businessHours` — **todos** os horários da configuração aparecem (vazios ou com bloco de agendamento). Toque no slot vazio → `/agendamento/novo?date=&time=`.
+
+**Não** usar Wix `Timeline` aqui: precisa de slots vazios no passo configurável e tokens Cortejo (`#6B4226` / `accentSoft`).
+
+### Card `agendaBlock`
+
+1. `DayStrip` **ou** `AgendaCalendar` (`compact` + `embedded`) conforme `viewMode`
+2. Barra do dia (`dayBar`): data formatada pt-BR + ações (visão, bloqueio, WhatsApp, busca, Novo)
+3. Abaixo: `DayHourTimeline` ou `DayScheduleList` (`flex: 1`, fundo `colors.bg`)
 
 ```tsx
 <SafeAreaView style={{ flex: 1, backgroundColor: colors.bg }}>
   <View style={styles.agendaBlock}>
-    <AgendaCalendar compact embedded ... />
+    {viewMode === 'day' ? <DayStrip ... /> : <AgendaCalendar compact embedded ... />}
     <View style={styles.dayBar}>
       <Text>{selectedLabel}</Text>
-      <Pressable style={styles.addChip}>+ Novo</Pressable>
+      {/* toggle mês/dia + chips */}
     </View>
   </View>
   <View style={{ flex: 1, minHeight: 0 }}>
-    <FlatList style={{ flex: 1 }} ... />
+    {viewMode === 'day' ? <DayHourTimeline ... /> : <DayScheduleList ... />}
   </View>
-  <FAB + /> {/* opcional, duplicata do chip Novo */}
+  <FAB + />
 </SafeAreaView>
 ```
 
@@ -115,7 +128,7 @@ Arquivos Cortejo: `components/agenda/AgendaCalendar.tsx`, `calendarLocale.ts` (p
 
 ### Regras
 
-1. **Intervalo base:** 30 minutos (`SLOT_STEP_MIN = 30`)
+1. **Intervalo base:** configurável no salão (`slotStepMin`, padrão 30) — `utils/slotStep.ts` / `normalizeSlotStepMin` (5–60). UI em `config/horarios` (chips + personalizado). Ausência do campo = 30.
 2. **Duração:** cada slot só aparece se `início + durationMin ≤ fechamento`
 3. **Profissional:** conflito só com agendamentos **dele** (`professionalUid`), status `scheduled` | `confirmed`
 4. **Horário do salão:** `members/{uid}.businessHours` (por profissional); fallback `salon.businessHours` — `resolveBusinessHours()` · tela `config/horarios`
@@ -125,17 +138,19 @@ Arquivos Cortejo: `components/agenda/AgendaCalendar.tsx`, `calendarLocale.ts` (p
 
 ### Código app (client)
 
+`utils/slotStep.ts` — `DEFAULT_SLOT_STEP_MIN`, `normalizeSlotStepMin`
+
 `utils/businessHours.ts` — `getOpenRangesOrDefault(day, businessHours)`
 
-`utils/timeSlots.ts` — `generateTimeSlots({ ..., businessHours, blockedPeriods, professionalUid })` — usa `slotOverlapsBlocked`
+`utils/timeSlots.ts` — `generateTimeSlots({ ..., businessHours, blockedPeriods, professionalUid, slotStepMin })` — usa `slotOverlapsBlocked`
 
 `utils/blockedPeriodsLogic.ts` — bloqueio por profissional e intervalo horário
 
 ### Código servidor (link público)
 
-`functions/SRC/slotLogic.ts` — `generateAvailableSlots()` (espelho sem dependências RN)
+`functions/SRC/slotLogic.ts` — `generateAvailableSlots({ ..., slotStepMin })` (espelho sem dependências RN)
 
-Cloud Function `availableSlots` — query params: `salonId`, `serviceId`, `professionalUid`, `date` (YYYY-MM-DD)
+Cloud Function `availableSlots` — query params: `salonId`, `serviceId`, `professionalUid`, `date` (YYYY-MM-DD); meta/`slots` devolvem `slotStepMin`
 
 ---
 

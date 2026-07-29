@@ -1351,3 +1351,19 @@
 **Tags:** performance,cors,export,zenpro,admin
 
 ---
+
+## 29/07/2026 — fabrica — Chroma .chroma_db corrompido — indexar_rapido trava após Loading weights / acces
+
+**Erro:** Chroma .chroma_db corrompido — indexar_rapido trava após Loading weights / access violation
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** 1) Parar processos Python usando o RAG. 2) python indexar_rapido.py --recriar-banco (move .chroma_db para .bak-TIMESTAMP e reindexa). 3) Para AWS: .\aws-rag\scripts\sync-push.ps1 -SkipIndex -Bucket fabrica-rag-084029330207-us-east-1 -Region us-east-1 (Lambda reinicia App Runner). Alternativa manual: renomear pasta + indexar_rapido.
+
+**Arquivos:** N/A
+
+**Tags:** rag,chroma,aws,windows
+
+---

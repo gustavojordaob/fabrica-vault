@@ -2361,3 +2361,63 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
+
+### 29/07/2026 — cortejo — Intervalo de horários configurável (slotStepMin)
+
+- **Decisão:** Campo salon.slotStepMin (5–60, padrão 30) no documento do salão. Grade de início no app (generateTimeSlots), availableSlots CF e booking.html usam o mesmo valor. UI em config/horarios com chips 10/15/20/30/60 + personalizado. Duração do serviço permanece independente.
+- **Motivo:** Salões pediram grade de 10 em 10 (ou outro passo) sem mudar duração dos serviços.
+- **Alternativa rejeitada:** Intervalo por profissional — mais complexo e inconsistente no link público.
+- **Impacto:** App OTA + hosting + availableSlots. Salões sem o campo continuam em 30 min.
+- **Quem decidiu:** produto + agente
+
+---
+
+### 29/07/2026 — cortejo — Agenda: timeline diária padrão + expandir mês
+
+- **Decisão:** Aba Agenda padrão = visão dia: DayStrip + DayHourTimeline (grade com vazios via slotStepMin + businessHours). Expandir/toggle calendário = visão mês (AgendaCalendar + DayScheduleList). Swipe horizontal muda o dia; toque no slot vazio abre novo com time=HH:mm. Sem Wix Timeline.
+- **Motivo:** Cliente pediu timeline diária estilo referência (slots vazios + faixa de dias), mantendo calendário mensal acessível.
+- **Alternativa rejeitada:** Wix Timeline / ExpandableCalendar — não mostra slots vazios no passo configurável com tokens Cortejo de forma simples.
+- **Impacto:** app/(tabs)/index.tsx; components/agenda/DayStrip.tsx, DayHourTimeline.tsx; utils/dayHourGrid.ts; prefill time em agendamento/[id].
+- **Quem decidiu:** produto + agente
+
+---
+
+### 29/07/2026 — cortejo — Editar agendamento + validação cliente + conflito claro
+
+- **Decisão:** Agendamento: botão Editar no detalhe abre o mesmo formulário (isEditing); cadastro de cliente com labels *, erros por campo e texto de bloqueio do botão; TimeSlotGrid mostra ocupados em cinza; checkConflict inclui pending e mensagem com nome/horário.
+- **Motivo:** Usuário pediu validações claras, edição e impedir horário já ocupado.
+- **Alternativa rejeitada:** Só alert genérico sem editar — insuficiente
+- **Impacto:** app/agendamento/[id].tsx, TimeSlotGrid, appointments.checkConflict, timeSlots booked statuses
+- **Quem decidiu:** Ambos
+
+---
+
+### 29/07/2026 — cortejo — Editar agendamento + validação cliente
+
+- **Decisão:** Botão Editar no detalhe do agendamento; formulário com campos * e erros; TimeSlotGrid mostra ocupados; checkConflict com pending e mensagem clara.
+- **Motivo:** Pedido do usuário: validação cadastro, editar, não agendar horário ocupado.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 29/07/2026 — LashMatch — Tela stack agendamento/[id] no lugar do modal
+
+- **Decisão:** Criar/editar agendamento em app/agendamento/[id].tsx (Expo Router: id=novo|docId, query date=YYYY-MM-DD, time=HH:MM). Fluxo Cliente → Serviço → Funcionária → AgendaCalendar embedded + TimeSlotGrid (gerarSlotsDisponiveis com slotStepMin de usuarios/{uid}) + botão Ver horários. Cancelamento seta status cancelado. Stack.Screen em _layout.tsx.
+- **Motivo:** Agenda diária (timeline) abre formulário full-screen com prefill de data/hora; modal na aba ficou insuficiente.
+- **Alternativa rejeitada:** Manter formulário só em Modal dentro de agendamentos.tsx
+- **Impacto:** app/agendamento/[id].tsx; app/_layout.tsx; utils/gerarSlotsDisponiveis.ts (slotStepMin); navegação desde DayHourTimeline/DayScheduleList
+- **Quem decidiu:** produto + agente
+
+---
+
+### 29/07/2026 — lashmatch — LashMatch agenda = padrão Cortejo (UI + rules + publicBooking)
+
+- **Decisão:** LashMatch agenda alinhada ao padrão Cortejo: viewMode day/month (DayStrip+DayHourTimeline), rota /agendamento/[id], slotStepMin em usuarios/{uid} (perfil chips), CF publicBooking + slotsAgendamentoPublico leem slotStepMin, firestore.rules agendamentos create só autenticado dono. Status/path PT mantidos.
+- **Motivo:** Paridade UX e segurança do link público sem migrar schema inglês.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---

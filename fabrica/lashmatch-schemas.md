@@ -4,7 +4,7 @@ tags:
   - schema
   - lashmatch
 fonte: LashMatch repo (código + docs)
-atualizado_em: 2026-06-09
+atualizado_em: 2026-07-29
 projeto: LashMatch
 links:
   - "[[../projetos/lashmatch-prd]]"
@@ -34,6 +34,8 @@ Path padrão de dados do app: `artifacts/{appId}/users/{uid}/...` com `appId = a
 | `hadIosTrial` | boolean | não | Trial intro Apple já usado |
 | `subscription` | object | não | Mirror webhook RC (`provider`, `status`, `currentPeriodEnd`) |
 | `trialFimEm` | string ISO | não | Trial cadastro / MP |
+| `agendamentoOnlineConfirmacaoManual` | boolean | não | Link público cria `pendente` |
+| `slotStepMin` | number (5–60) | não | Passo da grade de horários (default **30**) |
 
 **Telas:** `app/cadastroUsuario.tsx` (criação), `app/(tabs)/perfilUsuario.tsx` (edição).
 
