@@ -1,0 +1,13 @@
+# Build context = pasta obsidian/
+.git
+**/.chroma_db/**
+**/__pycache__/**
+**/*.pyc
+**/.venv/**
+**/venv/**
+**/node_modules/**
+**/aws-rag/terraform/.terraform/**
+**/aws-rag/terraform/*.tfstate*
+**/fabrica/eval/**
+**/.DS_Store
+**/Thumbs.db

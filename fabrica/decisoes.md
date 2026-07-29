@@ -2321,3 +2321,43 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
+
+### 29/07/2026 — fabrica — RAG HTTP na AWS via App Runner (Docker + Terraform)
+
+- **Decisão:** Hospedar o servidor indexar_obsidian_chroma.py --server em AWS App Runner com imagem ECR, índice Chroma no S3 (sync do PC via sync-push.ps1) e autenticação X-RAG-Key. Pacote em obsidian/aws-rag/ (Dockerfile, terraform, scripts).
+- **Motivo:** Manter o stack híbrido Chroma+BM25+MiniLM que já passou no eval (~78% hit@1) sem migrar para Bedrock KB; custo alvo US$12-30/mês; backup/remoto do RAG local na porta 7332.
+- **Alternativa rejeitada:** Bedrock Knowledge Base, SageMaker endpoint, Lambda+EFS — mais caro ou perda do pipeline local já afinado.
+- **Impacto:** Deploy sob demanda: bootstrap → sync-push → build-push → terraform apply. MCP pode apontar RAG_BASE_URL para App Runner.
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 29/07/2026 — fabrica — RAG App Runner us-east-1 no ar (chromadb 1.5 + health async)
+
+- **Decisão:** RAG em produção em us-east-1 (App Runner https://gmnxgbtjy9.us-east-1.awsapprunner.com): torch CPU, health imediato + warmup async, chromadb 1.5.x alinhado ao PC.
+- **Motivo:** Deploy completo pedido pelo usuário; região e versões ajustadas após CREATE_FAILED e panic SQLite.
+- **Alternativa rejeitada:** sa-east-1 (App Runner inexistente); torch CUDA (imagem 10GB); chromadb 1.0.x no Docker (incompatível com dump 1.5.x do Windows)
+- **Impacto:** Pipeline bootstrap/sync/build/apply validada; /buscar remoto OK. MCP pode usar RAG_BASE_URL + X-RAG-Key.
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 29/07/2026 — fabrica — MCP rag_buscar aponta para App Runner remoto
+
+- **Decisão:** MCP fabrica-apps e hooks passam a usar App Runner (RAG_BASE_URL + RAG_API_KEY via mcp.json e ~/.cursor/rag-remote.json). server-v2.js e rag-lib.js leem essa config; /health sem key, /buscar com X-RAG-Key.
+- **Motivo:** Usuario pediu apontar rag_buscar para a URL remota já validada.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 29/07/2026 — fabrica — RAG AWS: alarmes CloudWatch + restart auto no sync S3
+
+- **Decisão:** Passo 1+2 do RAG AWS: CloudWatch alarms (5xx + latência) via SNS fabrica-rag-alerts; Lambda fabrica-rag-restart-on-chroma dispara StartDeployment quando S3 recebe chroma/chroma.sqlite3. sync-push.ps1 continua indexando no PC.
+- **Motivo:** Usuario pediu observabilidade e restart automatico apos sync do indice.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---

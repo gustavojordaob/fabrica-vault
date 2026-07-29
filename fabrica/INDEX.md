@@ -44,6 +44,7 @@
 - [[rag-protocolo-antes-de-codar]] — protocolo RAG + caso calendário sem consulta · `rag`, `agente`
 - [[react-native-calendars]] — lib calendário (Calendar, Agenda, markedDates) · `calendario`, `expo`
 - **SINAFLOR2** (`fabrica/sinaflor/`) — Angular 7 + Spring Boot legado IBAMA · ver [[sinaflor/INDEX]]
+- [[aws-rag-app-runner]] — **RAG HTTP na AWS (Docker + Terraform App Runner + S3/ECR)** · `rag`, `aws`, `docker`, `terraform`
 - [[arquitetura-fabrica-ia]] — **como a fábrica funciona (doc canônico)** · estado jul/2026: Cortejo+LashMatch · `fabrica`, `arquitetura`, `rag`
 - [[guia-completo-usuario-fabrica]] — **guia para humano: começar, arquitetura, adicionar especialidade (AWS/Postgres)** · `fabrica`, `guia`, `onboarding`
 - `projetos/cortejo-project.md` · `projetos/lashmatch-project.md` — refs técnicas dos apps (RAG)

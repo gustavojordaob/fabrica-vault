@@ -1,3 +1,4 @@
+import os
 import sys
 import argparse
 import chromadb
@@ -13,11 +14,19 @@ if hasattr(sys.stdout, "reconfigure"):
     except Exception:
         pass
 
-VAULT_PATH    = Path("C:/Users/gusta/obsidian/fabrica")
-PROJETOS_PATH = Path("C:/Users/gusta/obsidian/projetos")
-CHROMA_PATH   = Path("C:/Users/gusta/obsidian/.chroma_db")
-COLLECTION    = "fabrica-knowledge"
-MODEL_NAME    = "paraphrase-multilingual-MiniLM-L12-v2"
+VAULT_PATH = Path(
+    os.environ.get("RAG_VAULT_PATH", "C:/Users/gusta/obsidian/fabrica")
+)
+PROJETOS_PATH = Path(
+    os.environ.get("RAG_PROJETOS_PATH", "C:/Users/gusta/obsidian/projetos")
+)
+CHROMA_PATH = Path(
+    os.environ.get("RAG_CHROMA_PATH", "C:/Users/gusta/obsidian/.chroma_db")
+)
+COLLECTION = "fabrica-knowledge"
+MODEL_NAME = os.environ.get(
+    "RAG_MODEL_NAME", "paraphrase-multilingual-MiniLM-L12-v2"
+)
 CHUNK_SIZE    = 500
 OVERLAP       = 100
 

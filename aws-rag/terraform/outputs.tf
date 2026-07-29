@@ -29,3 +29,15 @@ output "rag_api_key" {
 output "aws_region" {
   value = var.aws_region
 }
+
+output "sns_alerts_topic" {
+  value = aws_sns_topic.rag_alerts.arn
+}
+
+output "restart_lambda_name" {
+  value = aws_lambda_function.restart_on_chroma.function_name
+}
+
+output "service_arn" {
+  value = aws_apprunner_service.rag.arn
+}

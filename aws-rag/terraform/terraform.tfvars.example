@@ -11,6 +11,9 @@ memory = "4096"
 
 ecr_force_delete = true
 
+# E-mail dos alarmes CloudWatch (SNS envia link de confirmação)
+# alert_email = "seu@email.com"
+
 # Opcional: defina sua chave; senão o Terraform gera
 # rag_api_key = "troque-por-uma-chave-forte"
 

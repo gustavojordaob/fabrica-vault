@@ -45,3 +45,9 @@ variable "ecr_force_delete" {
   description = "Permite apagar ECR mesmo com imagens (cuidado)"
   default     = false
 }
+
+variable "alert_email" {
+  type        = string
+  description = "E-mail para alarmes CloudWatch (SNS). Vazio = tópico sem subscription."
+  default     = ""
+}
