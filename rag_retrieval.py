@@ -29,8 +29,16 @@ _PATTERN_MARKERS = (
     "deploy", "checklist", "como ", "padrao", "padrão", "schema", "modelar",
     "estrutur", " path", "regra", "fluxo", "export", "firestore", "multi-tenant",
     "cadastro", "login", "hosting", "functions", "members", "salão", "salao",
-    "google sign", "gate ", "rag_", "mcp ",
+    "google sign", "gate ", "rag_", "mcp ", "7332", "chroma", "endpoint",
+    "resource", "dto", "java ", "angular", "sinaflor",
 )
+
+# Logs cronológicos — competem com notas canônicas em queries de padrão.
+_NOISE_LOG_FILES = frozenset({"decisoes.md"})
+_SOLUCAO_FILE = "erros-e-solucoes.md"
+
+# Empurrar pool maior antes do boost (itens bons em rank 6–20 sobem).
+POST_RRF_POOL = 28
 
 
 def _tokenize(text: str) -> list[str]:
@@ -72,6 +80,171 @@ class ChunkHit:
     @property
     def arquivo(self) -> str:
         return self.metadata.get("arquivo", "")
+
+
+def _arquivo_nome(arquivo: str) -> str:
+    nome = (arquivo or "").replace("\\", "/")
+    return nome.rsplit("/", 1)[-1].lower()
+
+
+def _query_has_error_intent(query: str) -> bool:
+    q = query.lower()
+    return any(m in q for m in _ERROR_MARKERS)
+
+
+def _affinity_multiplier(arquivo: str, query: str) -> float:
+    """
+    Ajuste leve pós-RRF por afinidade query↔nota.
+    Não substitui retrieval — só reordena o pool híbrido.
+    """
+    q = query.lower()
+    nome = _arquivo_nome(arquivo)
+    mult = 1.0
+    pattern_q = should_demote_spec(query)
+    error_q = _query_has_error_intent(query)
+
+    # Logs cronológicos vs notas canônicas
+    if pattern_q and not error_q:
+        if nome in _NOISE_LOG_FILES:
+            mult *= 0.28
+        if nome == _SOLUCAO_FILE:
+            mult *= 0.35
+    elif error_q and nome == _SOLUCAO_FILE:
+        mult *= 1.45
+
+    # Schema salão / Cortejo (gs-001)
+    if any(k in q for k in ("members", "salão", "salao", "salons", "multi-tenant")) and (
+        "firestore" in q or "modelar" in q or "schema" in q
+    ):
+        if nome == "cortejo-schemas.md":
+            mult *= 2.4
+        elif nome.endswith("-schemas.md") or "schema" in nome:
+            mult *= 1.35
+        if nome in (
+            "capinhas-multitenant.md",
+            "erp-postgres-schema.md",
+            "lashmatch-mercadopago-assinatura.md",
+            "excluir-conta-app-expo-padrao.md",
+        ):
+            mult *= 0.4
+
+    # Path LashMatch artifacts (gs-002)
+    if "artifacts" in q or ("appid" in q and "users" in q):
+        if nome == "lashmatch-schemas.md":
+            mult *= 2.2
+        elif nome in ("firebase-setup-patterns.md", "padroes-fabrica.md"):
+            mult *= 1.25
+
+    # Expo web + Hosting (gs-015)
+    if ("export" in q or "hosting" in q) and ("web" in q or "firebase" in q or "deploy" in q):
+        if nome in ("firebase-setup-patterns.md", "lashmatch-web-plataforma.md"):
+            mult *= 2.0
+        elif "deploy" in nome or "hosting" in nome or "checklist" in nome:
+            mult *= 1.3
+
+    # Servidor Chroma / porta 7332 (gs-018 / gs-019)
+    if any(k in q for k in ("7332", "chroma", "indexar_obsidian", "servidor rag", "rag porta")):
+        if error_q or "fecha" in q or "crash" in q:
+            if nome == _SOLUCAO_FILE:
+                mult *= 2.4
+            if nome in ("arquitetura-fabrica-ia.md", "guia-completo-usuario-fabrica.md"):
+                mult *= 0.65
+        else:
+            if nome in ("arquitetura-fabrica-ia.md", "guia-completo-usuario-fabrica.md"):
+                mult *= 2.1
+            if nome in _NOISE_LOG_FILES:
+                mult *= 0.25
+
+    # Qual MCP (gs-020)
+    if "mcp" in q:
+        if nome == "mcps-cursor-padrao.md":
+            mult *= 2.0
+
+    # SINAFLOR vs ERP (map/regras)
+    if "sinaflor" in q or "ibama" in q:
+        if nome.startswith("erp-"):
+            mult *= 0.35
+        if nome in (
+            "mapeamento-frontend-backend.md",
+            "regras-gerais.md",
+            "angular-frontend.md",
+            "spring-backend.md",
+            "testes-frontend.md",
+            "testes-backend.md",
+        ):
+            mult *= 1.55
+        if nome.endswith("-prd.md") or nome == "sinaflor-prd.md":
+            mult *= 0.55
+        if pattern_q and not error_q and nome == _SOLUCAO_FILE:
+            mult *= 0.3
+
+    if "sinaflor" in q and any(k in q for k in ("endpoint", "resource", "dto", "mapeamento", "request", "response")):
+        if nome == "mapeamento-frontend-backend.md":
+            mult *= 2.2
+        if nome in ("angular-frontend.md", "testes-frontend.md", "spring-backend.md"):
+            mult *= 0.7
+
+    if "sinaflor" in q and any(k in q for k in ("java 17", "records", "legado", "não fazer", "nao fazer", "modernizar")):
+        if nome == "regras-gerais.md":
+            mult *= 2.2
+
+    if "java" in q and ("17" in q or "records" in q) and "sinaflor" in q:
+        if nome == "regras-gerais.md":
+            mult *= 1.5
+        if nome in ("testes-backend.md", "spring-backend.md", "testes-frontend.md"):
+            mult *= 0.55
+
+    return mult
+
+
+def _preferred_note_names(query: str) -> list[str]:
+    """Notas canônicas que devem entrar no pool mesmo se o RRF as deixou de fora."""
+    q = query.lower()
+    prefs: list[str] = []
+
+    if any(k in q for k in ("members", "salão", "salao", "salons", "multi-tenant")) and (
+        "firestore" in q or "modelar" in q or "schema" in q
+    ):
+        prefs.append("cortejo-schemas.md")
+
+    if "artifacts" in q or ("appid" in q and "uid" in q):
+        prefs.append("lashmatch-schemas.md")
+
+    if "sinaflor" in q or "ibama" in q:
+        if any(k in q for k in ("endpoint", "resource", "dto", "mapeamento", "request", "response")):
+            prefs.append("mapeamento-frontend-backend.md")
+        if any(k in q for k in ("java", "legado", "regra", "records", "modernizar", "não fazer", "nao fazer")):
+            prefs.append("regras-gerais.md")
+
+    if any(k in q for k in ("7332", "chroma", "servidor rag")) and _query_has_error_intent(query):
+        prefs.append(_SOLUCAO_FILE)
+
+    # unique preserve order
+    seen: set[str] = set()
+    out: list[str] = []
+    for p in prefs:
+        if p not in seen:
+            seen.add(p)
+            out.append(p)
+    return out
+
+
+def _apply_query_affinity(hits: list[ChunkHit], query: str) -> list[ChunkHit]:
+    if not hits:
+        return hits
+    scored: list[ChunkHit] = []
+    for h in hits:
+        m = _affinity_multiplier(h.arquivo, query)
+        scored.append(
+            ChunkHit(
+                chunk_id=h.chunk_id,
+                document=h.document,
+                metadata=h.metadata,
+                score=h.score * m,
+            )
+        )
+    scored.sort(key=lambda x: x.score, reverse=True)
+    return scored
 
 
 class HybridRetriever:
@@ -270,6 +443,39 @@ class HybridRetriever:
             )
         return [head] + tail_out
 
+    def _inject_preferred_notes(self, hits: list[ChunkHit], query: str) -> list[ChunkHit]:
+        prefs = _preferred_note_names(query)
+        if not prefs or not self._corpus:
+            return hits
+        existing_ids = {h.chunk_id for h in hits}
+        existing_names = {_arquivo_nome(h.arquivo) for h in hits}
+        # Só injeta se a nota preferida ainda não está no pool
+        missing = [p for p in prefs if p not in existing_names]
+        if not missing:
+            return hits
+        per_file: dict[str, int] = {p: 0 for p in missing}
+        injected: list[ChunkHit] = []
+        for c in self._corpus:
+            nome = _arquivo_nome(c.arquivo)
+            if nome not in per_file or per_file[nome] >= 3:
+                continue
+            if c.chunk_id in existing_ids:
+                continue
+            per_file[nome] += 1
+            injected.append(
+                ChunkHit(
+                    chunk_id=c.chunk_id,
+                    document=c.document,
+                    metadata=c.metadata,
+                    # Score base alto o bastante para o affinity*2.x colocar no topo
+                    score=0.08,
+                )
+            )
+            existing_ids.add(c.chunk_id)
+        if not injected:
+            return hits
+        return injected + hits
+
     def buscar(self, query: str, n: int = 5) -> list[dict[str, Any]]:
         self._ensure_corpus()
         if not query.strip():
@@ -279,10 +485,12 @@ class HybridRetriever:
         bm25 = self._bm25_hits(query, POOL_BM25)
         fused = self._rrf_fuse(dense, bm25)
         filtered = self._demote_spec(fused, query)
+        merged = self._inject_preferred_notes(filtered[:POST_RRF_POOL], query)
+        ranked = _apply_query_affinity(merged, query)
         if RERANK_ENABLED:
-            final = self._rerank(query, filtered, n)
+            final = self._rerank(query, ranked, n)
         else:
-            final = filtered[:n]
+            final = ranked[:n]
 
         saida = []
         for h in final:

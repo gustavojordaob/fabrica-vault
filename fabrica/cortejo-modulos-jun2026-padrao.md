@@ -19,7 +19,7 @@ links:
   - "[[modulo-ajuda-suporte-expo]]"
   - "[[whatsapp-salao-expo-padrao]]"
   - "[[agenda-salao-expo-padrao]]"
-atualizado_em: 2026-06-20
+atualizado_em: 2026-07-23
 ---
 
 > **Agente Cursor — use MCP antes de codar**
@@ -31,7 +31,7 @@ atualizado_em: 2026-06-20
 > 5. MCP **firebase** — deploy functions + hosting
 >
 > **Regra no repo:** `cortejo/.cursor/rules/rag-assinatura-padrao.mdc`  
-> Ver [[mcps-cursor-padrao]] — **MCP primeiro**, depois código.
+> Ref técnica: [[../projetos/cortejo-project]] · Ver [[mcps-cursor-padrao]] — **MCP primeiro**, depois código.
 
 # Cortejo — módulos jun/2026 (padrão reutilizável)
 
@@ -314,8 +314,18 @@ eas update --branch production --platform all --message "descrição"
 ### Deploy
 - [ ] `firebase deploy --only functions:mpCriarAssinatura,functions:mpTrocarPlano,functions:revenuecatWebhook,functions:mpWebhook`
 - [ ] `firebase deploy --only hosting`
-- [ ] `eas update` após mudanças JS
+- [ ] `eas update` após mudanças JS · embutir `EXPO_PUBLIC_REVENUECAT_API_KEY_IOS` / fallback `appl_`
 
 ---
 
-*Última atualização: 20/jun/2026 — Cortejo (trial 14d, sync Firestore iOS, RC API V2)*
+## Atualização jul/2026 (RAG)
+
+| Tema | Estado |
+|------|--------|
+| WhatsApp / Meta billing | Setup **só no computador** (`isWhatsAppMetaSetupAllowed`) — [[whatsapp-salao-expo-padrao]] |
+| OTA iOS | Public key RC com fallback no cliente — não publicar OTA sem chave |
+| Ref técnica | [[../projetos/cortejo-project]] |
+
+---
+
+*Última atualização: 23/jul/2026 — Cortejo (trial 14d, sync Firestore iOS, RC API V2, WhatsApp PC-only)*

@@ -154,6 +154,20 @@ Templates em `autorizacao/src/main/resources/templates/relatorio/`. Utilitário:
 
 Endpoint: `ComprovanteEnvioLicenciamentoResource` (`GET /api/licenciamento/{id}/...`).
 
+### Tramitação de Licenciamento (HU130)
+
+Scripts: `autorizacao/src/main/resources/db/scripts/SPRINT_19/`.
+
+| Peça | Detalhe |
+|---|---|
+| Catálogos | `TB_TIPO_TRAMITE_LIC` / `TB_TIPO_AVALIACAO_LIC` — PK = `CD_*` |
+| Histórico | `TB_TRAMITE_LIC` + `TB_TRAMITE_LIC_DESTINATARIO` + `RL_TRAMITE_LIC_CONTEUDO` |
+| Rascunho | `TB_TRAMITE_LIC_RASCUNHO` (1 por licenciamento + login) |
+| Status | `TB_STATUS_LIC` id=2 `Em Análise` |
+| Resource | `LicenciamentoTramitacaoResource` sob `/api/licenciamento/gestao/.../tramitacao` |
+| Visibilidade | Analista = destinatário ativo; GO = unidade e `FL_MANTER_ABERTO_UNIDADE` |
+| Analistas | SCA2 `GET api/unidadeibama/pessoa-orgao?idUnidadeIbama=` → login=CPF/CNPJ |
+
 #### Regras de layout ao editar `.jrxml`
 
 1. **Label + valor curto** (campos de uma linha): um `textField` com `markup="html"` — `"<b>Label:</b> " + valor`. Posição fixa (`y` sem `Float`) para não aumentar espaçamento vertical.
@@ -164,5 +178,20 @@ Endpoint: `ComprovanteEnvioLicenciamentoResource` (`GET /api/licenciamento/{id}/
 6. **Não** separar label e valor em `staticText` + `textField` com `x` fixo distante — gera gap visual grande entre `:` e o valor.
 7. **Não** colocar valor em `y` fora da altura inicial do frame sem `Float`/`stretch` — o conteúdo some.
 8. Após alterar `.jrxml`, **reiniciar o backend** (compilação em runtime via `JasperCompileManager`).
+
+---
+
+## Painel de Gestão — visibilidade
+
+*Atualizado em 28/07/2026*
+
+Listagem em `LicenciamentoQueryService.findGestaoByCriteria`.
+
+- Sempre: `excluirEmElaboracaoGestao` (sem statusLic e sem numeroRegistro).
+- Meus (`meusProcessos` true/null): GO → `filtroMeusProcessosGerenteOperacional`; Analista → destinatário ativo.
+- Todos (`meusProcessos=false`): GO/Analista/GA → `filtroPorUnidadesUsuario`; CG/AF → visão ampla.
+- `isGestaoLicenciamentoSomenteProcessosAtribuidos()` / flag no perfil: **sempre false**.
+- Front: checkbox **Todos os Processos** sempre renderizado no personalizar (sem `*ngIf`).
+- Nota: `fabrica/sinaflor/gestao-visibilidade-perfis.md`.
 
 ---

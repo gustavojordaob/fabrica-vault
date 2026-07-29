@@ -9,26 +9,29 @@ tags:
   - embedded-signup
   - coexistence
   - cortejo
-fonte: implementação Cortejo (jun/2026)
-referencia_repo: cortejo
-firebase_project: cortejo-app
-atualizado_em: 2026-06-23
+fonte: implementação Cortejo + LashMatch (jul/2026)
+referencia_repo: cortejo · LashMatch
+firebase_project: cortejo-app · lashmatch-627fd
+atualizado_em: 2026-07-23
 links:
   - "[[whatsapp-business-api]]"
   - "[[cortejo-schemas]]"
+  - "[[lashmatch-schemas]]"
   - "[[cloud-functions-patterns]]"
   - "[[firebase-setup-patterns]]"
   - "[[../projetos/cortejo-prd]]"
+  - "[[../projetos/cortejo-project]]"
+  - "[[../projetos/lashmatch-project]]"
 ---
 
 > **Agente Cursor — use MCP antes de codar**
 >
-> 1. MCP **whatsapp** — Graph API, templates, credenciais Business
-> 2. MCP **fabrica-apps** — `rag_buscar("whatsapp salao embedded signup coexistence")`
-> 3. MCP **fabrica-apps** — `buscar_historico("whatsapp cortejo meta")`
-> 4. Ler **[[whatsapp-business-api]]** (envio básico LashMatch) + **esta nota** (multi-tenant + Embedded Signup)
+> 1. MCP **whatsapp_cortejo** ou **whatsapp_lash_match** (conforme o repo aberto)
+> 2. MCP **fabrica-apps** — `rag_buscar("whatsapp salao embedded signup coexistence computador")`
+> 3. MCP **fabrica-apps** — `buscar_historico("whatsapp meta computador")`
+> 4. Ler **[[whatsapp-business-api]]** (envio) + **esta nota** (Embedded Signup + **setup só no PC**)
 >
-> **Referência de código:** repo `cortejo` — `functions/SRC/whatsapp*.ts`, `embeddedSignup.ts`, `services/embeddedSignup.ts`, `public/embedded-signup/`
+> **Referência de código:** `cortejo` e `LashMatch` — `isWhatsAppMetaSetupAllowed()`, `MetaBillingHelpPanel`, `embeddedSignup`
 
 ---
 
@@ -232,22 +235,23 @@ Salvar alterações no final da página.
 
 ## 6. Fluxo Embedded Signup (passo a passo — o que a cliente vê)
 
+> **Regra jul/2026 (Cortejo + LashMatch):** conectar WhatsApp e vincular cartão Meta **só no computador** (`Platform.OS === 'web'`). No celular: banner obrigatório + copiar link do painel web; **não** liberar botões Conectar / Resolver / Vincular cartão / abrir Business Manager. Motivo: Meta falha com frequência no telefone (“conteúdo não disponível”). Helper: `isWhatsAppMetaSetupAllowed()`.
+
+> **Agendamento (Cortejo jul/2026):** `enviarWhatsAppCliente: false` = só **pula confirmação** WhatsApp; lembretes 7d/1d seguem se houver telefone. App: opção **só nome** (`source: walk_in`, sem `clientId`) ou cadastrar/escolher cliente.
+
 Pré-requisitos: plano **Pro**, usuária **owner**, WhatsApp Business **≥ 2.24.17**, número **já ativo** no app.
 
-1. **Mais → WhatsApp do salão** (bloqueado se `whatsappSalonEnabled !== true` — ver §14)
-2. Tela mostra **WhatsAppConnectGuide** (portfólio do salão, conta WABA existente, site)
-3. **Conectar meu WhatsApp** (só `owner` + Pro + status ≠ live/pending)
+1. **Mais → WhatsApp do salão** no **Chrome/Edge do PC** (bloqueado se `whatsappSalonEnabled !== true` — ver §14)
+2. Tela mostra **WhatsAppConnectGuide** + banner “Só no computador”
+3. **Conectar meu WhatsApp** (só `owner` + Pro + status ≠ live/pending + **web**)
 4. Backend: `startEmbeddedSignup` → Firestore `status: pending`, `effectiveSender: shared`
 5. Abre browser: `https://{host}/embedded-signup/?session=…&redirect=cortejo://config/whatsapp`
 6. Página carrega `embeddedSignupPageConfig` → inicializa FB SDK
-7. **Mobile:** redirect OAuth em **página inteira** (não popup `FB.login`) — ver §16
-8. Cliente toca **Continuar com Meta** → login Facebook → escolhe portfólio **do salão** + WABA/número **existente** (Coexistence)
-9. Celular pode pedir confirmação no WhatsApp Business
-10. Web captura `code`, `waba_id`, `phone_number_id` via `postMessage` + OAuth return
-11. **Mobile (fix jun/2026):** página chama `completeEmbeddedSignupWeb` na própria web → redirect `cortejo://config/whatsapp?connected=1`
-12. **Fallback app:** deep link com `code` → app chama `completeEmbeddedSignup` (Bearer Firebase)
-13. Backend troca code, inscreve webhooks, descobre WABA se ausente, grava `status: live`
-14. Alert **Conectado** + card atualizado
+7. Cliente toca **Continuar com Meta** → login Facebook → escolhe portfólio **do salão** + WABA/número **existente** (Coexistence)
+8. Celular pode pedir confirmação no WhatsApp Business (só essa etapa no telefone)
+9. Web captura `code`, `waba_id`, `phone_number_id` via `postMessage` + OAuth return
+10. Página chama `completeEmbeddedSignupWeb` → status `live`
+11. Alert **Conectado** + **Vincular cartão na Meta** (mesmo PC) + `MetaBillingHelpPanel`
 
 **Deep link fixo (não usar `Linking.createURL` no mobile):**
 

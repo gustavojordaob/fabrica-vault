@@ -7,7 +7,7 @@ tags:
   - mcp
   - rag
   - obsidian
-atualizado_em: 2026-06-28
+atualizado_em: 2026-07-23
 autor: Gustavo
 status: documentacao-completa
 ---
@@ -17,7 +17,7 @@ status: documentacao-completa
 > **Documento canônico** da fábrica. Agentes Cursor devem consultar via `rag_buscar("arquitetura fabrica")` — não usar `CLAUDE.md` do repo como KB.
 
 > Documento para explicar **como eu uso IA no dia a dia** para criar apps (React Native + Firebase), com memória, padrões e Git automatizado.  
-> Projeto de referência: **LashMatch** (app de gestão para salões de cílios).
+> Apps de referência em produção: **LashMatch** (cílios) e **Cortejo** (salão). Detalhe de produto: `projetos/*-project.md` + notas em `fabrica/`.
 
 ---
 
@@ -172,7 +172,10 @@ C:/Users/gusta/
 │   │   ├── erros-e-solucoes.md
 │   │   └── decisoes.md
 │   ├── projetos/
-│   │   └── lashmatch-prd.md
+│   │   ├── lashmatch-prd.md
+│   │   ├── lashmatch-project.md
+│   │   ├── cortejo-prd.md
+│   │   └── cortejo-project.md
 │   ├── indexar_rapido.py     ← único que indexa Chroma
 │   └── indexar_obsidian_chroma.py --server  ← só HTTP :7332
 │
@@ -180,16 +183,14 @@ C:/Users/gusta/
 │   └── server-v2.js
 │
 └── projetos/
-    └── LashMatch/
+    ├── LashMatch/            ← Firebase lashmatch-627fd · .cursor/rules/
+    └── cortejo/              ← Firebase cortejo-app · .cursor/rules/
         ├── .cursorrules
-        ├── .cursor/rules/    ← regras só deste app
-        │   ├── rag-memoria-fabrica.mdc
-        │   ├── fonte-verdade-fabrica.mdc
-        │   ├── mcps-integracao-obrigatoria.mdc
-        │   └── lashmatch-projeto-firebase.mdc
         ├── CLAUDE.md         ← ponte curta (NÃO é KB)
-        └── docs/             ← espelho opcional de guias
+        └── …
 ```
+
+> Rules por app: `LashMatch/.cursor/rules/` e `cortejo/.cursor/rules/` (assinatura, agenda, WhatsApp).
 
 ### `hooks.json` — eventos completos
 
@@ -569,6 +570,24 @@ python C:/Users/gusta/obsidian/fabrica/eval/run_baseline.py
 | Deploy sem validar | Hook pos-deploy + regra `firebase-deploy-checklist.mdc` |
 | CLAUDE.md monólito no contexto | Substituído por ponte + KB só em `fabrica/` |
 | RAG só em “pergunta técnica” | **RAG universal** em toda mensagem (jun/2026) |
+| 1 app referência (LashMatch) | **2 apps** produção: LashMatch + Cortejo (stack espelhada) |
+| WhatsApp MCP único | MCP **whatsapp_lash_match** e **whatsapp_cortejo** |
+| Config Meta no celular | **Só no computador** (web) — Embedded Signup + cartão Meta (jul/2026) |
+| OTA sem RC key | Public SDK `appl_` com fallback no cliente (evita IAP quebrado) |
+
+---
+
+## Apps em produção (estado jul/2026)
+
+| App | Firebase | Tenant | Assinatura | WhatsApp MCP |
+|-----|----------|--------|------------|--------------|
+| **LashMatch** | `lashmatch-627fd` | `usuarios/{uid}` | RC iOS + MP Android | `whatsapp_lash_match` |
+| **Cortejo** | `cortejo-app` | `artifacts/cortejo/salons/{salonId}` | RC iOS + MP Android · trial **14d** | `whatsapp_cortejo` |
+
+- Stack comum: Expo + expo-router + Firebase JS + Cloud Functions + Hosting + EAS Update  
+- Assinatura dual: ver [[cortejo-modulos-jun2026-padrao]] · [[lashmatch-modulos-assinatura-jun2026]]  
+- WhatsApp próprio / Meta: [[whatsapp-salao-expo-padrao]] (setup **web only**) · [[whatsapp-business-api]]  
+- Refs técnicas: [[../projetos/cortejo-project]] · [[../projetos/lashmatch-project]]
 
 ---
 
@@ -579,21 +598,23 @@ python C:/Users/gusta/obsidian/fabrica/eval/run_baseline.py
 - [[padroes-fabrica]] — padrões gerais  
 - [[mcps-cursor-padrao]] — qual MCP por tema  
 - [[INDEX]] — índice da base  
-- [[../projetos/lashmatch-prd]] — PRD LashMatch  
+- [[../projetos/lashmatch-prd]] · [[../projetos/lashmatch-project]] — LashMatch  
+- [[../projetos/cortejo-prd]] · [[../projetos/cortejo-project]] — Cortejo  
 - [[lashmatch-web-plataforma]] — web sem análise/checkout in-app  
-- [[whatsapp-business-api]] · [[mercadopago-integration]] · [[firebase-setup-patterns]]  
+- [[whatsapp-business-api]] · [[whatsapp-salao-expo-padrao]] · [[mercadopago-integration]] · [[firebase-setup-patterns]]  
 
 ## Checklist — documentação 100% operacional
 
 - [x] Protocolo RAG universal + fallback documentado  
 - [x] Mapa de arquivos (`~/.cursor`, Obsidian, projeto)  
 - [x] `hooks.json` completo  
-- [x] Regras `.mdc` globais e LashMatch  
+- [x] Regras `.mdc` globais e por app (LashMatch + Cortejo)  
 - [x] Lista MCP fabrica-apps (28 tools)  
 - [x] CLAUDE.md = ponte, não KB  
 - [x] Indexação: `indexar_rapido.py` vs `--server`  
 - [x] Falhas comuns + healthcheck  
 - [x] Links para notas por tema  
+- [x] Estado jul/2026: dois apps + WhatsApp PC-only + dual MCP  
 
 ---
 
@@ -603,4 +624,4 @@ python C:/Users/gusta/obsidian/fabrica/eval/run_baseline.py
 
 ---
 
-*Última atualização: junho/2026 · Autor: Gustavo*
+*Última atualização: julho/2026 · Autor: Gustavo*

@@ -143,3 +143,15 @@ Resumo dos erros que **não** podem se repetir:
 | `salonId doesn't exist` | Não remover variável do store se JSX ainda referencia |
 
 Deploy obrigatório após mudar `functions/SRC/mercadoPagoAssinatura.ts` ou handlers em `index.ts`.
+
+---
+
+## Zen Pro — Checkout Pro (loja web)
+
+Repo: `zenpro` · docs: `docs/mercadopago-zenpro.md` · function: `criarCheckoutMercadoPago`
+
+| Sintoma | Causa / ação |
+|---------|----------------|
+| Botão **Pagar** cinza | Comprador logado na **mesma conta MP do vendedor** (self-purchase). Testar em aba anônima com outro e-mail. Também: conta loja incompleta. |
+| Site diz 2x sem juros, Checkout cobra juros | Preferência só define `installments` máx. **Sem juros** = painel MP → Oferecer parcelamento sem juros (vendedor absorve taxa). |
+| Trava no revise o pagamento | Totais/itens inconsistentes; preference alinha ao `totalCentavos`; `statement_descriptor` sem espaço (`ZENPRO`). |

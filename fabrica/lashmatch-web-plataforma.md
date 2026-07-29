@@ -6,7 +6,7 @@ tags:
   - analise
 fonte: LashMatch (jun/2026)
 projeto: LashMatch
-atualizado_em: 2026-06-09
+atualizado_em: 2026-07-22
 links:
   - "[[react-native-web-patterns]]"
   - "[[lashmatch-modulos-assinatura-jun2026]]"
@@ -68,6 +68,42 @@ Componente de aviso (URL direta): `components/analysis/IaAnalysisMobileOnlyNotic
 
 - `app/camera.tsx`, `app/analysisResult.tsx`, `app/assistente/*` — fluxo completo no app.
 
+## PWA (celular só instalado — desktop livre)
+
+Aditivo no Hosting. **Não** altera App Store / Play nem o runtime nativo.
+
+| Peça | Onde |
+|------|------|
+| Manifest | `public/manifest.webmanifest` → copiado para `dist-web` |
+| Service worker | `public/sw.js` — **sem cache** (só instala; rede normal) |
+| Ícones | `scripts/copy-pwa-assets.mjs` gera `/icons/pwa-192.png`, `pwa-512.png`, `apple-touch-icon.png` |
+| HTML | `app/+html.tsx` — link manifest + meta Apple + `register('/sw.js')` só em HTTPS |
+| Headers | `firebase.json` — `Cache-Control: no-cache` em `/sw.js` e `/manifest.webmanifest` |
+| Gate | `PwaMobileRequireInstall` + `utils/pwaWeb.ts` |
+
+**Regra:** no **celular**, o app web **só** em modo instalado (standalone). Navegador mobile → tela “Instale o LashMatch” com botão **sempre visível** (captura cedo de `beforeinstallprompt` no `+html.tsx`; se o Chrome não disparar, passos ⋮ → Instalar app).
+
+- **Desktop** web: liberado sem instalar (análises/câmera ainda só no PWA ou nativo)
+- **PWA instalado:** `canUseClientAnalysis()` e checkout MP (Android) liberados — paridade com nativo o quanto a web permite (sem RevenueCat/IAP iOS; câmera via browser)
+- **Nativo** loja: inalterado
+- **Exceções** no celular: `/agendar`, `/baixar`, privacidade/termos, `/embedded-signup`
+- SW: `fetch` → `respondWith(fetch(...))` (rede pura, critério Chrome)
+
+## Landing de divulgação (`/baixar`)
+
+URL: **https://lashmatch-627fd.web.app/baixar**
+
+Página estática em `public/baixar/index.html` (não passa pelo SPA).
+
+| Botão | Destino |
+|-------|---------|
+| **Android** | Instala PWA (`beforeinstallprompt` ou abre `/` com passos Chrome) |
+| **iPhone** | [App Store LashMatch](https://apps.apple.com/br/app/lashmatch/id6782080036) |
+
+- Rewrite Hosting: `/baixar` → `/baixar/index.html`
+- Gate PWA: `/baixar` em `PUBLIC_PATH_PREFIXES` (`utils/pwaWeb.ts`)
+- Copiado no `scripts/copy-pwa-assets.mjs` após `export:web`
+
 ## Deploy web
 
 ```powershell
@@ -76,8 +112,9 @@ npm run export:web
 firebase deploy --only hosting
 ```
 
-- `firebase.json` → `hosting.public`: **`dist`**
-- Rewrites SPA: `**` → `/index.html`
+- `firebase.json` → `hosting.public`: **`dist-web`**
+- `export:web` já chama `scripts/copy-pwa-assets.mjs` (manifest, SW, ícones, `tokenizar.html`, `baixar/`)
+- Rewrites SPA: `**` → `/index.html` (arquivos reais como `/sw.js` têm prioridade)
 - PowerShell: usar `;` em vez de `&&` se necessário
 
 ## Erros conhecidos (web + análise)

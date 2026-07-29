@@ -1,29 +1,29 @@
 {
-  "gerado_em": "2026-06-29T13:24:11.750777+00:00",
+  "gerado_em": "2026-07-29T11:37:07.546995+00:00",
   "porta_chroma": 7332,
   "top_k": 5,
   "total_pares": 56,
   "regua": "v2",
   "aggregate": {
-    "hit@1": 0.6607,
-    "hit@3": 0.875,
-    "hit@5": 0.9107,
-    "mrr": 0.7571,
+    "hit@1": 0.7857,
+    "hit@3": 0.9821,
+    "hit@5": 1.0,
+    "mrr": 0.8795,
     "n": 56
   },
   "por_tipo": {
     "fabrica": {
-      "hit@1": 0.5,
-      "hit@3": 0.8333,
-      "hit@5": 0.8333,
-      "mrr": 0.6389,
+      "hit@1": 0.8333,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "mrr": 0.9167,
       "n": 6
     },
     "fluxo": {
-      "hit@1": 0.5,
-      "hit@3": 0.75,
-      "hit@5": 0.75,
-      "mrr": 0.625,
+      "hit@1": 0.75,
+      "hit@3": 1.0,
+      "hit@5": 1.0,
+      "mrr": 0.875,
       "n": 4
     },
     "integracao": {
@@ -34,17 +34,17 @@
       "n": 4
     },
     "padrao": {
-      "hit@1": 0.697,
-      "hit@3": 0.8788,
-      "hit@5": 0.9091,
-      "mrr": 0.7788,
+      "hit@1": 0.7576,
+      "hit@3": 0.9697,
+      "hit@5": 1.0,
+      "mrr": 0.8662,
       "n": 33
     },
     "solucao": {
-      "hit@1": 0.6667,
-      "hit@3": 0.8889,
+      "hit@1": 0.8889,
+      "hit@3": 1.0,
       "hit@5": 1.0,
-      "mrr": 0.7815,
+      "mrr": 0.9259,
       "n": 9
     }
   },
@@ -77,23 +77,23 @@
         "cortejo-schemas.md"
       ],
       "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
       "top_k_arquivos": [
-        "erros-e-solucoes.md",
-        "lashmatch-mercadopago-assinatura.md",
-        "erp-postgres-schema.md",
-        "excluir-conta-app-expo-padrao.md",
-        "whatsapp-salao-expo-padrao.md"
+        "cortejo-schemas.md",
+        "cortejo-schemas.md",
+        "cortejo-schemas.md",
+        "capinhas-stack.md",
+        "erp-aws-rds.md"
       ],
       "top_k_similaridade": [
-        0.04,
-        0.04,
-        0.037,
-        0.036,
-        0.035
+        0.192,
+        0.192,
+        0.192,
+        0.034,
+        0.03
       ]
     },
     {
@@ -110,23 +110,23 @@
         "firebase-setup-patterns.md"
       ],
       "revisar": true,
-      "rank": 2,
-      "rank_primario": null,
+      "rank": 1,
+      "rank_primario": 1,
       "hit": true,
-      "hit_primario": false,
+      "hit_primario": true,
       "top_k_arquivos": [
+        "lashmatch-schemas.md",
+        "lashmatch-schemas.md",
+        "lashmatch-schemas.md",
         "padroes-fabrica.md",
-        "firebase-setup-patterns.md",
-        "whatsapp-salao-expo-padrao.md",
-        "cloud-functions-patterns.md",
-        "arquitetura-fabrica-ia.md"
+        "firebase-setup-patterns.md"
       ],
       "top_k_similaridade": [
-        0.041,
-        0.041,
-        0.034,
-        0.032,
-        0.029
+        0.176,
+        0.176,
+        0.176,
+        0.051,
+        0.051
       ]
     },
     {
@@ -145,17 +145,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "erros-e-solucoes.md",
-        "decisoes.md",
-        "cortejo-prd.md",
-        "setmatch-prd.md",
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md",
         "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.039,
-        0.039,
-        0.037,
-        0.036,
-        0.035
+        0.058,
+        0.058,
+        0.054,
+        0.044,
+        0.041
       ]
     },
     {
@@ -182,9 +182,9 @@
       "top_k_similaridade": [
         0.041,
         0.039,
-        0.035,
-        0.034,
-        0.033
+        0.033,
+        0.033,
+        0.032
       ]
     },
     {
@@ -197,23 +197,23 @@
         "auth-patterns.md"
       ],
       "revisar": false,
-      "rank": 2,
-      "rank_primario": 2,
+      "rank": 1,
+      "rank_primario": 1,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "decisoes.md",
         "auth-patterns.md",
         "auth-patterns.md",
-        "erros-e-solucoes.md",
+        "expo-router-navegacao.md",
+        "expo-router-navegacao.md",
         "expo-router-navegacao.md"
       ],
       "top_k_similaridade": [
-        0.04,
         0.039,
         0.039,
-        0.038,
-        0.036
+        0.037,
+        0.036,
+        0.035
       ]
     },
     {
@@ -263,15 +263,15 @@
         "whatsapp-business-api.md",
         "whatsapp-business-api.md",
         "whatsapp-business-api.md",
-        "decisoes.md",
-        "whatsapp-salao-expo-padrao.md"
+        "whatsapp-salao-expo-padrao.md",
+        "firebase-setup-patterns.md"
       ],
       "top_k_similaridade": [
         0.039,
         0.039,
-        0.038,
+        0.039,
         0.037,
-        0.037
+        0.027
       ]
     },
     {
@@ -292,15 +292,15 @@
         "erros-e-solucoes.md",
         "erros-e-solucoes.md",
         "erros-e-solucoes.md",
-        "decisoes.md",
+        "erros-e-solucoes.md",
         "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.04,
-        0.039,
-        0.039,
-        0.037,
-        0.037
+        0.058,
+        0.056,
+        0.054,
+        0.053,
+        0.052
       ]
     },
     {
@@ -325,15 +325,15 @@
         "whatsapp-salao-expo-padrao.md",
         "whatsapp-salao-expo-padrao.md",
         "whatsapp-salao-expo-padrao.md",
-        "decisoes.md",
+        "whatsapp-salao-expo-padrao.md",
         "whatsapp-salao-expo-padrao.md"
       ],
       "top_k_similaridade": [
-        0.039,
-        0.039,
-        0.037,
-        0.035,
-        0.035
+        0.04,
+        0.038,
+        0.034,
+        0.032,
+        0.029
       ]
     },
     {
@@ -355,14 +355,14 @@
         "lashmatch-mercadopago-assinatura.md",
         "mercadopago-integration.md",
         "mercadopago-integration.md",
-        "mercadopago-assinatura-ota-padroes.md"
+        "mercadopago-integration.md"
       ],
       "top_k_similaridade": [
         0.039,
-        0.038,
         0.037,
         0.036,
-        0.036
+        0.035,
+        0.034
       ]
     },
     {
@@ -386,16 +386,16 @@
       "top_k_arquivos": [
         "mercadopago-integration.md",
         "mercadopago-integration.md",
-        "cortejo-prd.md",
         "mercadopago-integration.md",
+        "cortejo-prd.md",
         "mercadopago-assinatura-ota-padroes.md"
       ],
       "top_k_similaridade": [
-        0.039,
-        0.039,
+        0.038,
         0.037,
         0.037,
-        0.036
+        0.037,
+        0.035
       ]
     },
     {
@@ -445,15 +445,15 @@
         "firebase-deploy-checklist-padrao.md",
         "cloud-functions-patterns.md",
         "cloud-functions-patterns.md",
-        "whatsapp-salao-expo-padrao.md",
-        "cloud-functions-patterns.md"
+        "cloud-functions-patterns.md",
+        "checklists-deploy.md"
       ],
       "top_k_similaridade": [
         0.04,
         0.04,
-        0.039,
+        0.04,
         0.038,
-        0.037
+        0.036
       ]
     },
     {
@@ -475,13 +475,13 @@
         "firebase-deploy-checklist-padrao.md",
         "arquitetura-fabrica-ia.md",
         "arquitetura-fabrica-ia.md",
-        "arquitetura-fabrica-ia.md"
+        "mcps-cursor-padrao.md"
       ],
       "top_k_similaridade": [
-        0.04,
-        0.04,
-        0.04,
+        0.041,
+        0.041,
         0.039,
+        0.038,
         0.037
       ]
     },
@@ -490,28 +490,32 @@
       "query": "expo export web e deploy firebase hosting",
       "tipo": "fluxo",
       "esperado_nota": "firebase-setup-patterns.md",
-      "aceitaveis": [],
+      "aceitaveis": [
+        "firebase-setup-patterns.md",
+        "lashmatch-web-plataforma.md"
+      ],
       "notas_alvo": [
-        "firebase-setup-patterns.md"
+        "firebase-setup-patterns.md",
+        "lashmatch-web-plataforma.md"
       ],
       "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
+      "rank": 1,
+      "rank_primario": 2,
+      "hit": true,
+      "hit_primario": true,
       "top_k_arquivos": [
         "lashmatch-web-plataforma.md",
-        "expo-router-navegacao.md",
-        "expo-router-navegacao.md",
-        "lashmatch-web-plataforma.md",
-        "expo-router-navegacao.md"
+        "firebase-setup-patterns.md",
+        "firebase-setup-patterns.md",
+        "firebase-deploy-checklist-padrao.md",
+        "lashmatch-web-plataforma.md"
       ],
       "top_k_similaridade": [
-        0.04,
-        0.038,
-        0.038,
-        0.038,
-        0.037
+        0.08,
+        0.06,
+        0.045,
+        0.043,
+        0.041
       ]
     },
     {
@@ -532,14 +536,14 @@
         "arquitetura-fabrica-ia.md",
         "arquitetura-fabrica-ia.md",
         "arquitetura-fabrica-ia.md",
-        "arquitetura-fabrica-ia.md",
-        "mcps-cursor-padrao.md"
+        "mcps-cursor-padrao.md",
+        "arquitetura-fabrica-ia.md"
       ],
       "top_k_similaridade": [
         0.04,
-        0.039,
-        0.039,
-        0.035,
+        0.038,
+        0.038,
+        0.036,
         0.035
       ]
     },
@@ -561,15 +565,15 @@
         "erros-e-solucoes.md",
         "rag-protocolo-antes-de-codar.md",
         "arquitetura-fabrica-ia.md",
-        "rag-protocolo-antes-de-codar.md",
-        "erros-e-solucoes.md"
+        "arquitetura-fabrica-ia.md",
+        "decisoes.md"
       ],
       "top_k_similaridade": [
-        0.038,
         0.037,
-        0.036,
-        0.033,
-        0.033
+        0.032,
+        0.031,
+        0.03,
+        0.025
       ]
     },
     {
@@ -577,28 +581,32 @@
       "query": "como subir servidor chroma rag porta 7332?",
       "tipo": "fabrica",
       "esperado_nota": "arquitetura-fabrica-ia.md",
-      "aceitaveis": [],
-      "notas_alvo": [
-        "arquitetura-fabrica-ia.md"
-      ],
-      "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
-      "top_k_arquivos": [
-        "decisoes.md",
-        "decisoes.md",
-        "guia-completo-usuario-fabrica.md",
-        "guia-completo-usuario-fabrica.md",
+      "aceitaveis": [
+        "arquitetura-fabrica-ia.md",
         "guia-completo-usuario-fabrica.md"
       ],
+      "notas_alvo": [
+        "arquitetura-fabrica-ia.md",
+        "guia-completo-usuario-fabrica.md"
+      ],
+      "revisar": false,
+      "rank": 1,
+      "rank_primario": 4,
+      "hit": true,
+      "hit_primario": true,
+      "top_k_arquivos": [
+        "guia-completo-usuario-fabrica.md",
+        "guia-completo-usuario-fabrica.md",
+        "guia-completo-usuario-fabrica.md",
+        "arquitetura-fabrica-ia.md",
+        "arquitetura-fabrica-ia.md"
+      ],
       "top_k_similaridade": [
-        0.039,
-        0.038,
-        0.038,
-        0.038,
-        0.038
+        0.082,
+        0.08,
+        0.077,
+        0.075,
+        0.075
       ]
     },
     {
@@ -611,23 +619,23 @@
         "erros-e-solucoes.md"
       ],
       "revisar": false,
-      "rank": 2,
-      "rank_primario": 2,
+      "rank": 1,
+      "rank_primario": 1,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "decisoes.md",
         "erros-e-solucoes.md",
-        "decisoes.md",
-        "arquitetura-fabrica-ia.md",
-        "guia-completo-usuario-fabrica.md"
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md",
+        "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.04,
-        0.039,
-        0.038,
-        0.038,
-        0.035
+        0.137,
+        0.102,
+        0.084,
+        0.072,
+        0.072
       ]
     },
     {
@@ -640,23 +648,23 @@
         "mcps-cursor-padrao.md"
       ],
       "revisar": false,
-      "rank": 3,
-      "rank_primario": 3,
+      "rank": 1,
+      "rank_primario": 1,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "mercadopago-integration.md",
-        "decisoes.md",
         "mcps-cursor-padrao.md",
+        "mercadopago-integration.md",
+        "setmatch-pagamentos-mercado-pago.md",
         "lashmatch-revenuecat-assinatura.md",
-        "lashmatch-modulos-assinatura-jun2026.md"
+        "lashmatch-revenuecat-assinatura.md"
       ],
       "top_k_similaridade": [
-        0.038,
+        0.066,
+        0.039,
         0.034,
-        0.033,
-        0.033,
-        0.032
+        0.032,
+        0.03
       ]
     },
     {
@@ -678,14 +686,14 @@
         "rag-protocolo-antes-de-codar.md",
         "decisoes.md",
         "rag-protocolo-antes-de-codar.md",
-        "agenda-salao-expo-padrao.md"
+        "cloud-functions-patterns.md"
       ],
       "top_k_similaridade": [
         0.041,
-        0.035,
-        0.033,
-        0.031,
-        0.026
+        0.034,
+        0.032,
+        0.03,
+        0.024
       ]
     },
     {
@@ -705,16 +713,16 @@
       "top_k_arquivos": [
         "arquitetura-fabrica-ia.md",
         "arquitetura-fabrica-ia.md",
-        "guia-completo-usuario-fabrica.md",
         "arquitetura-fabrica-ia.md",
-        "arquitetura-fabrica-ia.md"
+        "guia-completo-usuario-fabrica.md",
+        "erp-angular-estrutura.md"
       ],
       "top_k_similaridade": [
         0.04,
-        0.039,
+        0.04,
+        0.04,
         0.038,
-        0.036,
-        0.031
+        0.03
       ]
     },
     {
@@ -727,23 +735,23 @@
         "cadastro-clientes-salao-expo.md"
       ],
       "revisar": false,
-      "rank": 1,
-      "rank_primario": 1,
+      "rank": 2,
+      "rank_primario": 2,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
+        "cortejo-schemas.md",
         "cadastro-clientes-salao-expo.md",
-        "erros-e-solucoes.md",
-        "decisoes.md",
         "mercadopago-assinatura-ota-padroes.md",
-        "cortejo-schemas.md"
+        "firebase-setup-patterns.md",
+        "expo-router-navegacao.md"
       ],
       "top_k_similaridade": [
-        0.039,
-        0.037,
-        0.036,
-        0.033,
-        0.033
+        0.073,
+        0.038,
+        0.03,
+        0.02,
+        0.019
       ]
     },
     {
@@ -768,8 +776,8 @@
         "mcps-cursor-padrao.md"
       ],
       "top_k_similaridade": [
-        0.041,
-        0.039,
+        0.037,
+        0.037,
         0.036,
         0.035,
         0.033
@@ -799,8 +807,8 @@
       "top_k_similaridade": [
         0.039,
         0.038,
+        0.038,
         0.037,
-        0.036,
         0.036
       ]
     },
@@ -855,9 +863,9 @@
         "erp-multitenancy-spring.md"
       ],
       "top_k_similaridade": [
-        0.04,
+        0.039,
         0.038,
-        0.037,
+        0.036,
         0.036,
         0.036
       ]
@@ -908,16 +916,16 @@
       "top_k_arquivos": [
         "erp-auth-login.md",
         "erp-auth-login.md",
-        "setmatch-prd.md",
         "erp-auth-login.md",
-        "erp-auth-login.md"
+        "erp-auth-login.md",
+        "auth-patterns.md"
       ],
       "top_k_similaridade": [
         0.04,
-        0.038,
-        0.037,
-        0.034,
-        0.034
+        0.036,
+        0.032,
+        0.032,
+        0.031
       ]
     },
     {
@@ -937,16 +945,16 @@
       "top_k_arquivos": [
         "erp-auth-login.md",
         "erp-auth-login.md",
-        "erp-auth-login.md",
-        "erp-auth-login.md",
+        "decisoes.md",
+        "decisoes.md",
         "erp-auth-login.md"
       ],
       "top_k_similaridade": [
         0.04,
-        0.037,
+        0.036,
         0.035,
-        0.035,
-        0.033
+        0.034,
+        0.032
       ]
     },
     {
@@ -971,7 +979,7 @@
         "erp-multitenancy-spring.md"
       ],
       "top_k_similaridade": [
-        0.039,
+        0.04,
         0.039,
         0.038,
         0.037,
@@ -988,23 +996,23 @@
         "spring-backend.md"
       ],
       "revisar": false,
-      "rank": 1,
-      "rank_primario": 1,
+      "rank": 2,
+      "rank_primario": 2,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
+        "regras-gerais.md",
         "spring-backend.md",
-        "INDEX.md",
         "spring-backend.md",
-        "erp-spring-camadas.md",
-        "testes-backend.md"
+        "testes-backend.md",
+        "angular-frontend.md"
       ],
       "top_k_similaridade": [
-        0.04,
-        0.04,
-        0.039,
-        0.038,
-        0.037
+        0.117,
+        0.062,
+        0.06,
+        0.056,
+        0.05
       ]
     },
     {
@@ -1023,17 +1031,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "spring-backend.md",
-        "erp-spring-camadas.md",
         "mapeamento-frontend-backend.md",
         "regras-gerais.md",
-        "testes-backend.md"
+        "testes-backend.md",
+        "spring-backend.md"
       ],
       "top_k_similaridade": [
-        0.041,
-        0.033,
-        0.032,
-        0.032,
-        0.031
+        0.064,
+        0.045,
+        0.045,
+        0.043,
+        0.036
       ]
     },
     {
@@ -1053,16 +1061,16 @@
       "top_k_arquivos": [
         "mapeamento-frontend-backend.md",
         "spring-backend.md",
-        "testes-backend.md",
-        "INDEX.md",
-        "spring-backend.md"
+        "spring-backend.md",
+        "mapeamento-frontend-backend.md",
+        "testes-backend.md"
       ],
       "top_k_similaridade": [
-        0.04,
-        0.04,
-        0.038,
-        0.038,
-        0.038
+        0.062,
+        0.06,
+        0.059,
+        0.059,
+        0.058
       ]
     },
     {
@@ -1075,23 +1083,23 @@
         "angular-frontend.md"
       ],
       "revisar": false,
-      "rank": 1,
-      "rank_primario": 1,
+      "rank": 2,
+      "rank_primario": 2,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "angular-frontend.md",
-        "sinaflor-prd.md",
         "regras-gerais.md",
-        "INDEX.md",
-        "angular-frontend.md"
+        "angular-frontend.md",
+        "angular-frontend.md",
+        "mapeamento-frontend-backend.md",
+        "testes-frontend.md"
       ],
       "top_k_similaridade": [
-        0.041,
-        0.039,
-        0.039,
-        0.038,
-        0.038
+        0.132,
+        0.064,
+        0.06,
+        0.058,
+        0.057
       ]
     },
     {
@@ -1112,15 +1120,15 @@
         "angular-frontend.md",
         "mapeamento-frontend-backend.md",
         "spring-backend.md",
-        "testes-backend.md",
-        "testes-frontend.md"
+        "testes-frontend.md",
+        "testes-backend.md"
       ],
       "top_k_similaridade": [
-        0.04,
-        0.04,
-        0.039,
-        0.038,
-        0.038
+        0.062,
+        0.062,
+        0.058,
+        0.058,
+        0.057
       ]
     },
     {
@@ -1140,16 +1148,16 @@
       "top_k_arquivos": [
         "angular-frontend.md",
         "angular-frontend.md",
-        "sinaflor-prd.md",
         "testes-frontend.md",
-        "spring-backend.md"
+        "spring-backend.md",
+        "testes-frontend.md"
       ],
       "top_k_similaridade": [
-        0.041,
-        0.039,
-        0.039,
-        0.039,
-        0.037
+        0.064,
+        0.061,
+        0.061,
+        0.057,
+        0.057
       ]
     },
     {
@@ -1169,16 +1177,16 @@
       "top_k_arquivos": [
         "testes-backend.md",
         "testes-backend.md",
-        "INDEX.md",
         "testes-frontend.md",
-        "spring-backend.md"
+        "spring-backend.md",
+        "angular-frontend.md"
       ],
       "top_k_similaridade": [
-        0.041,
-        0.04,
-        0.037,
-        0.037,
-        0.037
+        0.063,
+        0.063,
+        0.056,
+        0.056,
+        0.052
       ]
     },
     {
@@ -1191,23 +1199,23 @@
         "testes-backend.md"
       ],
       "revisar": false,
-      "rank": 1,
-      "rank_primario": 1,
+      "rank": 2,
+      "rank_primario": 2,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "testes-backend.md",
         "regras-gerais.md",
+        "testes-backend.md",
         "spring-backend.md",
         "mapeamento-frontend-backend.md",
-        "sinaflor-prd.md"
+        "testes-frontend.md"
       ],
       "top_k_similaridade": [
-        0.04,
-        0.037,
-        0.037,
-        0.036,
-        0.036
+        0.127,
+        0.06,
+        0.057,
+        0.057,
+        0.055
       ]
     },
     {
@@ -1258,16 +1266,16 @@
       "top_k_arquivos": [
         "testes-frontend.md",
         "testes-frontend.md",
-        "INDEX.md",
         "angular-frontend.md",
-        "erp-angular-estrutura.md"
+        "angular-frontend.md",
+        "testes-frontend.md"
       ],
       "top_k_similaridade": [
-        0.041,
-        0.04,
-        0.038,
-        0.036,
-        0.036
+        0.064,
+        0.062,
+        0.056,
+        0.055,
+        0.055
       ]
     },
     {
@@ -1286,17 +1294,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "testes-frontend.md",
-        "testes-backend.md",
         "testes-frontend.md",
+        "testes-backend.md",
         "testes-frontend.md",
         "angular-frontend.md"
       ],
       "top_k_similaridade": [
-        0.04,
-        0.04,
-        0.039,
-        0.038,
-        0.038
+        0.062,
+        0.06,
+        0.059,
+        0.059,
+        0.057
       ]
     },
     {
@@ -1309,23 +1317,23 @@
         "testes-frontend.md"
       ],
       "revisar": false,
-      "rank": 3,
-      "rank_primario": 3,
+      "rank": 2,
+      "rank_primario": 2,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
         "testes-backend.md",
-        "sinaflor-prd.md",
         "testes-frontend.md",
         "angular-frontend.md",
-        "INDEX.md"
+        "mapeamento-frontend-backend.md",
+        "spring-backend.md"
       ],
       "top_k_similaridade": [
-        0.04,
-        0.039,
-        0.039,
-        0.039,
-        0.039
+        0.06,
+        0.059,
+        0.059,
+        0.058,
+        0.057
       ]
     },
     {
@@ -1338,23 +1346,23 @@
         "mapeamento-frontend-backend.md"
       ],
       "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
       "top_k_arquivos": [
-        "sinaflor-prd.md",
-        "erp-angular-estrutura.md",
-        "sinaflor-prd.md",
+        "mapeamento-frontend-backend.md",
+        "mapeamento-frontend-backend.md",
+        "mapeamento-frontend-backend.md",
         "angular-frontend.md",
-        "erp-angular-estrutura.md"
+        "testes-frontend.md"
       ],
       "top_k_similaridade": [
-        0.036,
-        0.035,
-        0.034,
-        0.034,
-        0.034
+        0.273,
+        0.273,
+        0.273,
+        0.037,
+        0.037
       ]
     },
     {
@@ -1373,17 +1381,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "mapeamento-frontend-backend.md",
-        "sinaflor-prd.md",
-        "angular-frontend.md",
-        "INDEX.md",
-        "spring-backend.md"
+        "mapeamento-frontend-backend.md",
+        "mapeamento-frontend-backend.md",
+        "testes-backend.md",
+        "regras-gerais.md"
       ],
       "top_k_similaridade": [
-        0.041,
-        0.04,
-        0.039,
-        0.039,
-        0.038
+        0.14,
+        0.12,
+        0.115,
+        0.059,
+        0.059
       ]
     },
     {
@@ -1396,23 +1404,23 @@
         "mapeamento-frontend-backend.md"
       ],
       "revisar": false,
-      "rank": null,
-      "rank_primario": null,
-      "hit": false,
-      "hit_primario": false,
+      "rank": 1,
+      "rank_primario": 1,
+      "hit": true,
+      "hit_primario": true,
       "top_k_arquivos": [
-        "sinaflor-prd.md",
-        "erp-stack.md",
-        "angular-frontend.md",
-        "erp-angular-estrutura.md",
-        "testes-frontend.md"
+        "mapeamento-frontend-backend.md",
+        "mapeamento-frontend-backend.md",
+        "mapeamento-frontend-backend.md",
+        "testes-frontend.md",
+        "angular-frontend.md"
       ],
       "top_k_similaridade": [
-        0.038,
-        0.037,
-        0.036,
-        0.036,
-        0.035
+        0.273,
+        0.273,
+        0.273,
+        0.039,
+        0.038
       ]
     },
     {
@@ -1431,17 +1439,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "regras-gerais.md",
+        "regras-gerais.md",
         "testes-backend.md",
-        "INDEX.md",
         "mapeamento-frontend-backend.md",
         "angular-frontend.md"
       ],
       "top_k_similaridade": [
-        0.041,
-        0.039,
-        0.039,
-        0.039,
-        0.038
+        0.14,
+        0.125,
+        0.061,
+        0.06,
+        0.06
       ]
     },
     {
@@ -1454,23 +1462,23 @@
         "regras-gerais.md"
       ],
       "revisar": false,
-      "rank": 5,
-      "rank_primario": 5,
+      "rank": 4,
+      "rank_primario": 4,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
         "angular-frontend.md",
         "angular-frontend.md",
-        "INDEX.md",
         "spring-backend.md",
-        "regras-gerais.md"
+        "regras-gerais.md",
+        "testes-backend.md"
       ],
       "top_k_similaridade": [
-        0.041,
-        0.039,
-        0.038,
-        0.038,
-        0.038
+        0.063,
+        0.06,
+        0.059,
+        0.058,
+        0.057
       ]
     },
     {
@@ -1483,21 +1491,21 @@
         "regras-gerais.md"
       ],
       "revisar": false,
-      "rank": 5,
-      "rank_primario": 5,
+      "rank": 1,
+      "rank_primario": 1,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
-        "spring-backend.md",
-        "testes-backend.md",
-        "testes-frontend.md",
+        "regras-gerais.md",
         "mapeamento-frontend-backend.md",
-        "regras-gerais.md"
+        "angular-frontend.md",
+        "gestao-visibilidade-perfis.md",
+        "INDEX.md"
       ],
       "top_k_similaridade": [
-        0.039,
-        0.039,
-        0.037,
+        0.179,
+        0.055,
+        0.052,
         0.036,
         0.036
       ]
@@ -1526,9 +1534,9 @@
       "top_k_similaridade": [
         0.041,
         0.04,
-        0.039,
-        0.037,
-        0.036
+        0.038,
+        0.036,
+        0.033
       ]
     },
     {
@@ -1547,17 +1555,17 @@
       "hit_primario": true,
       "top_k_arquivos": [
         "erp-spring-camadas.md",
+        "sinaflor-prd.md",
         "erp-auth-login.md",
         "erp-auth-login.md",
-        "decisoes.md",
-        "erp-spring-camadas.md"
+        "erros-e-solucoes.md"
       ],
       "top_k_similaridade": [
-        0.032,
+        0.03,
+        0.029,
         0.025,
         0.024,
-        0.024,
-        0.023
+        0.024
       ]
     },
     {
@@ -1637,14 +1645,14 @@
         "erp-stack.md",
         "erp-stack.md",
         "erp-angular-estrutura.md",
-        "sinaflor-prd.md"
+        "erp-stack.md"
       ],
       "top_k_similaridade": [
         0.04,
         0.038,
         0.038,
         0.038,
-        0.035
+        0.036
       ]
     },
     {
@@ -1657,23 +1665,23 @@
         "erp-stack.md"
       ],
       "revisar": false,
-      "rank": 3,
-      "rank_primario": 3,
+      "rank": 1,
+      "rank_primario": 1,
       "hit": true,
       "hit_primario": true,
       "top_k_arquivos": [
+        "erp-stack.md",
         "erp-angular-estrutura.md",
-        "sinaflor-prd.md",
         "erp-stack.md",
-        "erp-stack.md",
-        "erp-angular-estrutura.md"
+        "erp-angular-estrutura.md",
+        "erp-multitenancy-spring.md"
       ],
       "top_k_similaridade": [
-        0.038,
-        0.038,
         0.037,
         0.037,
-        0.036
+        0.037,
+        0.036,
+        0.035
       ]
     },
     {

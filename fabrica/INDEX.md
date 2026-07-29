@@ -1,10 +1,11 @@
 # 📚 Índice — Base de Conhecimento Fábrica
 
-> Gerado automaticamente a partir de `CLAUDE.md`  
-> Data: 11/05/2026 11:12
+> Indexar com `indexar_rapido.py` · Data de revisão índice: **23/07/2026**
 
 ## Notas criadas
 
+- [[setmatch-rankings-clubes-padrao]] — **clubes + rankings + solicitação + feed social** (Setmatch jul/2026) · `setmatch`, `ranking`, `firestore`
+- [[setmatch-pagamentos-mercado-pago]] — **PIX/cartão 1x + setmatchId + regras aulas/ranking/torneio** (Setmatch jul/2026) · `setmatch`, `pagamentos`, `mercadopago`
 - [[auth-patterns]] — 10 seção(ões) · `firebase`, `auth`, `seguranca`
 - [[checklists-deploy]] — 11 seção(ões) · `checklist`, `deploy`, `qualidade`
 - [[firebase-deploy-checklist-padrao]] — **checklist Firebase deploy (functions/rules/hosting)** · `firebase`, `deploy`, `fluxo`
@@ -22,6 +23,11 @@
 - [[excluir-conta-app-expo-padrao]] — **exclusão permanente de conta LGPD/App Store** (Cortejo/LashMatch) · `lgpd`, `lashmatch`, `cortejo`
 - [[outros]] — 76 seção(ões) · `geral`
 - [[padroes-fabrica]] — 18 seção(ões) · `padroes`, `fabrica`, `lashmatch`
+- [[zenpro-catalogo-variantes-capinha-padrao]] — **catálogo dinâmico modelo × variante (material/preço)** · `zenpro`, `capinha`, `personalizacao`, `firestore`
+- [[zenpro-portal-revendedor-b2b]] — **portal único /revendedor + faixas de preço** · `zenpro`, `revendedor`, `b2b`
+- [[zenpro-melhor-envio]] — **cotação frete Melhor Envio + peso no produto** · `zenpro`, `frete`, `melhor-envio`
+- [[zenpro-estoque-multitenant]] — **estoque central × por loja (inclui loja oficial zenpro)** · `zenpro`, `estoque`, `admin`
+- [[zenpro-personalizacao-rockb2b]] — **frames RockB2B como câmera (não só SVG/heurística note→Samsung)** · `zenpro`, `rockb2b`, `personalizacao`, `capinha`
 - [[react-native-fundamentos]] — 14 seção(ões) · `react-native`, `fundamentos`, `ui`
 - [[react-navigation-patterns]] — 5 seção(ões) · `navegacao`, `react-navigation`, `tabs`
 - [[snippets-utilitarios]] — 6 seção(ões) · `snippets`, `utilitarios`, `codigo`
@@ -38,8 +44,9 @@
 - [[rag-protocolo-antes-de-codar]] — protocolo RAG + caso calendário sem consulta · `rag`, `agente`
 - [[react-native-calendars]] — lib calendário (Calendar, Agenda, markedDates) · `calendario`, `expo`
 - **SINAFLOR2** (`fabrica/sinaflor/`) — Angular 7 + Spring Boot legado IBAMA · ver [[sinaflor/INDEX]]
-- [[arquitetura-fabrica-ia]] — **como a fábrica funciona (doc canônico 100%)** · `fabrica`, `arquitetura`, `rag`
+- [[arquitetura-fabrica-ia]] — **como a fábrica funciona (doc canônico)** · estado jul/2026: Cortejo+LashMatch · `fabrica`, `arquitetura`, `rag`
 - [[guia-completo-usuario-fabrica]] — **guia para humano: começar, arquitetura, adicionar especialidade (AWS/Postgres)** · `fabrica`, `guia`, `onboarding`
+- `projetos/cortejo-project.md` · `projetos/lashmatch-project.md` — refs técnicas dos apps (RAG)
 
 ## Como usar no RAG
 

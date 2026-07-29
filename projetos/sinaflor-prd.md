@@ -245,6 +245,10 @@ Microsserviço Spring Boot gerado com **JHipster**. Expõe a API REST consumida 
 - **Config server**: Spring Cloud Config (bootstrap)
 - **Monitoramento**: Sentry + Spring Actuator
 
+### Painel de Gestão — visibilidade
+
+Ver `fabrica/sinaflor/gestao-visibilidade-perfis.md` e `PROJECT.md` (repo). Em resumo: sem Em Elaboração; GO/Analista têm Meus e Todos (órgãos SCA no Todos; Meus do Analista = destinatário; Meus do GO = destinatário + Aguardando + manteve aberto).
+
 ## Stack e bibliotecas principais
 
 | Biblioteca | Uso |

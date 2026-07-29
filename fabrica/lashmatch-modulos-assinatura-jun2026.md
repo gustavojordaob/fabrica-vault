@@ -7,20 +7,21 @@ tags:
   - paywall
 fonte: LashMatch (jun/2026)
 projeto: LashMatch
-atualizado_em: 2026-06-09
+atualizado_em: 2026-07-23
 links:
   - "[[lashmatch-mercadopago-assinatura]]"
   - "[[lashmatch-revenuecat-assinatura]]"
   - "[[cortejo-modulos-jun2026-padrao]]"
   - "[[mercadopago-assinatura-ota-padroes]]"
   - "[[lashmatch-schemas]]"
+  - "[[../projetos/lashmatch-project]]"
 ---
 
 > **Agente Cursor — consultar ANTES de alterar pagamentos LashMatch**
 >
 > 1. `rag_buscar("lashmatch assinatura dual revenuecat mercadopago")`
 > 2. MCP **revenuecat** + **appstore-connect** (iOS) · MCP **mercadopago** (Android)
-> 3. Notas: [[lashmatch-mercadopago-assinatura]] · [[lashmatch-revenuecat-assinatura]]
+> 3. Notas: [[lashmatch-mercadopago-assinatura]] · [[lashmatch-revenuecat-assinatura]] · [[../projetos/lashmatch-project]]
 
 # LashMatch — Módulo assinatura (jun/2026)
 
@@ -92,5 +93,6 @@ functions/SRC/
 - [ ] Produtos ASC + RevenueCat offering `default`
 - [ ] IDs MP em `config/mercadopago_planos` ou `MP_PLAN_IDS`
 - [ ] `firebase deploy` functions MP + RC
-- [ ] EAS build iOS (não Expo Go)
+- [ ] EAS build iOS (não Expo Go) · OTA com public key RC (`appl_`) / fallback no cliente
 - [ ] Reindexar Obsidian após editar docs
+- [ ] WhatsApp Meta: setup **só no PC** — [[whatsapp-salao-expo-padrao]] · ref [[../projetos/lashmatch-project]]

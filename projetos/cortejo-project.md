@@ -5,33 +5,40 @@ stack: React Native (Expo) + Firebase
 package: com.fabricaapps.cortejo
 firebase: cortejo-app
 repo: C:/Users/gusta/projetos/cortejo
-atualizado_em: 2026-06-18
+atualizado_em: 2026-07-23
 links:
   - "[[cortejo-prd]]"
   - "[[../fabrica/cortejo-schemas]]"
+  - "[[../fabrica/cortejo-modulos-jun2026-padrao]]"
   - "[[../fabrica/agenda-salao-expo-padrao]]"
+  - "[[../fabrica/whatsapp-salao-expo-padrao]]"
+  - "[[../fabrica/arquitetura-fabrica-ia]]"
 ---
 
 # Cortejo — PROJECT (referência técnica)
 
-> **Fonte de verdade:** esta nota + PRD **[[cortejo-prd]]**.  
+> **Fonte de verdade:** esta nota + PRD **[[cortejo-prd]]** + módulos **[[../fabrica/cortejo-modulos-jun2026-padrao]]**.  
 > Padrões cross-projeto: `obsidian/fabrica/`.  
-> O arquivo `PROJECT.md` no repo Git é só um **atalho** para cá.
+> O arquivo `PROJECT.md` / `CLAUDE.md` no repo Git é só **atalho** — KB = Obsidian.
 
 ---
 
 ## Visão rápida
 
-App de gestão para salões: agenda, estoque, PDV, financeiro, assinatura MP.
+App de gestão para salões: agenda, estoque, PDV, financeiro, WhatsApp, assinatura.
 
-- **Stack:** Expo Router + Firebase JS SDK + `theme/tokens.ts`
-- **Multi-tenant:** `artifacts/cortejo/salons/{salonId}/…`
+| Item | Valor |
+|------|-------|
+| Stack | Expo (SDK 54) · expo-router · Firebase JS SDK 12 · `theme/tokens.ts` |
+| Firebase | `cortejo-app` |
+| Multi-tenant | `artifacts/cortejo/salons/{salonId}/…` |
+| Assinatura | **Dual:** RevenueCat iOS + Mercado Pago Android · trial **14 dias** · sync Firestore |
+| WhatsApp | Número plataforma + próprio (Embedded Signup) · config Meta **só no web/PC** |
+| Deploy | Cloud Functions · Hosting · EAS Update (OTA) · RC public key `appl_` no cliente |
 
 ---
 
 ## Design tokens
-
-Ver PRD seção 2 ou `theme/tokens.ts` no repo.
 
 | Token | Hex |
 |-------|-----|
@@ -46,11 +53,13 @@ Ver PRD seção 2 ou `theme/tokens.ts` no repo.
 | Rota | Função |
 |------|--------|
 | `/(tabs)/index` | Agenda |
-| `/agendamento/novo` | Novo agendamento |
-| `/config/horarios` | Horário **por profissional** |
+| `/agendamento/[id]` | Detalhe / edição agendamento |
+| `/config/horarios` | Horário por profissional |
 | `/config/bloqueios` | Bloqueios agenda |
 | `/config/clientes` | CRUD clientes |
-| `/agendar` | Link público (web) |
+| `/config/whatsapp` | Status + connect (web) + cartão Meta |
+| `/config/plano` · `/config/cartao` | Assinatura / paywall |
+| `/agendar` | Link público (web Hosting) |
 
 ---
 
@@ -60,16 +69,16 @@ Ver PRD seção 2 ou `theme/tokens.ts` no repo.
 |------|----------|
 | **[[cortejo-prd]]** | Produto, design system, escopo |
 | **[[../fabrica/cortejo-schemas]]** | Firestore Cortejo |
-| **[[../fabrica/agenda-salao-expo-padrao]]** | Agenda, slots, bloqueios, busca cliente |
-| **[[../fabrica/cadastro-clientes-salao-expo]]** | Clientes + link público |
-| **[[../fabrica/whatsapp-business-api]]** | WhatsApp Meta |
+| **[[../fabrica/cortejo-modulos-jun2026-padrao]]** | Assinatura dual, trial, msgUsage, OTA |
+| **[[../fabrica/agenda-salao-expo-padrao]]** | Agenda, slots, bloqueios |
+| **[[../fabrica/whatsapp-salao-expo-padrao]]** | WhatsApp multi-tenant + Meta PC-only |
+| **[[../fabrica/whatsapp-business-api]]** | Envio Meta / templates |
 | **[[../fabrica/mercadopago-assinatura-ota-padroes]]** | Assinatura MP |
-| **[[../fabrica/decisoes]]** | Decisões técnicas (filtrar Cortejo) |
-| **[[../fabrica/erros-e-solucoes]]** | Erros resolvidos |
+| **[[../fabrica/decisoes]]** · **[[../fabrica/erros-e-solucoes]]** | Memória |
 
 ---
 
-## RAG obrigatório
+## RAG
 
-Antes de codar: `rag_buscar` + `buscar_historico`  
-Após erro/decisão: `registrar_erro_solucao` / `salvar_decisao` + `indexar_rapido.py`
+Queries úteis: `cortejo assinatura dual`, `whatsapp salao embedded signup`, `agenda calendario cortejo`.  
+Antes de codar: `rag_buscar` + `buscar_historico`.

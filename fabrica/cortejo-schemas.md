@@ -43,6 +43,8 @@ Path raiz: `artifacts/cortejo/salons/{salonId}`
 | `whatsapp` | object | Ver seção abaixo — conexão Meta / envio |
 | `businessHours` | `BusinessHours` | **Fallback** de horário (legado / template) |
 | `blockedPeriods` | `BlockedPeriod[]` | Bloqueios de agenda (salão ou por profissional) |
+| `lembrete1dHorario` | string HH:mm? | Lembrete WhatsApp no dia civil anterior (padrão `08:00` BRT) |
+| `lembrete7dHorario` | string HH:mm? | Lembrete WhatsApp 7 dias antes (padrão `08:00` BRT) |
 | `subscription` | object | Mercado Pago |
 
 ### `BlockedPeriod` (no doc do salão)
@@ -109,12 +111,14 @@ Ver **[[cadastro-clientes-salao-expo]]**
 
 | Campo | Tipo | Uso |
 |-------|------|-----|
-| `clientId`, `clientName`, `clientPhone` | string | Desnormalizado |
+| `clientId`, `clientName`, `clientPhone` | string? | Desnormalizado; `clientId` ausente = só nome (walk_in) |
 | `professionalUid`, `professionalName` | string | Agenda + slots |
 | `serviceIds[]`, `serviceNames[]` | string[] | Serviço |
 | `start`, `end` | Timestamp | Conflito + bloqueio |
-| `status` | scheduled \| confirmed \| done \| canceled \| no_show | |
-| `source` | app \| public \| walk_in | |
+| `status` | scheduled \| confirmed \| done \| canceled \| no_show \| pending | |
+| `source` | app \| public \| walk_in | `walk_in` = app sem cadastro de cliente |
+| `enviarWhatsAppCliente` | boolean? | `false` = sem **confirmação** WhatsApp; lembretes 7d/1d independentes (precisam telefone) |
+| `confirmacaoPuladaEm` | Timestamp? | CF pulou confirmação |
 
 ---
 
