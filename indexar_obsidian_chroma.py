@@ -40,12 +40,26 @@ MAX_RESULTS = int(os.environ.get("RAG_MAX_RESULTS", "5"))
 # 127.0.0.1 local; 0.0.0.0 no Docker/App Runner
 RAG_BIND = os.environ.get("RAG_BIND", "127.0.0.1")
 RAG_API_KEY = os.environ.get("RAG_API_KEY", "").strip()
+# Local: aws-rag/static; Docker: /app/static
+_STATIC_CANDIDATES = [
+    Path(os.environ.get("RAG_STATIC_PATH", "")),
+    Path(__file__).resolve().parent / "aws-rag" / "static",
+    Path(__file__).resolve().parent / "static",
+    Path("/app/static"),
+]
 
 
-def buscar(collection, model, query, n=MAX_RESULTS):
+def _static_dir():
+    for p in _STATIC_CANDIDATES:
+        if p and (p / "index.html").is_file():
+            return p
+    return None
+
+
+def buscar(collection, model, query, n=MAX_RESULTS, projeto=None):
     from rag_retrieval import buscar_hibrido
 
-    return buscar_hibrido(collection, model, query, n)
+    return buscar_hibrido(collection, model, query, n, projeto=projeto)
 
 
 def _sync_chroma_from_s3():
@@ -96,7 +110,15 @@ def iniciar_servidor(porta=7332, device="cpu"):
     from http.server import HTTPServer, BaseHTTPRequestHandler
     from urllib.parse import urlparse, parse_qs
 
-    state = {"ready": False, "error": None, "collection": None, "model": None}
+    state = {
+        "ready": False,
+        "error": None,
+        "collection": None,
+        "model": None,
+        "chunks": None,
+        "pools": None,
+    }
+    static_root = _static_dir()
 
     class RAGHandler(BaseHTTPRequestHandler):
         def _unauthorized(self):
@@ -111,24 +133,86 @@ def iniciar_servidor(porta=7332, device="cpu"):
             got = self.headers.get("X-RAG-Key") or self.headers.get("x-rag-key") or ""
             return got == RAG_API_KEY
 
+        def _send_json(self, code: int, body: dict):
+            raw = json.dumps(body, ensure_ascii=False).encode("utf-8")
+            self.send_response(code)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(raw)
+
+        def _send_file(self, path: Path, content_type: str):
+            data = path.read_bytes()
+            self.send_response(200)
+            self.send_header("Content-Type", content_type)
+            self.send_header("Cache-Control", "no-cache")
+            self.send_header("Content-Length", str(len(data)))
+            self.end_headers()
+            self.wfile.write(data)
+
+        def _health_body(self) -> dict:
+            rerank = os.environ.get("RAG_RERANK", "1").strip().lower() not in (
+                "0",
+                "false",
+                "no",
+                "off",
+            )
+            # Não importar rag_retrieval aqui — no boot do App Runner isso
+            # compete com o warmup e pode matar a instância (OOM / health fail).
+            chunks = state["chunks"]
+            if chunks is None and state["collection"] is not None:
+                try:
+                    chunks = state["collection"].count()
+                    state["chunks"] = chunks
+                except Exception:
+                    chunks = None
+            pools = state.get("pools") or {
+                "dense": 48,
+                "bm25": 48,
+                "meta": 32,
+                "rerank": int(os.environ.get("RAG_RERANK_POOL", "24")) if rerank else None,
+            }
+            pipeline = (
+                "denso+BM25+meta+RRF+rerank" if rerank else "denso+BM25+meta+RRF"
+            )
+            rerank_model = os.environ.get(
+                "RAG_RERANK_MODEL", "BAAI/bge-reranker-v2-m3"
+            ).strip()
+            body = {
+                "ok": True,
+                "service": "fabrica-rag",
+                "bind": RAG_BIND,
+                "ready": state["ready"],
+                "chunks": chunks,
+                "rerank": bool(rerank),
+                "model": MODEL_NAME,
+                "rerank_model": rerank_model if rerank else None,
+                "pipeline": pipeline,
+                "pools": pools,
+                "auth_required": bool(RAG_API_KEY),
+                "ui": bool(static_root),
+            }
+            if state["error"]:
+                body["error"] = state["error"]
+            return body
+
         def do_GET(self):
             parsed = urlparse(self.path)
-            if parsed.path in ("/health", "/"):
-                body = {
-                    "ok": True,
-                    "service": "fabrica-rag",
-                    "bind": RAG_BIND,
-                    "ready": state["ready"],
-                }
-                if state["error"]:
-                    body["error"] = state["error"]
-                self.send_response(200)
-                self.send_header("Content-Type", "application/json; charset=utf-8")
-                self.end_headers()
-                self.wfile.write(json.dumps(body, ensure_ascii=False).encode("utf-8"))
+            path = parsed.path.rstrip("/") or "/"
+
+            if path == "/health":
+                self._send_json(200, self._health_body())
                 return
 
-            if parsed.path != "/buscar":
+            if path in ("/", "/ui") and static_root:
+                self._send_file(static_root / "index.html", "text/html; charset=utf-8")
+                return
+
+            if path == "/" and not static_root:
+                self._send_json(200, self._health_body())
+                return
+
+            if path != "/buscar":
                 self.send_response(404)
                 self.end_headers()
                 return
@@ -152,12 +236,15 @@ def iniciar_servidor(porta=7332, device="cpu"):
             params = parse_qs(parsed.query)
             query = params.get("q", [""])[0]
             n = int(params.get("n", [str(MAX_RESULTS)])[0])
+            projeto = (params.get("projeto", [""])[0] or "").strip() or None
             if not query:
                 self.send_response(400)
                 self.end_headers()
                 return
             t0 = datetime.now()
-            resultados = buscar(state["collection"], state["model"], query, n)
+            resultados = buscar(
+                state["collection"], state["model"], query, n, projeto=projeto
+            )
             elapsed_ms = (datetime.now() - t0).total_seconds() * 1000
             self.send_response(200)
             self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -191,8 +278,29 @@ def iniciar_servidor(porta=7332, device="cpu"):
             warmup_indices(collection, model)
             state["collection"] = collection
             state["model"] = model
+            state["chunks"] = n_chunks
+            try:
+                from rag_retrieval import (
+                    POOL_BM25,
+                    POOL_DENSE,
+                    POOL_META,
+                    RERANK_ENABLED,
+                    RERANK_POOL,
+                )
+
+                state["pools"] = {
+                    "dense": POOL_DENSE,
+                    "bm25": POOL_BM25,
+                    "meta": POOL_META,
+                    "rerank": RERANK_POOL if RERANK_ENABLED else None,
+                }
+            except Exception:
+                pass
             state["ready"] = True
-            print("✅  Índices BM25 prontos — /buscar liberado\n")
+            from rag_retrieval import RERANK_ENABLED
+
+            modo = "denso+BM25+meta+RRF+rerank" if RERANK_ENABLED else "denso+BM25+meta+RRF"
+            print(f"✅  Índices prontos — /buscar liberado ({modo})\n")
             sys.stdout.flush()
         except BaseException as e:
             # pyo3 PanicException do Chroma nao herda de Exception
@@ -204,6 +312,8 @@ def iniciar_servidor(porta=7332, device="cpu"):
     servidor = HTTPServer((bind, porta), RAGHandler)
     print(f"🚀  Servidor RAG (health) em http://{bind}:{porta}")
     print(f"    Health: http://{bind}:{porta}/health  (ready sobe após warmup)")
+    if static_root:
+        print(f"    UI:     http://{bind}:{porta}/  ({static_root})")
     print(f"    Teste:  http://{bind}:{porta}/buscar?q=como+fazer+auth")
     print(f"    Ctrl+C para parar\n")
     sys.stdout.flush()
@@ -288,7 +398,7 @@ def main():
         return
 
     print("\n╔══════════════════════════════════════╗")
-    print("║  RAG Local — Híbrido (Chroma+BM25)   ║")
+    print("║  RAG Local — Híbrido + meta/rerank   ║")
     print("╚══════════════════════════════════════╝\n")
 
     if args.doctor:
@@ -298,6 +408,9 @@ def main():
 
     if args.server:
         # Health responde na hora; modelo/Chroma aquecem em background (App Runner).
+        # Rerank ON por padrão (RAG_RERANK=0 para desligar).
+        if "RAG_RERANK" not in os.environ:
+            os.environ["RAG_RERANK"] = "1"
         iniciar_servidor(porta=args.porta, device=args.device)
         return
 
@@ -311,10 +424,14 @@ def main():
         sys.exit(1)
 
     if args.buscar:
+        if "RAG_RERANK" not in os.environ:
+            os.environ["RAG_RERANK"] = "1"
         print(f"🔍  Buscando: '{args.buscar}'\n")
         for i, r in enumerate(buscar(collection, model, args.buscar, args.n), 1):
-            print(f"  [{i}] {r['arquivo']} (similaridade: {r['similaridade']})")
-            print(f"      {r['conteudo'][:200]}...\n")
+            cit = r.get("citacao", r["arquivo"])
+            proj = r.get("projeto", "?")
+            print(f"  [{i}] {cit}  projeto={proj}  sim={r['similaridade']}")
+            print(f"      {r.get('trecho') or r['conteudo'][:200]}...\n")
         return
 
 

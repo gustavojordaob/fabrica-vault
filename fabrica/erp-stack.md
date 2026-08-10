@@ -16,7 +16,9 @@ tipo_doc: padrao
 # ERP — stack canônica (padrão fábrica)
 
 > **Especialidade ERP-web.** Diferente do padrão Expo/Firebase dos apps de salão.
-> Agente: consultar `rag_buscar("erp stack")` antes de codar backend, front ou schema.
+>
+> **Gateway primeiro:** `rag_buscar("erp agente modo cursor")` → [[erp-agente-modo-cursor]] (rule + skills).
+> Depois: `rag_buscar("erp stack")` antes de codar backend, front ou schema.
 
 ERP web **sério, transacional, multi-tenant**. Não é app mobile, não vai pra loja.
 
@@ -93,4 +95,5 @@ erp-<cliente-ou-produto>/
 ## Links
 
 - [[erp-multitenancy-spring]] · [[erp-spring-camadas]] · [[erp-transacao-dominio]]
-- [[erp-migrations-flyway]] · [[erp-postgres-schema]] · [[erp-angular-estrutura]] · [[erp-testes-backend]]
+- [[erp-migrations-flyway]] · [[erp-postgres-schema]] · [[erp-angular-estrutura]] · [[erp-ui-telas]] · [[erp-modulo-produto]] · [[erp-modulo-estoque]] · [[erp-testes-backend]]
+- PRD escopo: `projetos/erp-baseline-prd.md`

@@ -166,6 +166,9 @@ resource "aws_apprunner_service" "rag" {
           RAG_API_KEY           = coalesce(var.rag_api_key, random_password.rag_api_key.result)
           AWS_DEFAULT_REGION    = var.aws_region
           RAG_MAX_RESULTS       = tostring(var.rag_max_results)
+          RAG_RERANK            = var.rag_rerank
+          RAG_RERANK_MODEL      = var.rag_rerank_model
+          RAG_RERANK_POOL       = tostring(var.rag_rerank_pool)
         }
       }
     }

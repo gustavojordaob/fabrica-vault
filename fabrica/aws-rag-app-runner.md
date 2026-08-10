@@ -48,6 +48,8 @@ Bucket: `fabrica-rag-<account>-us-east-1`
 | Health | `/health` → `{ ok, ready }` |
 | Buscar | `/buscar?q=` + header `X-RAG-Key` |
 | Chroma no Docker | **1.5.x** (igual ao PC — major diferente quebra o dump) |
+| Instância | **4 vCPU / 8 GB** · `RAG_RERANK=1` com **`bge-reranker-base`** (leve) · lazy na 1ª busca · bake no Docker |
+| **UI** | `https://gmnxgbtjy9.us-east-1.awsapprunner.com/` — HTML estático; API key; **Ver nota** mostra `conteudo` do chunk |
 
 API key: `terraform output -raw rag_api_key` (não commitar).
 
@@ -66,6 +68,18 @@ cd C:\Users\gusta\obsidian
 .\aws-rag\scripts\sync-push.ps1
 # App Runner reinicia sozinho (Lambda no upload de chroma/chroma.sqlite3)
 ```
+
+## Atualizar código de retrieval (rerank / meta / citações)
+
+```powershell
+cd C:\Users\gusta\obsidian
+.\aws-rag\scripts\build-push.ps1
+# auto_deployments_enabled=false → forçar:
+aws apprunner start-deployment --service-arn <ARN> --region us-east-1
+.\aws-rag\scripts\test-remote.ps1 -Query "sinaflor arquivar"
+```
+
+Env App Runner: `RAG_RERANK=1` (Terraform `var.rag_rerank`). Desligar: `rag_rerank = "0"` + `terraform apply`.
 
 ## Observabilidade (CloudWatch + sync auto)
 
@@ -89,3 +103,5 @@ cd C:\Users\gusta\obsidian
 - Imagem com torch CUDA ~10GB — usar `--index-url .../cpu`
 - Health check falha se a porta só abre após o modelo — health imediato + warmup thread
 - Chroma 1.0.x no Docker + dump 1.5.x do Windows → panic SQLite; alinhar versão
+- **OOM / "internal system error"** — CrossEncoder no warmup estoura RAM; e **CRLF no `entrypoint.sh`** no Windows faz o container morrer na hora (`exec ... no such file or directory`). Sempre LF + `sed` no Dockerfile.
+- UI em `/` (HTML); stats em `/health` (`chunks`, `rerank`, `pools`, `ui`)

@@ -21,6 +21,7 @@ atualizado_em: 2026-06-12
 | [[testes-backend]] | JUnit 5 + Mockito |
 | [[mapeamento-frontend-backend]] | Services ↔ Resources |
 | [[gestao-visibilidade-perfis]] | Painel gestão: Meus/Todos por GO e Analista |
+| [[tramitacao-arquivar-desarquivar]] | HU133/HU134 — Arquivar e Desarquivar |
 
 ## Atualizar
 

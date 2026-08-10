@@ -27,5 +27,10 @@ links:
 | `LicenciamentoExploracao.service` / `licenciamento.ts` | `LicenciamentoResource` | `/sinaflor2autorizacao/api/licenciamento` |
 | `licenciamento.ts` (PDF) | `ComprovanteEnvioLicenciamentoResource` | `/sinaflor2autorizacao/api/licenciamento/{id}/comprovante-envio-projeto` |
 | `licenciamento.ts` (PDF) | `ComprovanteEnvioLicenciamentoResource` | `/sinaflor2autorizacao/api/licenciamento/{id}/formulario-envio-licenciamento` |
+| `tramitacao.service.ts` | `LicenciamentoTramitacaoResource` | `/sinaflor2autorizacao/api/licenciamento/gestao/{id}/tramitacao/*` (contexto, rascunho, finalizar, histórico) |
 
 As **roles são idênticas** no frontend (`PermissaoUtil`) e no backend (`Roles`) — mesma string de valor.
+
+### Tramitação Arquivar/Desarquivar
+
+Ver `tramitacao-arquivar-desarquivar.md`. Tipos 7/8; `acoesDisponiveis` no contexto.

@@ -3,14 +3,81 @@ tags:
   - projeto
   - setmatch
   - estado
-atualizado_em: 2026-07-26
+atualizado_em: 2026-07-27
 firebase: setmatch-app-fabrica
 figma: SvZ8vsoadqyC0yz0uUQm6C
 repo: gustavojordaob/setmatch-app
-maturidade: 95
+hosting: https://setmatch-app-fabrica.web.app
+maturidade: 99
 ---
 
 # Setmatch — estado do projeto
+
+## Pagamentos — recorrência + promo por meio (jul/2026)
+
+- Ciclo **mensal + cartão** → Stripe Checkout `subscription` (renova e estende `vigenteAte` via `invoice.paid`)
+- PIX mensal = cobrança única do mês (Stripe não assina com PIX no BR)
+- Admin cadastra `descontoPixPercent` / `descontoCartaoPercent` em ranking, aulas e torneio
+- Jogador vê “PIX −X%” / “Cartão −Y%” e escolhe o meio antes do checkout (`pagarComEscolhaDeMeio`)
+- Nota: [[setmatch-pagamentos-stripe]]
+
+## Suporte + notificações de mensagem (ago/2026)
+
+- Tela in-app `/ajuda` — WhatsApp `5519989632897` (`constants/support.ts` + `openSupportWhatsApp`)
+- Perfil / Painel: “Ajuda e suporte” → `/ajuda` (página Hosting `/suporte` ainda disponível)
+- `conversas.naoLidas.{uid}` incrementa ao enviar; zera ao abrir `/chat/[id]`
+- Badges: Notificações (aba Mensagens), BottomNav chat, sino Home/Perfil/Troféu, painel professor/admin
+
+## Solicitar professor / telefone global (ago/2026)
+
+- Rota `/(auth)/solicitar-acesso` (professor ou admin_clube) → coleção `solicitacoesAcesso`
+- Entrada: login admin → botões Solicitar ser professor / Solicitar admin
+- `PhoneInput` com DDI (código do país) + DDD — wizard, perfil, onboarding admin, editar clube
+- WhatsApp: número com código do país (legado BR 10–11 dígitos ganha `55`)
+
+## Pagamentos Stripe (ago/2026)
+
+- Provedor principal: **Stripe Checkout** (cartão; PIX se ativo no Dashboard)
+- Connect Express: admin em `/clube/financeiro` → Recebimentos Stripe
+- Functions: `criarCheckoutStripe`, `confirmarCheckoutStripe`, `webhookStripeSetmatch`, `stripeConnectOnboarding`, `stripeConnectStatus` (southamerica-east1)
+- Nota: [[setmatch-pagamentos-stripe]] (substitui fluxo MP no app; MP functions legado)
+
+## Propagar foto/nome (ago/2026)
+
+- Ao salvar perfil (`updatePerfil` / wizard): `services/propagarPerfil.ts` atualiza denormalizados
+- Alvos: desafios, amizades, posts, comentarios, conversas (`fotos`/`nomes`), solicitacoes, classificacao, inscritos, confrontos
+- UI mensagens/notificações usa `Avatar` com `fotos[outroUid]`
+- Rules: autor pode update em comentarios; jogador pode update própria solicitacao (foto/nome)
+
+## Deploy / OTA (ago/2026)
+
+- **EAS Update** branch `preview` — OTA iOS/Android (runtime 1.0.0)
+- **Hosting** PWA: https://setmatch-app-fabrica.web.app (+ `/privacy` `/terms` `/suporte` `/baixar`)
+- Dashboard update: expo.dev → setmatch-app → updates (branch preview)
+- `eas.json`: channels development/preview/production + env `EXCLUIR_CONTA` / Hosting
+
+## i18n (ago/2026)
+
+- `pt-BR` · `en-US` · `es` — `¿`/`¡` corretos no espanhol
+- Gate de idioma **antes dos slides** + seletor no Perfil
+- Hook `useT()` · dicionários `i18n/locales/*`
+- Nota: [[setmatch-i18n-padrao]]
+
+## Rankings — rules (ago/2026)
+
+- Create: admin_clube **ou** professor
+- Update ranking: dono ou membro
+- `classificacao/*`: write autenticado
+- Nota: [[setmatch-rankings-clubes-padrao]]
+
+## Compliance lojas (App Store / Play / LGPD) — ago/2026
+
+- Páginas: `/privacy` · `/terms` · `/suporte` (Hosting)
+- Consentimento em login / cadastro / admin-login
+- Perfil + Painel clube: Ajuda, Termos, Privacidade, Sair, **Excluir minha conta**
+- CF `excluirConta` → `https://southamerica-east1-setmatch-app-fabrica.cloudfunctions.net/excluirConta`
+- Idade mínima 13 · `ITSAppUsesNonExemptEncryption: false`
+- Nota fábrica: [[setmatch-compliance-lojas-padrao]]
 
 ## Esporte + clube ativo
 
@@ -20,54 +87,104 @@ maturidade: 95
 - Feed, rankings, torneios e partidas respeitam esporte; clube filtra quando selecionado
 - Post grava `esporte` + `clubeId` opcional; resultados de partida viram post `tipo: resultado`
 
-## Aulas (aluno)
+## Aulas (aluno + professor)
 
-- **Aba `/(tabs)/aulas`** — hub do aluno: minhas aulas (matrículas) + descobrir clubes do esporte
-- `/meu-clube/[id]/aulas` — aluno **não se matricula sozinho**: mensagem no app ou WhatsApp (com Setmatch ID); clube cadastra em `/clube/alunos`
-- Admin: `/clube/aulas-modalidades` — formulário + lista em **um único scroll**
+- **Aba `/(tabs)/aulas`** — respeita `esporteAtivo` + `EsporteSwitcher` + busca
+  - ONLINE: cards de **professor/curso** → `/aula/curso/[donoUid]` (módulos → aulas) → `/aula/[id]` (YouTube)
+  - PRESENCIAL: clubes/quadras do esporte + matrículas + interesse
+- Admin/professor: `/clube/aulas-publicar` — upload Storage + marcar cada aula **paga/grátis** (`pago`, `valorOnline`) + cadeado na lista
+- Player: grátis ou com acesso assiste; paga bloqueia até pagamento/`aulaPublicadaId`
+- Em aula bloqueada (`/aula/[id]`): **Pagar aula** (MP) ou **Pedir liberação** (chat + `pagamentos` pendente)
+- Professor libera em `/clube/financeiro` (lista por `donoUid`, tip `aula_online`)
+- Coleção: `aulasPublicadas` com `videoUrl`, `videoStoragePath`, `pago`, `valorOnline`
+- Role `professor` → mesmo painel `/clube/*`
+- Para aulas **pagas**: preferir upload (não YouTube público)
+
+## Feed social
+
+- Composer Home: texto + foto (`posts/{uid}/…` Storage)
+- Post: curtidas, comentários (`posts/{id}/comentarios`), compartilhar
+- `/post/[id]` — comentários + share para amigo (chat) ou fora do app (precisa instalar)
+- Share externo: link + loja — conteúdo só no app autenticado
+- Avatar/nome no feed e comentários → `/jogador/[uid]` (stats + info + desafiar/mensagem)
+
+## Perto de mim
+
+- Rota `/(tabs)/proximos` — banner na Home + link “Perto de mim” no feed
+- `expo-location` → grava `usuarios.lat/lng` + `localizacaoAtualizadaEm`
+- Abas Pessoas | Quadras; raio 25 km; Haversine client-side
+- Clubes demo com lat/lng seed (SP / Santos / Campinas)
+- Coleção opcional `quadras/{id}`
 
 ## Mensagens (aluno)
 
 - **Aba `/(tabs)/mensagens`** — lista de conversas (amigos + clubes) → `/chat/[id]`
-- Notificações: aba MENSAGENS mostra conversas recentes (ultimoTexto) com link pro chat
-- BottomNav: 6 itens — home, trofeu, aulas, mensagens, estatisticas, perfil
+- Notificações: aba MENSAGENS com badge de `naoLidas` + destaque visual
+- BottomNav: badge no ícone de chat quando há não lidas
+- BottomNav: home, partidas, rankings, aulas, chat, perfil
+- `TAB_BAR_CLEARANCE` (`constants/tabBar.ts`) em todas as tabs — barra não cobre conteúdo
+
+## Torneios (admin + chave viva)
+
+- `/clube/torneio-novo` — config de chave + pagamento
+- `/torneio/[id]` — inscrição + **chaveamento vivo** (`confrontos` subcoleção)
+- Admin: **Sortear chave e iniciar** → single-elim + byes (padrão clube/UTR)
+- Jogadores/dono: tocam confronto `pronto` → placar → vencedor avança; final define `campeaoUid`
+- Services: `services/chaveamentoTorneio.ts`, `utils/chaveamento.ts`
+
+## Perfil público + social competitivo
+
+- `/jogador/[uid]` — stats, H2H, últimas partidas, badges, VS com % vitória
+- `/buscar` — nome, cidade, nível, esporte, ID `SM-`
+- Badges em `constants/badges.ts` (perfil + jogador)
+- Probabilidade: `utils/probabilidade.ts` (logistic win rate + H2H + nível)
+
+## Matrículas (admin)
+
+- Rules: read/update de `matriculas` se aluno, `donoUid` **ou** dono do clube (`isDonoClube`)
+- Queries: `useMatriculasDoClube` / `matricularAlunoPorId` filtram `donoUid == auth.uid`
 
 ## Convites / desafios
 
-- `/desafio/novo` — **VS** com fotos, comparativo (win rate/nível), H2H, formatos (`constants/formatosPartida.ts`: Md3, Md3+STB10, Md5, 2 sets, pro set, TB10)
-- `/desafio/[id]` — card VS + formato/local/quando + aceitar/recusar + placar
+- `/desafio/novo` — **VS** com fotos, comparativo, H2H, formatos
+- `/desafio/[id]` — aceitar/recusar + placar
 - Home: banner “Convidar para jogar” + jogos no feed
-- Perfil jogador: botão “Convidar para jogar”
 
 ## Auth / wizard
 
 - `onAuthStateChanged` marca `loading` **antes** do await do perfil — evita flash da tela idade
 - AuthGuard / wizard / primeiro-acesso esperam `perfil` carregado
+- Roles: `jogador` | `admin_clube` | `professor` (+ `tipoAdmin` opcional)
+
+## i18n (pt-BR / en-US / es)
+
+- Hook: `useT()` de `hooks/useI18n` → `LocaleContext`
+- Chaves: `i18n/locales/pt-BR.ts` (+ en-US, es)
+- Migrado: `perfil`, `login`, `cadastro`, `admin-login`, `esqueci-senha`, `AuthSocialRow`, `clube/painel` (títulos/hello/logout/ações com key)
+- Já i18n: BottomNav, LegalConsent, AccountComplianceLinks, LanguagePicker
 
 ## Perfil
 
 - `/perfil/editar` — nome, telefone, endereço **e foto** (`uploadFotoPerfil`)
 
-
 ## Chat
 
-- Rules: `get` em conversa inexistente permitido (`resource == null`) — corrige permission-denied ao abrir chat novo
+- Rules: `get` em conversa inexistente permitido (`resource == null`)
 - `setDoc(..., { merge: true })` + Alert de erro no composer
 
 ## Meu clube (jogador)
 
-- `/meus-clubes` — lista clubes com vínculo (ranking / aula / pagamento)
-- `/meu-clube/[id]` — regras, aulas (entrada), rankings, pagamentos **daquele clube**, chat
+- `/meus-clubes` — lista clubes com vínculo
+- `/meu-clube/[id]` — regras, aulas, rankings, pagamentos, chat
 - `/pagamentos?clubeId=` — filtro opcional
 
 ## Estratégia de papéis
 
 | Papel | Como nasce | App |
 |-------|------------|-----|
-| Jogador | Cadastro público | Tabs + wizard (telefone + endereço) |
-| Admin clube | Solicita à Setmatch → equipe cria Auth + `role: admin_clube` | Só **login** admin → painel `/clube/*` |
-
-Cada clube tem **um admin**. Rankings/torneios/aulas com **regras de pagamento** cadastradas pelo dono. Jogadores pagam no app (Mercado Pago: PIX + cartão 1x).
+| Jogador | Cadastro público | Tabs + wizard |
+| Admin clube | Equipe Setmatch → `role: admin_clube` | Painel `/clube/*` |
+| Professor | Equipe Setmatch → `role: professor` | Mesmo painel (aulas online sem clube físico obrigatório) |
 
 ## ID amigável
 
@@ -78,25 +195,16 @@ Cada clube tem **um admin**. Rankings/torneios/aulas com **regras de pagamento**
 | jogador.teste | `SM-JOG001` |
 | amigo.teste | `SM-AMI002` |
 | admin.clube | `SM-ADM003` |
+| Rodrigo Patah (professor) | `SM-RPATAH` |
 
 ## Pagamentos (Mercado Pago)
 
 - Functions: `criarPreferenciaSetmatch` + `webhookMercadoPagoSetmatch` (southamerica-east1)
 - Coleções: `pagamentos`, `matriculas`
-- Admin: regras aulas, alunos por ID, financeiro (liberar), msg inscritos torneio
-- Jogador: pagar em ranking/aulas/torneio + `/pagamentos`
-- Recorrência MVP: ciclo mensal + renovação por novo checkout (não preapproval)
-- **Pendente:** preencher `functions/.env` → `MP_ACCESS_TOKEN` e redeploy
+- Admin: regras aulas, alunos por ID, financeiro, msg inscritos torneio
+- **Pendente:** `functions/.env` → `MP_ACCESS_TOKEN` e redeploy
 
 Ver: `fabrica/setmatch-pagamentos-mercado-pago.md`
-
-## Fluxos
-
-1. **Ranking** — solicitar → chat + cobrança se `pagamento.ativo`
-2. **Torneio** — inscrição → PIX/cartão 1x + regras/prazo do dono + msg em massa
-3. **Aulas** — interesse → mensalidade se clube.aulas.ativo
-4. **Social** — amigos, feed, WhatsApp
-5. **Perfil** — editar; ID Setmatch visível
 
 ## Contas teste
 
@@ -105,14 +213,15 @@ Ver: `fabrica/setmatch-pagamentos-mercado-pago.md`
 | Jogador | `jogador.teste@setmatch.app` | `Setmatch@123` |
 | Amigo | `amigo.teste@setmatch.app` | `Setmatch@123` |
 | Admin | `admin.clube@setmatch.app` | `Setmatch@123` |
+| Professor | `rodrigo.patah@setmatch.app` | `SetmatchRodrigo2026!` |
 
 WhatsApp suporte (solicitar admin): **19989632897**
 
-Clubes demo do admin: Arena Tennis + Smash Padel Moema + Arena Beach Santos + Raquetinha Campinas.
+Professor seed: **Rodrigo Joaquim Patah Batista** — Orlando, FL — 4 aulas online (Módulo 1 Aulas 1–3, Módulo 2 Aula 1) em `aulasPublicadas`.
 
-Admin: modalidades de aula (trio/beach/spozinho…) + aluno com desconto; Msg inscritos com chips corrigidos; chat com doc ID estável.
+Clubes demo: Arena Tennis + Smash Padel Moema + Arena Beach Santos + Raquetinha Campinas (com lat/lng).
 
 ## Rotas chave
 
-- Admin: `clube/painel`, `aulas-regras`, `alunos`, `financeiro`, `torneio-mensagens`, `ranking-novo`, `torneio-novo`
-- Jogador: `pagamentos`, `torneio/[id]`, `ranking/[id]`, `perfil`
+- Admin/professor: `clube/painel`, `aulas-publicar`, `aulas-modalidades`, `alunos`, `financeiro`, `torneio-novo`, `torneio-mensagens`, `ranking-novo`
+- Jogador: `aulas`, `aula/[id]`, `proximos`, `pagamentos`, `torneio/[id]`, `ranking/[id]`, `perfil`

@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fábrica RAG</title>
+  <style>
+    :root {
+      --bg: #0f1419;
+      --panel: #1a222c;
+      --line: #2a3542;
+      --text: #e7eef7;
+      --muted: #8b9bb0;
+      --accent: #3d9a6a;
+      --accent2: #c4a35a;
+      --danger: #c45c5c;
+      --font: "Segoe UI", system-ui, sans-serif;
+      --mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: radial-gradient(1200px 600px at 10% -10%, #1b2a22 0%, var(--bg) 55%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    main { max-width: 920px; margin: 0 auto; padding: 28px 18px 64px; }
+    h1 { font-size: 1.45rem; font-weight: 650; margin: 0 0 4px; letter-spacing: -0.02em; }
+    .sub { color: var(--muted); font-size: 0.92rem; margin-bottom: 20px; }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .stat .k { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .stat .v { font-size: 0.95rem; margin-top: 4px; font-family: var(--mono); word-break: break-all; }
+    .stat .v.on { color: var(--accent); }
+    .stat .v.off { color: var(--danger); }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    label { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 4px; }
+    input, select, button, textarea {
+      font: inherit;
+      color: var(--text);
+      background: #121820;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 9px 11px;
+      width: 100%;
+    }
+    .row { display: grid; gap: 10px; grid-template-columns: 1fr; margin-bottom: 10px; }
+    @media (min-width: 720px) {
+      .row.q { grid-template-columns: 1fr 90px 140px auto; align-items: end; }
+      .row.key { grid-template-columns: 1fr auto; align-items: end; }
+    }
+    button {
+      cursor: pointer;
+      background: var(--accent);
+      border-color: transparent;
+      color: #06140c;
+      font-weight: 650;
+      white-space: nowrap;
+    }
+    button.ghost { background: transparent; border-color: var(--line); color: var(--text); font-weight: 500; }
+    button:disabled { opacity: 0.55; cursor: wait; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
+    .chip {
+      border: 1px solid var(--line);
+      background: #121820;
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+    .chip:hover, .chip.active { border-color: var(--accent); color: var(--text); }
+    .meta-line { color: var(--muted); font-size: 0.85rem; margin: 8px 0 12px; }
+    .hit {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      background: #121820;
+    }
+    .hit header { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; justify-content: space-between; }
+    .hit .title { font-weight: 600; }
+    .hit .score { font-family: var(--mono); font-size: 0.82rem; color: var(--accent2); }
+    .hit .path { color: var(--muted); font-size: 0.78rem; font-family: var(--mono); margin-top: 4px; }
+    .hit .trecho { margin-top: 8px; font-size: 0.92rem; line-height: 1.45; white-space: pre-wrap; }
+    .hit .nota {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #0c1117;
+      font-size: 0.88rem;
+      line-height: 1.45;
+      white-space: pre-wrap;
+      max-height: 420px;
+      overflow: auto;
+      font-family: var(--mono);
+    }
+    .hit.open .nota { display: block; }
+    .hit .actions { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .hit .actions button { width: auto; padding: 5px 10px; font-size: 0.78rem; }
+    .hist { list-style: none; padding: 0; margin: 0; }
+    .hist li {
+      display: flex; justify-content: space-between; gap: 10px;
+      padding: 8px 0; border-bottom: 1px solid var(--line);
+      cursor: pointer; font-size: 0.88rem;
+    }
+    .hist li:hover { color: var(--accent); }
+    .err { color: var(--danger); margin: 8px 0; }
+    .badge {
+      display: inline-block; font-size: 0.72rem; padding: 2px 7px;
+      border-radius: 999px; border: 1px solid var(--line); color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Fábrica RAG</h1>
+    <p class="sub">Busca híbrida (denso + BM25 + meta + RRF + rerank) · mesma API do MCP</p>
+
+    <div class="stats" id="stats">
+      <div class="stat"><div class="k">ready</div><div class="v" id="s-ready">…</div></div>
+      <div class="stat"><div class="k">chunks</div><div class="v" id="s-chunks">…</div></div>
+      <div class="stat"><div class="k">rerank</div><div class="v" id="s-rerank">…</div></div>
+      <div class="stat"><div class="k">modelo</div><div class="v" id="s-model">…</div></div>
+      <div class="stat"><div class="k">pools</div><div class="v" id="s-pools">…</div></div>
+    </div>
+
+    <section class="panel">
+      <div class="row key">
+        <div>
+          <label for="apiKey">X-RAG-Key (App Runner)</label>
+          <input id="apiKey" type="password" autocomplete="off" placeholder="cole a API key" />
+        </div>
+        <button type="button" class="ghost" id="saveKey">Salvar key</button>
+      </div>
+      <div class="row q">
+        <div>
+          <label for="q">Query</label>
+          <input id="q" type="text" placeholder="ex: sinaflor arquivar" />
+        </div>
+        <div>
+          <label for="n">n</label>
+          <input id="n" type="number" min="1" max="20" value="5" />
+        </div>
+        <div>
+          <label for="projeto">projeto</label>
+          <input id="projeto" type="text" placeholder="opcional" />
+        </div>
+        <button type="button" id="buscar">Buscar</button>
+      </div>
+      <div class="chips" id="chips"></div>
+      <p class="meta-line" id="latency"></p>
+      <p class="err" id="err" hidden></p>
+    </section>
+
+    <section class="panel" id="resultsPanel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <strong>Resultados</strong>
+        <span class="badge" id="pipeBadge">pipeline</span>
+      </div>
+      <div id="results"></div>
+    </section>
+
+    <section class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <strong>Histórico local</strong>
+        <span class="badge" id="histStats">—</span>
+      </div>
+      <ul class="hist" id="hist"></ul>
+    </section>
+  </main>
+  <script>
+    const KEY = "fabrica-rag-key";
+    const HIST = "fabrica-rag-hist";
+    const PROJETOS = ["sinaflor", "lashmatch", "cortejo", "fabrica", "zenpro", "setmatch", "erp"];
+
+    const $ = (id) => document.getElementById(id);
+    $("apiKey").value = localStorage.getItem(KEY) || "";
+
+    const chips = $("chips");
+    PROJETOS.forEach((p) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "chip";
+      b.textContent = p;
+      b.onclick = () => {
+        $("projeto").value = p;
+        [...chips.children].forEach((c) => c.classList.remove("active"));
+        b.classList.add("active");
+      };
+      chips.appendChild(b);
+    });
+
+    $("saveKey").onclick = () => {
+      localStorage.setItem(KEY, $("apiKey").value.trim());
+      $("saveKey").textContent = "Salvo";
+      setTimeout(() => ($("saveKey").textContent = "Salvar key"), 1200);
+    };
+
+    function loadHist() {
+      try { return JSON.parse(localStorage.getItem(HIST) || "[]"); } catch { return []; }
+    }
+    function saveHist(rows) {
+      localStorage.setItem(HIST, JSON.stringify(rows.slice(0, 20)));
+    }
+    function renderHist() {
+      const rows = loadHist();
+      const el = $("hist");
+      el.innerHTML = "";
+      if (!rows.length) {
+        el.innerHTML = "<li style='cursor:default;color:var(--muted)'>Nenhuma busca ainda neste browser</li>";
+        $("histStats").textContent = "—";
+        return;
+      }
+      const lats = rows.map((r) => r.ms).filter((x) => typeof x === "number");
+      if (lats.length) {
+        const avg = Math.round(lats.reduce((a, b) => a + b, 0) / lats.length);
+        $("histStats").textContent = `latência avg ${avg}ms · min ${Math.min(...lats)} · max ${Math.max(...lats)}`;
+      }
+      rows.forEach((r) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<span>${escapeHtml(r.q)}${r.projeto ? " · " + escapeHtml(r.projeto) : ""}</span><span>${r.ms != null ? r.ms + "ms" : ""} · ${escapeHtml(r.top1 || "")}</span>`;
+        li.onclick = () => {
+          $("q").value = r.q;
+          $("projeto").value = r.projeto || "";
+          $("n").value = r.n || 5;
+          runSearch();
+        };
+        el.appendChild(li);
+      });
+    }
+
+    function escapeHtml(s) {
+      return String(s || "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+
+    async function refreshHealth() {
+      try {
+        const r = await fetch("/health");
+        const h = await r.json();
+        $("s-ready").textContent = h.ready ? "true" : "false";
+        $("s-ready").className = "v " + (h.ready ? "on" : "off");
+        $("s-chunks").textContent = h.chunks != null ? h.chunks : "—";
+        $("s-rerank").textContent = h.rerank ? "ON" : "OFF";
+        $("s-rerank").className = "v " + (h.rerank ? "on" : "off");
+        $("s-model").textContent = h.model || "—";
+        const p = h.pools || {};
+        $("s-pools").textContent = p.dense != null
+          ? `${p.dense}/${p.bm25}/${p.meta}` + (p.rerank != null ? `→${p.rerank}` : "")
+          : "—";
+        $("pipeBadge").textContent = h.pipeline || (h.rerank ? "denso+BM25+meta+RRF+rerank" : "denso+BM25+meta+RRF");
+        if (h.error) {
+          $("err").hidden = false;
+          $("err").textContent = "Warmup: " + h.error;
+        }
+      } catch (e) {
+        $("s-ready").textContent = "erro";
+        $("s-ready").className = "v off";
+      }
+    }
+
+    function renderResults(hits, ms) {
+      const box = $("results");
+      box.innerHTML = "";
+      $("latency").textContent = ms != null ? `Latência: ${ms} ms · ${hits.length} hit(s)` : "";
+      if (!hits.length) {
+        box.innerHTML = "<p class='meta-line'>Nenhum resultado</p>";
+        return;
+      }
+      const sorted = [...hits].sort((a, b) => (b.similaridade || 0) - (a.similaridade || 0));
+      sorted.forEach((h, i) => {
+        const div = document.createElement("div");
+        div.className = "hit";
+        const cit = h.citacao || `${h.arquivo}#${h.chunk || 0}`;
+        const full = h.conteudo || h.trecho || "";
+        const tags = (h.tags || "").toString();
+        div.innerHTML = `
+          <header>
+            <span class="title">${i + 1}. ${escapeHtml(h.arquivo || "")} <span class="badge">${escapeHtml(h.projeto || "")}</span></span>
+            <span class="score">${(h.similaridade != null ? Number(h.similaridade).toFixed(3) : "—")} · rank ${h.rank != null ? h.rank : "—"}</span>
+          </header>
+          <div class="path">${escapeHtml(cit)} · ${escapeHtml(h.path || "")}${tags ? " · tags: " + escapeHtml(tags) : ""}</div>
+          <div class="trecho"><strong>Trecho:</strong> ${escapeHtml(h.trecho || full.slice(0, 320))}</div>
+          <div class="nota"></div>
+          <div class="actions">
+            <button type="button" class="ghost toggle">Ver nota</button>
+            <button type="button" class="ghost copy">Copiar citação</button>
+            <button type="button" class="ghost copyNota">Copiar nota</button>
+          </div>`;
+        const notaEl = div.querySelector(".nota");
+        notaEl.textContent = full;
+        div.querySelector(".toggle").onclick = () => {
+          const open = div.classList.toggle("open");
+          div.querySelector(".toggle").textContent = open ? "Ocultar nota" : "Ver nota";
+        };
+        div.querySelector(".copy").onclick = async () => {
+          try {
+            await navigator.clipboard.writeText(cit);
+            div.querySelector(".copy").textContent = "Copiado";
+            setTimeout(() => (div.querySelector(".copy").textContent = "Copiar citação"), 1000);
+          } catch {}
+        };
+        div.querySelector(".copyNota").onclick = async () => {
+          try {
+            await navigator.clipboard.writeText(full);
+            div.querySelector(".copyNota").textContent = "Copiado";
+            setTimeout(() => (div.querySelector(".copyNota").textContent = "Copiar nota"), 1000);
+          } catch {}
+        };
+        box.appendChild(div);
+      });
+    }
+
+    async function runSearch() {
+      const q = $("q").value.trim();
+      const n = Number($("n").value) || 5;
+      const projeto = $("projeto").value.trim();
+      $("err").hidden = true;
+      if (!q) {
+        $("err").hidden = false;
+        $("err").textContent = "Informe a query";
+        return;
+      }
+      const btn = $("buscar");
+      btn.disabled = true;
+      try {
+        const params = new URLSearchParams({ q, n: String(n) });
+        if (projeto) params.set("projeto", projeto);
+        const headers = {};
+        const key = $("apiKey").value.trim();
+        if (key) headers["X-RAG-Key"] = key;
+        const t0 = performance.now();
+        const r = await fetch("/buscar?" + params.toString(), { headers });
+        const msHeader = r.headers.get("X-RAG-MS");
+        const ms = msHeader ? Math.round(Number(msHeader)) : Math.round(performance.now() - t0);
+        if (!r.ok) {
+          const t = await r.text();
+          throw new Error(r.status + " " + t);
+        }
+        let hits = await r.json();
+        if (!Array.isArray(hits)) hits = hits.resultados || hits.hits || [];
+        renderResults(hits, ms);
+        const rows = loadHist();
+        rows.unshift({
+          q,
+          projeto,
+          n,
+          ms,
+          top1: hits[0] && hits[0].arquivo,
+          at: Date.now(),
+        });
+        saveHist(rows);
+        renderHist();
+      } catch (e) {
+        $("err").hidden = false;
+        $("err").textContent = String(e.message || e);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    $("buscar").onclick = runSearch;
+    $("q").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") runSearch();
+    });
+
+    refreshHealth();
+    renderHist();
+    setInterval(refreshHealth, 15000);
+  </script>
+</body>
+</html>

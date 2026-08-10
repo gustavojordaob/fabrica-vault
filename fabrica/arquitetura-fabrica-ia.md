@@ -245,26 +245,25 @@ O MCP expõe três buscas:
 | `buscar_historico` | Decisões e padrões anteriores |
 | `buscar_solucao` | Erros já resolvidos (+ trecho RAG via `:7332`) |
 
-### Retrieval híbrido (jun/2026)
+### Retrieval híbrido (atualizado ago/2026)
 
-Pipeline em `rag_retrieval.py`, exposto pelo HTTP `:7332` (MCP `rag_buscar`, `buscar_historico` e parte RAG de `buscar_solucao`):
+Pipeline em `rag_retrieval.py` (+ detalhe em [[rag-retrieval-fabrica]]), HTTP `:7332`:
 
-1. **Denso** — Chroma + `paraphrase-multilingual-MiniLM-L12-v2`
-2. **BM25** — `rank_bm25` nos mesmos chunks
-3. **RRF** — fusão Reciprocal Rank Fusion (denso com peso 1.5×)
-4. **Filtro PRD** — `*-prd.md` excluídos em queries de padrão/fluxo/deploy (`tipo_doc: spec`)
-5. **Rerank** — `BAAI/bge-reranker-v2-m3` no top-20; rank 1 preservado do RRF
+1. **Denso** — Chroma + `paraphrase-multilingual-MiniLM-L12-v2` (pool 48)
+2. **BM25** — `rank_bm25` (pool 48)
+3. **Meta** — 3ª recall por `projeto` / `tags` / nome (pool 32)
+4. **RRF** — denso 1.5×, BM25 1.0×, meta 1.25×
+5. Affinity por query + injeção de notas canônicas
+6. **Rerank** — `BAAI/bge-reranker-v2-m3` (top-24; rank 1 do RRF preservado)
 
-Metadados de indexação (`indexar_rapido.py`): `tipo_doc` = `padrao` | `spec` | `solucao` | `eval`.  
-Pasta `fabrica/eval/` **não** entra no índice (relatórios de eval).
+Metadados (`indexar_rapido.py`): `tipo_doc`, **`projeto`**, **`tags`**, **`path`**.  
+Resposta: `trecho`, `citacao` (`arquivo#chunk`), `projeto`, `rank`.  
+Filtro: `?projeto=sinaflor`.
 
-Dependência extra: `pip install rank-bm25`
+**Hot path (MCP):** `RAG_RERANK=1` (**default**). Desligar: `RAG_RERANK=0`.  
+Servidor `http://127.0.0.1:7332`. Warmup carrega BM25 + reranker quando ligado.
 
-**Hot path (MCP):** `RAG_RERANK=0` (default) — denso + BM25 + RRF, **sem rerank**.  
-Servidor em `http://127.0.0.1:7332` (evitar `localhost` no Windows — delay IPv6 ~2s).  
-BM25 pré-construído na subida (`warmup_indices`); alvo **&lt;200 ms** por query (~50 ms medido).
-
-**Eval offline:** `RAG_RERANK=1` opcional para rerank completo.
+Dependência: `pip install rank-bm25` (+ sentence-transformers para CrossEncoder).
 
 ### Harness de avaliação (baseline RAG)
 

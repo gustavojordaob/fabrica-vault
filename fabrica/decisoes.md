@@ -35,6 +35,22 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ## 2026
 
+### 07/08/2026 — setmatch — Aula online pagar/liberar + feed social
+
+- **Decisão:** Aula paga: aluno em `/aula/[id]` usa **Pagar** (MP, `tipo: aula_online` + `aulaPublicadaId`) ou **Pedir liberação** (pagamento `pendente` + chat). Professor libera em `/clube/financeiro` (query por `donoUid`). Feed: foto (`posts/{uid}`), comentários subcoleção, share in-app (chat) e fora (loja + deep link — precisa instalar o app). Perto de mim: banner na Home → `/(tabs)/proximos`.
+- **Motivo:** Usuário pediu fluxo de liberar/pagar aula, achar pessoas/quadras e feed com comentário/foto/compartilhar.
+- **Alternativa rejeitada:** Checkout iOS IAP nesta entrega (fica para depois); share externo sem app (conteúdo fica só autenticado).
+- **Impacto:** `app/aula/[id].tsx`, `app/post/[id].tsx`, `app/(tabs)/home.tsx`, `services/feed.ts`, `services/aulasPublicadas.ts`, `firestore.rules`, `storage.rules`, financeiro por donoUid
+- **Quem decidiu:** Ambos
+
+### 06/08/2026 — SINAFLOR2 — HU133/HU134 Arquivar e Desarquivar na tramitação
+
+- **Decisão:** Tipos 7 (Arquivar) e 8 (Desarquivar) na fila/rascunho/histórico existentes; `acoesDisponiveis` no contexto; Arquivar GO/GA com despacho+anexo → status Arquivado; Desarquivar GO/GA/Analista só se Arquivado → restaura `statusAnterior` do último Arquivar; bloquear 7+8 na mesma fila; front com `tramitacao-arquivamento`.
+- **Motivo:** Atender HU133/HU134 sem fluxo paralelo.
+- **Alternativa rejeitada:** Endpoints separados de arquivar/desarquivar fora da fila de tramitação.
+- **Impacto:** `LicenciamentoTramitacaoService`, `gestao-tramitacao`, `tramitacao-arquivamento`, nota `tramitacao-arquivar-desarquivar.md`.
+- **Quem decidiu:** Gustavo + Agente
+
 ### 12/06/2026 — SINAFLOR2 — Integração na fábrica + CLAUDE dividido
 
 - **Decisão:** Entrar na fábrica com PRD `sinaflor-prd.md`, notas em `fabrica/sinaflor/` (6 arquivos + INDEX), `CLAUDE.md` no repo virou índice curto
@@ -2418,6 +2434,606 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Motivo:** Paridade UX e segurança do link público sem migrar schema inglês.
 - **Alternativa rejeitada:** N/A
 - **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 29/07/2026 — cortejo — OTA + iOS 1.0.4 build 21 submit ASC
+
+- **Decisão:** eas.json submit.production.ios.ascAppId=6781006697 para submit non-interactive. OTA + build iOS 1.0.4 (21) com RC appl_OnUg… enviados à ASC.
+- **Motivo:** Usuário pediu republicar OTA com public key, build nova e submit.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 30/07/2026 — zenpro — Página produto estilo OBLI — PIX, parcelas e frete
+
+- **Decisão:** ProdutoPageClient exibe preço no padrão OBLI: se descontoPixPercentual > 0 (produto ou loja.pagamentoPadrao), mostra valor PIX em destaque + % de desconto + preço cheio; parcelas = maxParcelasCartao cadastrado (até Nx de R$). Frete CEP/Calcular na própria página (FreteCheckoutSection compacto). Não exibe quantidade em estoque ao cliente.
+- **Motivo:** Referência visual OBLI pedida pelo dono; estoque público não deve aparecer; frete e condições de pagamento precisam estar visíveis antes do carrinho.
+- **Alternativa rejeitada:** Manter só preço único sem PIX/parcelas/frete na PDP
+- **Impacto:** Cliente vê desconto PIX e parcelas do admin + cotação de frete na seleção do produto
+- **Quem decidiu:** Usuário + agente
+
+---
+
+### 30/07/2026 — zenpro — Desconto PIX padrão 5% no cadastro de produto
+
+- **Decisão:** Cadastro de produto inicia Desconto PIX em 5% (constante DESCONTO_PIX_PRODUTO_PADRAO / PAGAMENTO_PRODUTO_DEFAULT). Dono pode alterar; 0 = herda padrão da loja. Capinha Nova também grava 5%.
+- **Motivo:** Pedido do dono: padrão 5% no campo ao cadastrar produto
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Usuário
+
+---
+
+### 30/07/2026 — cortejo — Agenda: grade segue horário do profissional
+
+- **Decisão:** DayHourTimeline usa agendaGridBusinessHours(members, salon) — une businessHours dos profissionais ativos (tela Horários). Antes usava só salon??DEFAULT 09:00-19:00 e ignorava members/{uid}.businessHours.
+- **Motivo:** Dona configurou 06:40-20:00 no profissional; agenda mostrava desde 09:00.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 30/07/2026 — lashmatch — Agenda grade usa horarioTrabalho das funcionárias
+
+- **Decisão:** DayHourTimeline em agendamentos.tsx passa a usar agendaGridBusinessHoursFromFuncionarias(): une horarioTrabalho (dom/seg…) das funcionárias ativas, com fallback usuarios.businessHours e DEFAULT 09h. Mesma classe de bug do Cortejo (grade ignorava horário real).
+- **Motivo:** Confirmação do usuário: no LashMatch a grade também caía em 09h porque lia businessHours do usuário/dono, não o horário configurado em Funcionárias.
+- **Alternativa rejeitada:** Manter businessHours do usuário como fonte única
+- **Impacto:** app OTA LashMatch production; utils/businessHours.ts + agendamentos.tsx
+- **Quem decidiu:** produto + agente
+
+---
+
+### 30/07/2026 — sinaflor — Gestão — exportar para todos os perfis
+
+- **Decisão:** Botão exportar da Gestão de Licenciamento usa GESTAO_LICENCIAMENTO_ROLES (todos os perfis). Endpoint /exportacao já aceitava todos; faltava role no *hasAccess do datatable. Export aplica o mesmo filtro de situação da listagem.
+- **Motivo:** Usuário pediu exportar igual à lista normal; botão só aparecia para CG
+- **Alternativa rejeitada:** Manter export só para Consulta Geral
+- **Impacto:** gestao-licenciamento-exploracao.component.html, GestaoLicenciamentoResource.exportar
+- **Quem decidiu:** Usuário + agente
+
+---
+
+### 31/07/2026 — cortejo — Agenda multi-serviço + horário da timeline no novo agendamento
+
+- **Decisão:** Agendamento app permite vários serviços (chips multi-select; durationMin = soma; priceTotal = soma; serviceIds/serviceNames arrays). Toque em slot vazio na DayHourTimeline passa ?time=HH:mm e o horário NÃO é limpo ao escolher serviço/profissional (só ao mudar a data). Banner “Horário da agenda” mostra o horário pré-selecionado.
+- **Motivo:** Pedido do usuário: mais de um serviço por horário e já levar o horário tocado na grade do dia.
+- **Alternativa rejeitada:** Um agendamento por serviço; limpar horário ao mudar profissional
+- **Impacto:** app OTA; schema Firestore já tinha serviceIds[]; link público /agendar permanece 1 serviço
+- **Quem decidiu:** produto + agente
+
+---
+
+### 31/07/2026 — lashmatch — Multi-serviço + horário timeline no LashMatch (paridade Cortejo)
+
+- **Decisão:** LashMatch app/agendamento/[id].tsx: chips multi-select (servicoIds/servicoNomes + legado servico/servicoId); duração/preço somados; horário da DayHourTimeline via ?time= com banner. Versões store: LashMatch 1.0.2, Cortejo 1.0.5.
+- **Motivo:** Pedido: portar alterações e gerar build/submit LashMatch e Cortejo
+- **Alternativa rejeitada:** Só Cortejo com multi-serviço
+- **Impacto:** EAS iOS build+submit ambos apps
+- **Quem decidiu:** produto + agente
+
+---
+
+### 31/07/2026 — cortejo — WhatsApp {{servico}} com todos os serviços do agendamento
+
+- **Decisão:** formatServiceNamesLabel(serviceNames) nas CFs Cortejo (confirmação, lembretes, fallback, push). LashMatch: preferir servicoNomes.join(', ') antes de servicoNome.
+- **Motivo:** Multi-serviço salvava array, mas WhatsApp usava só [0].
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Deploy functions cortejo-app + lashmatch-627fd; OTA opcional client Cortejo
+- **Quem decidiu:** Ambos
+
+---
+
+### 31/07/2026 — cortejo — Store 1.0.6 Cortejo + 1.0.3 LashMatch
+
+- **Decisão:** Bump store LashMatch 1.0.3 e Cortejo 1.0.6 com eas build+auto-submit iOS (multi-serviço + horário timeline + WhatsApp {{servico}} multi).
+- **Motivo:** Usuário confirmou LashMatch ok e pediu build/submit com versão no código
+- **Alternativa rejeitada:** N/A
+- **Impacto:** ASC TestFlight ambos apps
+- **Quem decidiu:** Ambos
+
+---
+
+### 31/07/2026 — fabrica — Copy Meta: Utility ~R$ 0,035 (LashMatch + Cortejo)
+
+- **Decisão:** Copy WhatsApp Próprio (LashMatch + Cortejo): confirmação/lembrete = templates Utility (~R$ 0,035 BR na tabela Meta), não mais estimativa genérica R$ 0,10. Arquivos planoMarketing, planoWhatsappEscolha, whatsappProprioGuia.
+- **Motivo:** Alinhar texto ao rate card oficial e deixar claro que não é Marketing.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 02/08/2026 — lashmatch — Web hosting deve acompanhar app após OTA/build
+
+- **Decisão:** Hosting Firebase (expo export) não atualiza com EAS OTA/build. Após mudanças de UI/copy em LashMatch e Cortejo, rodar export:web + firebase deploy --only hosting nos dois. Deploy 02/08/2026: lashmatch-627fd.web.app e cortejo-app.web.app sincronizados com código do app.
+- **Motivo:** Live hosting estava em 29/07 enquanto app já tinha agenda/copy via OTA/submit.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 03/08/2026 — zenpro — Categorias vitrine + campanhas promocionais
+
+- **Decisão:** Vitrine estilo Gocase no visual Zen Pro: categorias fixas termicos/capinhas/personalizadas via produtos.categoriaId; campanhas/{id} com titulo, descricao, produtoIds; nav + páginas /c/[slug] e /promocao?slug=; home com strip de promo e personalizadas no topo. Sem deploy nesta entrega.
+- **Motivo:** Pedido do dono para categorias + promoções tipo Gocase e personalizadas não ficarem no fim da home
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Usuário + agente
+
+---
+
+### 03/08/2026 — undefined — undefined
+
+- **Decisão:** PromocoesStrip: campanha única = título + descrição + CTA Ver ofertas (ouro); várias = grid de cards com CTA. Header mantém link dourado.
+- **Motivo:** Faixa anterior ficava vazia e repetia o nav sem ação clara.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** src/components/loja/PromocoesStrip.tsx
+- **Quem decidiu:** Ambos
+
+---
+
+### 03/08/2026 — sinaflor — Tramitação — RN02 tipos avaliação Vistoria
+
+- **Decisão:** RN02 Vistoria: inserts SPRINT_19 (5 tipos VISTORIA_*). ANALISE_POA_AMAZONIA compartilhada. API tipos-avaliacao?idTipoTramite= filtra via TipoAvaliacaoLicEnum. Front libera tramite id=2 e reutiliza formulário com Tipo Avaliação obrigatório. Finalizar define status Em Vistoria quando último item é Vistoria.
+- **Motivo:** RN02 Tipo de Avaliação para Vistoria do Projeto
+- **Alternativa rejeitada:** Reutilizar só os tipos de Análise no dropdown de Vistoria
+- **Impacto:** SPRINT_19/01_tb_tipo_avaliacao_lic_vistoria.sql, TipoAvaliacaoLicEnum, LicenciamentoTramitacaoService/Resource, gestao-tramitacao + tramitacao-analise-projeto, tramitacao.service.ts
+- **Quem decidiu:** Usuário + agente
+
+---
+
+### 03/08/2026 — undefined — undefined
+
+- **Decisão:** Categoria de vitrine acessorios (películas, chaveiros etc.) além de capinhas/termicos/personalizadas. Rota /c/acessorios, header, home e select no admin via CATEGORIAS_VITRINE.
+- **Motivo:** Produtos que não são case/térmico/personalizada precisam de vitrine própria.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** categoriasVitrine.ts, types.ts, StoreHeader, HomeLojaPageContent, generateStaticParams via CATEGORIA_VITRINE_IDS
+- **Quem decidiu:** Ambos
+
+---
+
+### 04/08/2026 — undefined — undefined
+
+- **Decisão:** Admin marcas/modelos/tipos: botão Excluir na listagem com confirm + excluir*Admin (deleteDoc). Rules já permitem delete para isMarca.
+- **Motivo:** Cadastro incompleto sem remoção de itens errados/duplicados.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** marcaAdminService, modeloAdminService, tipoAdminService, Marcas/Modelos/TiposAdminPageClient
+- **Quem decidiu:** Ambos
+
+---
+
+### 04/08/2026 — undefined — undefined
+
+- **Decisão:** Cadastro de produto: campo Tipo removido da UI. tipoId derivado da categoria (capinhas/personalizadas→capinha; demais→pronta). personalizavel só com categoria personalizadas.
+- **Motivo:** Admin confundia tipo (motor de personalização) com categoria da vitrine.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** ProdutoFormPageClient, produtoCentralService.sincronizarFlagsCategoria, catalogo/types.tipoIdPorCategoriaVitrine, seed TIPO_PRONTA
+- **Quem decidiu:** Ambos
+
+---
+
+### 04/08/2026 — undefined — undefined
+
+- **Decisão:** Categorias: personalizadas = arte pronta (sem editor); personalizaveis = cliente personaliza (personalizavel=true). Migração: personalizadas+personalizavel legado → personalizaveis. Admin: botão Selecionar todos / Limpar em modelos compatíveis.
+- **Motivo:** Separar vitrine de temas prontos do fluxo de personalização com foto.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** categoriasVitrine, catalogoProdutos, produto form/service, StoreHeader, Home, CapinhaNova, CategoriaPage
+- **Quem decidiu:** Ambos
+
+---
+
+### 05/08/2026 — undefined — undefined
+
+- **Decisão:** Home mobile: produtos em carrossel horizontal 2 por vista + setas (ProdutosVitrineFaixa); categorias continuam empilhadas. Listagem /c e promo: grid-cols-2 no celular. Desktop inalterado.
+- **Motivo:** No celular 1 produto por linha ficava longo; usuário pediu lado a lado com seta.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** ProdutosVitrineFaixa.tsx, VitrineCategoriaPreview, CategoriaPageClient, PromocaoPageClient, CatalogProductCard
+- **Quem decidiu:** Ambos
+
+---
+
+### 05/08/2026 — fabrica — Modo agente ERP Cursor (rule + 2 skills)
+
+- **Decisão:** Nível 1 modo ERP no Cursor: rule global ~/.cursor/rules/erp-fabrica.mdc (alwaysApply false + globs) + skills criar-modulo-erp e revisar-pr-erp em ~/.cursor/skills/. Reutiliza notas erp-* já no RAG App Runner e MCP postgres. No repo ERP usar erp-projeto.mdc alwaysApply true (template em erp-agente-modo-cursor.md). Orquestra multi-agente = nível 2 futuro, não bloqueia.
+- **Motivo:** Especializar rápido sem 6 agentes; conhecimento ERP já existia no vault.
+- **Alternativa rejeitada:** Orquestrador LangGraph/6 workers antes de ter rule/skills
+- **Impacto:** Arquivos locais Cursor + nota fabrica/erp-agente-modo-cursor.md + INDEX
+- **Quem decidiu:** Ambos
+
+---
+
+### 05/08/2026 — fabrica — RAG mandatory gateway erp-agente-modo-cursor
+
+- **Decisão:** ERP gateway no RAG: detectMandatoryRagDocs id erp-agente-modo em rag-lib.js força query para erp-agente-modo-cursor.md + workflow erp_modo_gateway. Atualizados erp-stack, rag-protocolo, rag-memoria-fabrica.mdc, erp-fabrica.mdc.
+- **Motivo:** Garantir que consultas/implementações ERP sempre lembrem rule+skills antes do tema específico.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 05/08/2026 — fabrica — erp-ui-telas baseado em SAP Fiori floorplans
+
+- **Decisão:** Criada erp-ui-telas.md como casca UX estável da fábrica, baseada nos floorplans SAP Fiori (List Report, Object Page, Worklist, Wizard, Overview) adaptados ao Angular 21. Domínio por cliente continua em PRD/modulo.
+- **Motivo:** Padrão conceituado de mercado para telas ERP sem amarrar a um cliente.
+- **Alternativa rejeitada:** Copiar SAPUI5/OData ou inventar UX sem floorplan
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 05/08/2026 — fabrica — Módulos canônicos produto + estoque (SAP MM simplificado)
+
+- **Decisão:** Criados erp-modulo-produto.md (Material Master mínimo) e erp-modulo-estoque.md (Goods Movements: saldo + ledger append-only, tipos ENTRADA/SAIDA/AJUSTE/TRANSFERENCIA). Baseline fábrica; PRD sobrescreve. Fontes SAP MM + Odoo-like.
+- **Motivo:** Agente não inventa domínio do zero; cliente só documenta divergências.
+- **Alternativa rejeitada:** Módulos só por cliente sem baseline; ou copiar SAP MM completo com valuation/FI
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 06/08/2026 — fabrica — PRD baseline ERP MVP PT-BR (auth produto estoque)
+
+- **Decisão:** Criado projetos/erp-baseline-prd.md: escopo v1 = auth+tenant+produto+estoque; fase 2 = vendas/financeiro; UI e mensagens PT-BR; SAP só como modelo de processo/Best Practices. Gateway erp-agente-modo + rule + workflow hook apontam para o PRD. INDEX e notas módulo/ui atualizadas.
+- **Motivo:** Fechar escopo para o agente não inventar ERP genérico; indexar e sync App Runner.
+- **Alternativa rejeitada:** PRD só na cabeça / módulos v1 inventados sem ordem SAP
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 06/08/2026 — sinaflor — HU133/HU134 Arquivar e Desarquivar na tramitação
+
+- **Decisão:** Implementar tipos 7 (Arquivar) e 8 (Desarquivar) reutilizando fila/rascunho/histórico existentes. Disponibilidade via acoesDisponiveis no contexto. Arquivar: GO/GA, despacho+anexo, status Arquivado. Desarquivar: GO/GA/Analista só se Arquivado, restaura statusAnterior do último Arquivar. Bloquear 7+8 na mesma fila. Front: componente tramitacao-arquivamento compartilhado.
+- **Motivo:** Atender HU133 e HU134 sem criar fluxo paralelo de tramitação.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** LicenciamentoTramitacaoService, gestao-tramitacao, novo formulário arquivamento, filtro do dropdown por contexto.
+- **Quem decidiu:** Gustavo + agente Cursor
+
+---
+
+### 06/08/2026 — sinaflor — HU133/HU134 Arquivar e Desarquivar
+
+- **Decisão:** Implementar tipos 7 (Arquivar) e 8 (Desarquivar) reutilizando fila/rascunho/histórico. Disponibilidade via acoesDisponiveis. Arquivar: GO/GA, despacho+anexo, status Arquivado. Desarquivar: GO/GA/Analista se Arquivado, restaura statusAnterior do último Arquivar. Bloquear 7+8 na mesma fila.
+- **Motivo:** Atender HU133 e HU134 sem fluxo paralelo.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** LicenciamentoTramitacaoService, gestao-tramitacao, tramitacao-arquivamento
+- **Quem decidiu:** Ambos
+
+---
+
+### 06/08/2026 — sinaflor — Reaplicar HU133/HU134 na branch hu132
+
+- **Decisão:** Reaplicado HU133/HU134 na branch feature/hu132 (com Vistoria). Tipos 7/8 via acoesDisponiveis; Arquivar GO/GA; Desarquivar GO/GA/Analista; bloqueio 7+8; status Arquivado ou statusAnterior do último Arquivar.
+- **Motivo:** Usuário desfez na branch errada; reimplementar na branch atualizada.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** LicenciamentoTramitacaoService, gestao-tramitacao, tramitacao-arquivamento na branch hu132
+- **Quem decidiu:** Ambos
+
+---
+
+### 07/08/2026 — sinaflor — Corrigir alerta e layout Arquivar/Desarquivar
+
+- **Decisão:** Alertas Arquivar/Desarquivar devem usar o texto literal das HU133/HU134. Layout: neutralizar :host verde do textarea-despacho no formulário de arquivamento (só faz sentido na Análise ao lado dos analistas).
+- **Motivo:** Texto inventado estava diferente da HU; bordas verdes do host do despacho apareciam como stubs no layout.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 07/08/2026 — fabrica — RAG fábrica: rerank ON + meta recall + citações
+
+- **Decisão:** Hot path RAG da fábrica: RAG_RERANK=1 por default; 3ª recall por projeto/tags; pools ampliados; resposta com trecho/citacao/projeto; indexar_rapido grava projeto/tags/path. Desligar rerank com RAG_RERANK=0.
+- **Motivo:** Melhorar precisão do agente na fábrica (citações + projeto + rerank) sem migrar para RAGFlow.
+- **Alternativa rejeitada:** Manter rerank só offline e sem 3ª recall — pior hit em queries com sinaflor/lashmatch.
+- **Impacto:** rag_retrieval.py, indexar_obsidian_chroma.py, indexar_rapido.py, rag-retrieval-fabrica.md, arquitetura-fabrica-ia.md
+- **Quem decidiu:** Ambos
+
+---
+
+### 07/08/2026 — fabrica — RAG hot path: rerank ON + 3ª recall meta + citações
+
+- **Decisão:** Pipeline :7332 = denso(48)+BM25(48)+meta projeto/tags(32) → RRF → affinity → bge-reranker-v2-m3 (RAG_RERANK=1 default). /buscar devolve trecho, citacao, projeto, path, tags. Filtro ?projeto=. Indexação grava projeto/tags/path; rglob em subpastas.
+- **Motivo:** Afinar fábrica sem migrar para RAGFlow: mais acerto em notas de projeto (ex. sinaflor arquivar → tramitacao-arquivar-desarquivar.md#0) aceitando latência/RAM do CrossEncoder.
+- **Alternativa rejeitada:** Manter só denso+BM25 sem rerank; ou adotar RAGFlow (~16GB) para uso solo.
+- **Impacto:** rag_retrieval.py, indexar_obsidian_chroma.py, indexar_rapido.py, fabrica/rag-retrieval-fabrica.md, arquitetura-fabrica-ia.md
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 07/08/2026 — fabrica — RAG hot path: rerank ON + 3ª recall meta + citações
+
+- **Decisão:** Pipeline :7332 = denso(48)+BM25(48)+meta projeto/tags(32) → RRF → affinity → bge-reranker-v2-m3 (RAG_RERANK=1 default). /buscar devolve trecho, citacao, projeto, path, tags. Filtro ?projeto=. Indexação grava projeto/tags/path; rglob em subpastas.
+- **Motivo:** Afinar fábrica sem migrar para RAGFlow: mais acerto em notas de projeto (ex. sinaflor arquivar → tramitacao-arquivar-desarquivar.md#0) aceitando latência/RAM do CrossEncoder.
+- **Alternativa rejeitada:** Manter só denso+BM25 sem rerank; ou adotar RAGFlow (~16GB) para uso solo.
+- **Impacto:** rag_retrieval.py, indexar_obsidian_chroma.py, indexar_rapido.py, fabrica/rag-retrieval-fabrica.md, arquitetura-fabrica-ia.md
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 07/08/2026 — fabrica — App Runner RAG: 4 vCPU / 8GB + rerank ON
+
+- **Decisão:** App Runner fabrica-rag em 4 vCPU (4096) / 8 GB (8192) com RAG_RERANK=1. Índice sync S3 + imagem ECR com hybrid+meta+rerank. Validado: /buscar sinaflor arquivar retorna tramitacao-arquivar-desarquivar.md.
+- **Motivo:** Rerank bge + MiniLM + Chroma estoura 4GB; App Runner só oferece 8GB a partir de 4 vCPU.
+- **Alternativa rejeitada:** Manter 1 vCPU/4GB com RAG_RERANK=1 (OOM / internal system error) ou 2 vCPU/8GB (combinação inválida no App Runner).
+- **Impacto:** aws-rag/terraform/terraform.tfvars, custo App Runner sobe; MCP Cursor continua no App Runner.
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 07/08/2026 — fabrica — UI web do RAG no App Runner (/)
+
+- **Decisão:** UI HTML estática em aws-rag/static/index.html servida em GET / do App Runner (mesma origem que /buscar). /health enriquecido com chunks, rerank, pools, pipeline. Histórico/latência só no localStorage do browser.
+- **Motivo:** Caminho mais fácil sem Firebase: zero CORS, um build-push publica a tela.
+- **Alternativa rejeitada:** Firebase Hosting separado (CORS + project ID).
+- **Impacto:** indexar_obsidian_chroma.py, aws-rag/Dockerfile, aws-rag/static/index.html, fabrica/aws-rag-app-runner.md
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 07/08/2026 — fabrica — App Runner crash = CRLF no entrypoint.sh
+
+- **Decisão:** Causa do 'internal system error' recente: entrypoint.sh com CRLF (Windows) — Linux falha com 'exec /app/entrypoint.sh: no such file or directory'. Corrigido para LF + sed no Dockerfile. Rerank permanece OFF no App Runner. UI validada em docker local (health.ui=true).
+- **Motivo:** Reprodução local do container mostrou o erro real; App Runner mascara como internal system error.
+- **Alternativa rejeitada:** Continuar reiniciando com a mesma imagem CRLF; ou culpar só OOM do rerank.
+- **Impacto:** aws-rag/entrypoint.sh, aws-rag/Dockerfile, fabrica/aws-rag-app-runner.md
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 07/08/2026 — fabrica — UI RAG App Runner no ar (fix CRLF)
+
+- **Decisão:** UI RAG no ar em https://gmnxgbtjy9.us-east-1.awsapprunner.com/ — causa dos crashes era CRLF no entrypoint.sh. Imagem LF publicada; health ui=true, chunks=2079, rerank=false no App Runner.
+- **Motivo:** Docker local reproduziu 'exec entrypoint.sh: no such file'; App Runner mascarava como internal system error.
+- **Alternativa rejeitada:** Continuar redeploy da imagem com entrypoint CRLF.
+- **Impacto:** aws-rag/entrypoint.sh LF, Dockerfile sed, static/index.html
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 07/08/2026 — setmatch — Aulas online/presencial, professor, torneio dinâmico e perto de mim
+
+- **Decisão:** Coleção aulasPublicadas com role professor no painel /clube; tab Aulas ONLINE/PRESENCIAL; torneio-novo persiste formatoChaves/estrutura/grupos/formatoPartida (preview textual, sem motor de chave); Perto de mim com expo-location + Haversine 25km em /(tabs)/proximos; matrículas listam com donoUid + rules isDonoClube; TAB_BAR_CLEARANCE unificado.
+- **Motivo:** Alinhar Figma Aulas/Torneios-Admin, desbloquear matrícula admin (permission-denied) e descoberta geográfica sem Geoqueries Firestore.
+- **Alternativa rejeitada:** GeoFirestore / geohash nativo; geração automática completa de árvore de confrontos nesta entrega.
+- **Impacto:** Novas rotas aulas-publicar, aula/[id], proximos; schema torneios e usuarios/clubes lat/lng; seed professor Rodrigo Patah.
+- **Quem decidiu:** agente+usuario
+
+---
+
+### 07/08/2026 — setmatch — Aulas: listar por professor e filtrar por esporteAtivo
+
+- **Decisão:** ONLINE lista cards de professor (não aulas soltas); toque abre /aula/curso/[donoUid] com módulos→aulas→player. Tudo filtrado por EsporteContext.esporteAtivo. PRESENCIAL lista clubes/quadras do esporte.
+- **Motivo:** Escala com vários professores e mantém consistência com o esporte escolhido no app.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** usuario+agente
+
+---
+
+### 07/08/2026 — setmatch — Upload de vídeo de aula no Firebase Storage
+
+- **Decisão:** Professor envia vídeo pela galeria → Storage path aulas/{uid}/; player nativo expo-av. YouTube só como demo/placeholder. Rules storage deployadas (200MB video/*).
+- **Motivo:** Aula paga não pode depender de YouTube público; precisa conteúdo hospedado no app.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** usuario+agente
+
+---
+
+### 07/08/2026 — setmatch — undefined
+
+- **Decisão:** Aula online paga: aluno paga via MP (tipo aula_online + aulaPublicadaId) ou pede liberação (pagamento pendente + chat). Professor libera no financeiro por donoUid. Feed: foto, comentarios subcoleção, compartilhar in-app (chat) e fora (gate instalar app / deep link post).
+- **Motivo:** Usuario pediu fluxo de pedir/pagar aula, descoberta de proximos, e feed com comentario/foto/share externo exigindo app.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 07/08/2026 — setmatch — undefined
+
+- **Decisão:** Aula online paga: aluno paga via MP (tipo aula_online + aulaPublicadaId) ou pede liberação (pagamento pendente + chat). Professor libera no financeiro por donoUid. Feed: foto, comentarios, compartilhar in-app e fora (instalar app).
+- **Motivo:** Usuario pediu fluxo pedir/pagar aula, proximos e feed social completo.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 07/08/2026 — setmatch — undefined
+
+- **Decisão:** Feed social + aula online: pagar MP ou pedir liberacao; proximos na Home; post com foto/comentario/share externo exige app
+- **Motivo:** Pedido do usuario sobre liberar/pagar aula, achar pessoas/quadras e feed completo
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 07/08/2026 — setmatch — undefined
+
+- **Decisão:** Torneio single-elim vivo em torneios/{id}/confrontos (sorteio+byes+avançar). Perfil com H2H/histórico/badges. Busca avançada /buscar. VS com probabilidade logistic (win rate+H2H+nível). Rules: confrontos + onlyStatsBump V/D.
+- **Motivo:** Pedido do usuario com padrao de mercado tennis/padel (chave de clube, perfil competitivo, matchup %).
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 07/08/2026 — setmatch — Admin vê torneios; aluno sem VS; matrículas sempre visíveis
+
+- **Decisão:** 1) /clube/torneios lista torneios por donoUid. 2) Aba Aulas PRESENCIAL lista todas as matrículas do jogador (sem filtro esportes do clube). 3) /clube/alunos usa FlatList única com formulário no header (scroll contínuo). 4) Perfil do aluno via clube abre com contexto=aluno_clube e esconde VsCard/H2H/convidar.
+- **Motivo:** Admin não conseguia abrir torneio criado; matrícula sumia pelo filtro de esporte; lista de alunos ficava em área minúscula; perfil competitivo não faz sentido clube→aluno.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** UX admin e aluno; rota nova /clube/torneios; query param contexto no perfil público.
+- **Quem decidiu:** Ambos
+
+---
+
+### 07/08/2026 — setmatch — Inscrição torneio + chave liberada pelo admin
+
+- **Decisão:** Inscrição cria inscritos/{uid} + increment totalInscritos (rules onlyTotalInscritosBump). Lista de inscritos pública no detalhe. Admin libera chave via gerarChaveamento (chaveLiberada:true) em /clube/torneios ou /torneio/[id]; jogadores veem chave após liberação.
+- **Motivo:** Inscrição falhava por permission-denied; produto exige ver inscritos e chave só após sorteio do admin.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 07/08/2026 — setmatch — Chaveamento horizontal estilo FotMob
+
+- **Decisão:** Componente ChaveamentoBracket: ScrollView horizontal com colunas por rodada (Oitavas→Quartas→Semi→Final), setas entre fases, cards alinhados em árvore (fase seguinte entre os dois confrontos). Referência: FotMob / apps de esporte.
+- **Motivo:** Pedido do usuário: chave passando para o lado, não lista vertical.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 07/08/2026 — setmatch — Aula online só por mensagem; combo de clube com busca
+
+- **Decisão:** Aula paga online: único CTA 'Mensagem para liberar' (chat + pedido no financeiro). ClubeSwitcher virou combo/modal com pesquisa por nome/cidade e filtros Todos / Perto de mim (cidade do perfil) / Meus clubes.
+- **Motivo:** Pedido do usuário: liberação só na conversa; seleção de clube mais usável com busca e perto de mim.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 07/08/2026 — setmatch — PWA Setmatch instalável via Firebase Hosting
+
+- **Decisão:** Expo web static → dist-web + manifest/SW/ícones (copy-pwa-assets). Página pública /baixar. Hosting setmatch-app-fabrica.web.app. Scripts npm run export:web e deploy:web.
+- **Motivo:** Usuário pediu PWA instalável por link sem loja.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 08/08/2026 — setmatch — Compliance App Store/Play — termos, privacidade, excluir conta
+
+- **Decisão:** Setmatch segue o padrão LashMatch/Cortejo: páginas públicas /privacy /terms /suporte no Hosting; consentimento obrigatório no login/cadastro/admin; Perfil e Painel com Sair + Excluir conta; Cloud Function excluirConta (southamerica-east1) com wipe Firestore/Storage/Auth; idade mínima 13; ITSAppUsesNonExemptEncryption false no app.json.
+- **Motivo:** Exigências Apple/Google/LGPD — mesma checklist que permitiu publicar LashMatch e Cortejo.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** URLs legais para App Store Connect / Play Console; exclusão permanente via Bearer ID token; EXPO_PUBLIC_EXCLUIR_CONTA_URL no .env.
+- **Quem decidiu:** agente
+
+---
+
+### 08/08/2026 — setmatch — Migração telas auth/perfil/painel para useT i18n
+
+- **Decisão:** Telas perfil, login, cadastro, admin-login, esqueci-senha, AuthSocialRow e clube/painel passam a usar useT() com chaves existentes em i18n/locales/pt-BR.ts (espelhadas em en-US/es). Strings sem chave (ex.: Gerenciar, Editar clube, Modalidades) ficam hardcoded até haver key.
+- **Motivo:** Infra i18n já existia; UI ainda tinha PT hardcoded. Evitar inventar keys novas.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Auth, perfil e painel do clube respeitam idioma do LocaleContext.
+- **Quem decidiu:** agente
+
+---
+
+### 08/08/2026 — undefined — Setmatch i18n — telas onboarding/wizard/tabs com useT
+
+- **Decisão:** Migração de strings user-facing para useT() com chaves de i18n/locales/pt-BR.ts. BottomNav já pronto. Onboarding passou a guardar keys no constants/onboarding.ts. Esportes traduzidos no call site (esporte.*). WizardLayout defaults Continuar/whyInfo via t(). Strings sem chave correspondente foram mantidas em PT.
+- **Motivo:** A definir
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 08/08/2026 — setmatch — Migração telas auth/perfil/painel para useT i18n
+
+- **Decisão:** Telas perfil, login, cadastro, admin-login, esqueci-senha, AuthSocialRow e clube/painel usam useT() com chaves de i18n/locales/pt-BR.ts. Sem inventar keys — strings sem chave ficam hardcoded.
+- **Motivo:** Infra i18n pronta; UI ainda tinha PT fixo.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Auth, perfil e painel do clube seguem LocaleContext.
+- **Quem decidiu:** agente
+
+---
+
+### 08/08/2026 — setmatch — i18n pt-BR / en-US / es com LocaleContext
+
+- **Decisão:** Setmatch usa LocaleProvider + dicionários em i18n/locales (pt-BR padrão, en-US, es), persistido em AsyncStorage @setmatch/locale. Seletor no Perfil (LanguagePicker). Hook useT()/useLocale(). Telas principais (tabs, auth, onboarding, wizard, painel) usam t('chave').
+- **Motivo:** Permitir trocar idioma do app inteiro para lojas internacionais e usuários multilíngues, sem lib pesada.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Novas strings devem entrar nos 3 arquivos de locale. Fallback pt-BR se chave faltando.
+- **Quem decidiu:** agente
+
+---
+
+### 08/08/2026 — setmatch — ES ¿¡ correto + EAS preview + ranking rules
+
+- **Decisão:** Espanhol mantém ¿ e ¡ (norma). Ajustes pontuais de ¡ em boas-vindas/CTA. EAS update branch preview publicado. Hosting redeployado. Rules ranking: create admin|professor; update dono|membros; classificacao write auth.
+- **Motivo:** Usuário validou ES na tela; pediu update preview + deploy + docs/rank enquanto offline.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** OTA preview; PWA atualizado; menos permission-denied em ranking para professor/membros.
+- **Quem decidiu:** agente
+
+---
+
+### 08/08/2026 — setmatch — Propagar foto/nome do perfil nos docs denormalizados
+
+- **Decisão:** Ao salvar perfil (updatePerfil / wizard), chamar propagarPerfilPublico para atualizar fotoUrl/nome em desafios, amizades, posts, comentarios, conversas.fotos, solicitacoes, classificacao, inscritos e confrontos. Conversas passam a guardar mapa fotos e a UI de mensagens/notificacoes usa Avatar com uri.
+- **Motivo:** Foto e nome estavam denormalizados nas coleções sociais; só usuarios/{uid} era atualizado, então desafios e chats antigos ficavam com avatar velho.
+- **Alternativa rejeitada:** Buscar sempre usuarios/{uid} em tempo real em cada lista (mais leituras e latência).
+- **Impacto:** services/propagarPerfil.ts, AuthContext, mensagens.ts, useConversas, mensagens/notificacoes UI, firestore.rules (comentarios+solicitacoes update), firestore.indexes fieldOverrides collection group
+- **Quem decidiu:** Agente + usuario
+
+---
+
+### 08/08/2026 — setmatch — Stripe Checkout + Connect Express no Setmatch
+
+- **Decisão:** Setmatch passa a cobrar via Stripe Checkout (card; PIX se habilitado no Dashboard, senão fallback cartão). Dono do clube conecta conta com Stripe Connect Express no Financeiro; se charges_enabled, destination charge + fee opcional. Secrets em functions/.env STRIPE_SECRET_KEY.
+- **Motivo:** Pedido do usuário: integrar Stripe com chaves test e plug fácil da conta do clube; visão global.
+- **Alternativa rejeitada:** Manter só Mercado Pago (limitado globalmente) ou exigir PIX antes de shipar
+- **Impacto:** functions/src/stripeHandlers.ts, pagamentosSync.ts, utils/stripeCheckout.ts, clube/financeiro, app/pagamento/*, deploy southamerica-east1
+- **Quem decidiu:** Usuario + agente
+
+---
+
+### 08/08/2026 — setmatch — Solicitar professor + telefone internacional
+
+- **Decisão:** Formulário /(auth)/solicitar-acesso para professor e admin_clube com coleção solicitacoesAcesso. Telefone global via PhoneInput (DDI + DDD) no wizard, perfil, onboarding admin e editar clube; WhatsApp normaliza com código do país.
+- **Motivo:** App global + solicitação explícita de professor com celular internacional.
+- **Alternativa rejeitada:** Só WhatsApp sem formulário / telefone só BR
+- **Impacto:** PhoneInput, telefoneInternacional, solicitar-acesso, firestore.rules solicitacoesAcesso, wizard/perfil/clube
+- **Quem decidiu:** Usuario + agente
+
+---
+
+### 08/08/2026 — setmatch — Suporte in-app WhatsApp + naoLidas em conversas/notificacoes
+
+- **Decisão:** Tela /ajuda com WhatsApp 5519989632897 (SUPPORT_WHATSAPP). Ao enviar mensagem, incrementa conversas.naoLidas.{uidDestinatario}; ao abrir chat zera. Badges em Notificacoes (aba Mensagens), BottomNav, sino Home/Perfil/Trofeu e painel clube/professor.
+- **Motivo:** Usuario pediu area de suporte no app e indicador visual de notificacao de mensagem para jogador, professor e dono de clube.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** app/ajuda.tsx, constants/support.ts, services/mensagens.ts, hooks/useConversas.ts, notificacoes/mensagens/BottomNav/painel
+- **Quem decidiu:** Usuario + agente
+
+---
+
+### 09/08/2026 — setmatch — Stripe subscription + promo % por meio
+
+- **Decisão:** Ciclo mensal com cartão usa Checkout mode subscription; PIX mensal continua payment one-shot. Admin grava descontoPixPercent/descontoCartaoPercent em ranking/aulas/torneio; jogador escolhe meio via pagarComEscolhaDeMeio e vê o % off. Webhook invoice.paid renova vigenteAte.
+- **Motivo:** Pedido do usuário: cobrança recorrente real e promoção visível por meio de pagamento.
+- **Alternativa rejeitada:** Manter só payment + vigenteAte manual; um único Checkout com PIX+cartão e preços diferentes (Stripe não permite preço por método na mesma session).
+- **Impacto:** functions criarCheckoutStripe/webhook; utils checkoutComMeio/precoPagamento; telas admin ranking-novo, aulas-regras, torneio-novo; fluxos jogador trofeu/torneio/aulas/pagamentos
+- **Quem decidiu:** Ambos
+
+---
+
+### 09/08/2026 — cortejo — Sidebar desktop web com scroll vertical
+
+- **Decisão:** WebDesktopSidebar: ScrollView com minHeight:0 + overflowY:auto no web, showsVerticalScrollIndicator ligado; brand/logout fora do scroll (flexShrink 0). Só desktop web.
+- **Motivo:** Telas baixas cortavam Configurações/Links do menu lateral.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Hosting cortejo-app; mobile nativo sem mudança
 - **Quem decidiu:** Ambos
 
 ---

@@ -36,7 +36,7 @@ Mesmo app React Native no browser (`https://cortejo-app.web.app`), com login Fir
 | `hooks/useWebLayout.ts` | `isWeb`, `isDesktopWeb`, `width` |
 | `utils/webNavigation.ts` | `shouldShowWebSidebar`, `isWebNavActive` |
 | `components/layout/WebDesktopFrame.tsx` | Sidebar + conteúdo |
-| `components/layout/WebDesktopSidebar.tsx` | Nav principal + configurações |
+| `components/layout/WebDesktopSidebar.tsx` | Nav principal + configurações; scroll vertical (`minHeight: 0` + `overflowY: auto`) em telas baixas |
 | `components/layout/WebAuthLayout.tsx` | Login centralizado (max 440px) |
 | `app/+html.tsx` | Meta/título/cor de fundo web |
 | `app/_layout.tsx` | Envolve `Stack` com `WebDesktopFrame` |

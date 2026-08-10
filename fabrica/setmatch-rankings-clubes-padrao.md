@@ -4,7 +4,7 @@ tags:
   - setmatch
   - ranking
   - firestore
-atualizado_em: 2026-07-26
+atualizado_em: 2026-08-08
 ---
 
 # Setmatch — Rankings, clubes, roles e social (padrão)
@@ -21,8 +21,21 @@ Repo: `setmatch-app` · Firebase: `setmatch-app-fabrica`
 |------|-----------|------|
 | `jogador` | Signup público | App comum |
 | `admin_clube` | **Só equipe Setmatch** (Console) após solicitação | Login admin → `/clube/*` |
+| `professor` | Equipe Setmatch | Mesmo painel `/clube/*` (aulas + ranking/torneio) |
 
 **Proibido:** signup admin no app. Rules: `create` só com `role == jogador`; `update` não pode mudar `role`.
+
+## Firestore — rankings (ago/2026)
+
+| Path | Permissão |
+|------|-----------|
+| `rankings` create | `admin_clube` **ou** `professor` + `donoUid == auth.uid` |
+| `rankings` update | dono **ou** uid em `membros[]` |
+| `rankings` delete | só dono |
+| `rankings/{id}/classificacao/{uid}` | read/write se autenticado (placares / sync) |
+| `solicitacoes` | create pelo jogador (`uid`); update só `donoUid` |
+
+Deploy: `firebase deploy --only firestore:rules --project setmatch-app-fabrica`
 
 ## Fluxos sem falha
 

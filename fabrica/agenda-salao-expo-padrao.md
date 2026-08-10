@@ -156,16 +156,20 @@ Cloud Function `availableSlots` — query params: `salonId`, `serviceId`, `profe
 
 ## 3. Fluxo Novo agendamento
 
-Rota: `/agendamento/novo?date=YYYY-MM-DD` (Expo: `id=novo` + param `date`)
+Rota: `/agendamento/novo?date=YYYY-MM-DD&time=HH:mm` (Expo: `id=novo` + params `date` / `time`)
+
+- Toque em slot vazio na `DayHourTimeline` → passa `time` já selecionado
+- Banner **Horário da agenda** mostra o horário pré-preenchido
+- **Não** limpar `start` ao mudar serviço/profissional — só ao mudar a **data**
+- (Bug antigo: limpar em `serviceId`/`professionalUid` apagava o horário da timeline)
 
 Ordem das seções:
 1. **Cliente** — busca no topo (`filterClientsByQuery`), lista limitada (8 sem busca / 20 com busca), card “Cliente selecionada”, ou formulário nova cliente
-2. Serviço (chip com duração e preço) + Profissional (membros `active`)
+2. **Serviços** (chips **multi-select**) + Profissional (membros `active`)
+   - `serviceIds[]` / `serviceNames[]`; `durationMin` padrão = soma das durações; `priceTotal` = soma dos preços
 3. Calendário (`embedded`, `minDate=hoje`)
-4. Grid de horários (`TimeSlotGrid` — só slots `available`)
+4. Grid de horários (`TimeSlotGrid` — slots + horário já vindo da timeline destacado)
 5. Resumo + Confirmar
-
-Ao mudar serviço/profissional/data → limpar horário selecionado.
 
 Persistir: `start`, `end` (start + durationMin), `clientPhone` desnormalizado (WhatsApp).
 
@@ -175,6 +179,8 @@ Rota: `/agendar?salon={salonId}` — `app/agendar/index.tsx` (Expo Router, expor
 
 Fluxo em 3 passos:
 1. Serviço → 2. Profissional → 3. **Calendário compacto** (`AgendaCalendar` + `embedded`) + `TimeSlotGrid` + nome/WhatsApp
+
+> Link público permanece **1 serviço** por reserva (jul/2026). Multi-serviço é só no app (agenda interna).
 
 - Slots via `availableSlots` (mesma CF do app) — recarrega ao mudar a data no calendário
 - `meta=1` retorna também `salonName` e `blockedPeriods` para marcar dias bloqueados

@@ -26,6 +26,7 @@ fonte: incidente Cortejo 09/06/2026
 | Erro / bug | + `buscar_solucao` |
 | `npx expo install` + UI | `rag_buscar("<pacote>")` + guia em `fabrica/` |
 | Calendário / agenda | ver tabela abaixo |
+| **ERP / Spring / Flyway / multi-tenant** | **GATEWAY** `rag_buscar("erp agente modo cursor")` → [[erp-agente-modo-cursor]] + rule `erp-fabrica.mdc` |
 | Nova feature | + PRD do projeto |
 
 **Exceção:** cumprimento puro (`oi`, `obrigado`) sem pedido.

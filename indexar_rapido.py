@@ -4,6 +4,7 @@ import argparse
 import chromadb
 import hashlib
 import shutil
+import re
 from datetime import datetime
 from pathlib import Path
 
@@ -29,6 +30,75 @@ MODEL_NAME = os.environ.get(
 )
 CHUNK_SIZE    = 500
 OVERLAP       = 100
+
+_FRONTMATTER_RE = re.compile(
+    r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL
+)
+
+
+def parse_frontmatter(texto: str) -> tuple[dict, str]:
+    """Extrai YAML frontmatter simples (tags/projeto) sem depender de PyYAML."""
+    m = _FRONTMATTER_RE.match(texto)
+    if not m:
+        return {}, texto
+    meta: dict = {}
+    for line in m.group(1).splitlines():
+        if ":" not in line or line.strip().startswith("-"):
+            continue
+        key, _, val = line.partition(":")
+        key = key.strip().lower()
+        val = val.strip().strip("\"'")
+        if not key:
+            continue
+        if key == "tags":
+            # tags: [a, b] ou tags:\n  - a
+            continue
+        meta[key] = val
+    # tags em lista YAML
+    tags: list[str] = []
+    in_tags = False
+    for line in m.group(1).splitlines():
+        s = line.strip()
+        if s.startswith("tags:"):
+            rest = s[5:].strip()
+            if rest.startswith("[") and rest.endswith("]"):
+                tags = [t.strip().strip("\"'") for t in rest[1:-1].split(",") if t.strip()]
+            else:
+                in_tags = True
+            continue
+        if in_tags:
+            if s.startswith("-"):
+                tags.append(s[1:].strip().strip("\"'"))
+            elif s and not s.startswith("#"):
+                in_tags = False
+    if tags:
+        meta["tags"] = ",".join(tags)
+    body = texto[m.end():]
+    return meta, body
+
+
+def infer_projeto(md: Path, fm: dict | None = None) -> str:
+    if fm and fm.get("projeto"):
+        return str(fm["projeto"]).strip().lower()
+    nome = md.name.lower()
+    try:
+        rel = md.relative_to(VAULT_PATH)
+        if len(rel.parts) >= 2:
+            # fabrica/sinaflor/foo.md → sinaflor
+            return rel.parts[0].lower()
+    except ValueError:
+        pass
+    for p in (
+        "sinaflor", "lashmatch", "cortejo", "erp", "setmatch", "zenpro",
+        "whatsapp", "firebase", "mercadopago",
+    ):
+        if nome.startswith(p) or f"-{p}" in nome or f"{p}-" in nome:
+            return p
+    if md.parent.name == "projetos":
+        stem = md.stem.lower().replace("-prd", "").replace("_prd", "")
+        return stem.split("-")[0] if stem else "projetos"
+    return "fabrica"
+
 
 def infer_tipo_doc(md: Path) -> str:
     nome = md.name.lower()
@@ -86,6 +156,14 @@ def recriar_banco():
 
 def indexar_arquivo(col, model, md: Path) -> int:
     texto = md.read_text(encoding="utf-8")
+    fm, _body = parse_frontmatter(texto)
+    projeto = infer_projeto(md, fm)
+    tags = str(fm.get("tags", ""))
+    try:
+        rel_path = str(md.relative_to(VAULT_PATH.parent)).replace("\\", "/")
+    except ValueError:
+        rel_path = md.name
+
     chks = chunks(texto, md.name)
     try:
         col.delete(where={"arquivo": md.name})
@@ -97,7 +175,14 @@ def indexar_arquivo(col, model, md: Path) -> int:
             documents=[txt],
             embeddings=[emb],
             ids=[cid],
-            metadatas=[{"arquivo": md.name, "chunk": idx, "tipo_doc": infer_tipo_doc(md)}],
+            metadatas=[{
+                "arquivo": md.name,
+                "chunk": idx,
+                "tipo_doc": infer_tipo_doc(md),
+                "projeto": projeto,
+                "tags": tags,
+                "path": rel_path,
+            }],
         )
     return len(chks)
 
@@ -116,6 +201,14 @@ def resolver_arquivos(nomes: list[str]) -> list[Path]:
             if direto.is_file():
                 resolvidos.append(direto.resolve())
                 achou = True
+                break
+            if not achou:
+                for cand in base.rglob(nome):
+                    if cand.is_file():
+                        resolvidos.append(cand.resolve())
+                        achou = True
+                        break
+            if achou:
                 break
         if not achou:
             print(f"⚠️  Não encontrado: {raw}", file=sys.stderr)

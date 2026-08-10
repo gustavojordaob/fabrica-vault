@@ -1367,3 +1367,179 @@
 **Tags:** rag,chroma,aws,windows
 
 ---
+
+## 30/07/2026 — zenpro — Desconto PIX no checkout sempre 0% — total e preference MP sem desconto
+
+**Erro:** Desconto PIX no checkout sempre 0% — total e preference MP sem desconto
+
+**Contexto:** Checkout com PIX selecionado não mostrava desconto nem aplicava no total/preference MP, mesmo com % cadastrado no produto ou loja.
+
+**Causa:** intersecaoPagamentoProdutos usava reduce com seed PAGAMENTO_PRODUTO_DEFAULT (descontoPixPercentual=0); Math.min(0, X) sempre zerava o desconto do produto/loja.
+
+**Solução:** Seed da interseção = primeiro produto do carrinho (configs[0]), não o default global. UI do seletor PIX mostra % de desconto + aviso verde; total com linha de desconto e riscado; pedido/MP já usavam totalPago (agora com valor correto).
+
+**Arquivos:** src/features/pagamentos/pagamentoProduto.ts, src/components/loja/SeletorFormaPagamentoOnline.tsx, src/components/loja/CheckoutPageContent.tsx
+
+**Tags:** pix,checkout,desconto,mercadopago
+
+---
+
+## 30/07/2026 — lashmatch — LashMatch eas update SyntaxError app/index.tsx Unexpected token } linha extra
+
+**Erro:** LashMatch eas update SyntaxError app/index.tsx Unexpected token } linha extra
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** Remover chave de fechamento órfã no final de app/index.tsx (copia/cola quebrada).
+
+**Arquivos:** N/A
+
+**Tags:** ota,syntax,expo
+
+---
+
+## 30/07/2026 — sinaflor — ExportacaoException ClassCastException String cannot be cast to Long numeroRegis
+
+**Erro:** ExportacaoException ClassCastException String cannot be cast to Long numeroRegistro FormatterEnum.ID
+
+**Contexto:** N/A
+
+**Causa:** LicenciamentoExploracaoListagemDTO.numeroRegistro é String mas @Propriedade usava FormatterEnum.ID (DRIValueFormatter<String, Long>). Na exportação Jasper faz cast para Long e quebra.
+
+**Solução:** Trocar formatter de numeroRegistro para FormatterEnum.TEXTO_NA (null/vazio → N/A, senão o texto).
+
+**Arquivos:** autorizacao/.../LicenciamentoExploracaoListagemDTO.java
+
+**Tags:** sinaflor,exportacao,jasper,formatter,gestao
+
+---
+
+## 30/07/2026 — sinaflor — ExportacaoException ClassCastException String cannot be cast to Long em numeroRe
+
+**Erro:** ExportacaoException ClassCastException String cannot be cast to Long em numeroRegistro (FormatterEnum.ID)
+
+**Contexto:** Exportação PDF/CSV da Gestão de Licenciamento
+
+**Causa:** numeroRegistro é String mas @Propriedade usava FormatterEnum.ID (espera Long). Jasper faz ClassCastException no export.
+
+**Solução:** Alterar formatter de numeroRegistro para FormatterEnum.TEXTO_NA
+
+**Arquivos:** autorizacao/src/main/java/br/gov/ibama/sinaflor2/service/dto/LicenciamentoExploracaoListagemDTO.java
+
+**Tags:** sinaflor,exportacao,jasper,formatter,gestao
+
+---
+
+## 31/07/2026 — lashmatch — EAS iOS build ERRORED Bundle JavaScript — SyntaxError app/index.tsx Unexpected t
+
+**Erro:** EAS iOS build ERRORED Bundle JavaScript — SyntaxError app/index.tsx Unexpected token } linha 57
+
+**Contexto:** N/A
+
+**Causa:** Chave de fechamento órfã no final de app/index.tsx (regressão após fix anterior)
+
+**Solução:** Remover } extra; validar com expo export; novo eas build --auto-submit
+
+**Arquivos:** app/index.tsx
+
+**Tags:** eas,ios,syntax,build
+
+---
+
+## 03/08/2026 — zenpro — FirebaseError: Missing or insufficient permissions ao ler campanhas
+
+**Erro:** FirebaseError: Missing or insufficient permissions ao ler campanhas
+
+**Contexto:** StoreHeader e PromocoesStrip chamam listarCampanhasAtivas() e recebiam Missing or insufficient permissions
+
+**Causa:** Coleção campanhas era nova; rules locais tinham allow read: if true, mas não tinham sido deployadas — default deny no projeto live.
+
+**Solução:** Deploy firebase deploy --only firestore:rules com match /campanhas/{id} allow read: if true; write se isMarca()
+
+**Arquivos:** firestore.rules
+
+**Tags:** firestore,rules,campanhas,permissions
+
+---
+
+## 07/08/2026 — setmatch — permission-denied ao comentar post no feed
+
+**Erro:** permission-denied ao comentar post no feed
+
+**Contexto:** Usuario tentava comentar em /post/[id]; composer tambem ficava sob a barra de navegacao do Android
+
+**Causa:** Regra match /posts/{postId}/comentarios nao estava deployada no Firebase (default deny). Deploy anterior firestore+storage nao refletiu a subcolecao.
+
+**Solução:** Deploy firestore:rules com allow create/read em posts/{id}/comentarios; paddingBottom com useSafeAreaInsets no composer do post.
+
+**Arquivos:** firestore.rules, app/post/[id].tsx
+
+**Tags:** firestore,rules,feed,comentarios,safe-area,setmatch
+
+---
+
+## 07/08/2026 — setmatch — teclado cobria o composer do chat — não dava para ver o que digitava
+
+**Erro:** teclado cobria o composer do chat — não dava para ver o que digitava
+
+**Contexto:** app/chat/[id].tsx no Android/Expo Go
+
+**Causa:** KeyboardAvoidingView sem behavior no Android + SafeAreaView edges bottom competindo com teclado; falta softwareKeyboardLayoutMode resize
+
+**Solução:** KAV behavior height/padding; edges só top; paddingBottom dinâmico com keyboard listeners; scrollToEnd; app.json android.softwareKeyboardLayoutMode=resize
+
+**Arquivos:** app/chat/[id].tsx, app.json
+
+**Tags:** chat,teclado,KeyboardAvoidingView,android,setmatch
+
+---
+
+## 07/08/2026 — setmatch — permission-denied ao se inscrever no torneio (update totalInscritos)
+
+**Erro:** permission-denied ao se inscrever no torneio (update totalInscritos)
+
+**Contexto:** Jogador não podia update no doc torneios — só dono. Deploy firestore:rules setmatch-app-fabrica.
+
+**Causa:** 
+
+**Solução:** Rules: onlyTotalInscritosBump permite +1 em totalInscritos. inscreverTorneio valida status/duplicata; chat opcional. UI lista inscritos; admin libera chave em /clube/torneios e no detalhe com chaveLiberada.
+
+**Arquivos:** N/A
+
+**Tags:** 
+
+---
+
+## 08/08/2026 — fabrica — chromadb InternalError: Error loading hnsw index / Error constructing hnsw segme
+
+**Erro:** chromadb InternalError: Error loading hnsw index / Error constructing hnsw segment reader
+
+**Contexto:** indexar_rapido.py e MCP falhavam ao abrir .chroma_db; Error loading hnsw index
+
+**Causa:** Índice HNSW do Chroma PersistentClient ficou inconsistente (arquivo de segmento quebrado) — tipicamente após kill/crash do processo ou sync parcial.
+
+**Solução:** python indexar_rapido.py --recriar-banco (move .chroma_db para .chroma_db.bak-* e reindexa do zero). Depois .\aws-rag\scripts\sync-push.ps1 -SkipIndex para S3 us-east-1.
+
+**Arquivos:** obsidian/.chroma_db (recriado); aws-rag/scripts/sync-push.ps1; indexar_rapido.py --recriar-banco
+
+**Tags:** chroma,rag,hnsw,aws
+
+---
+
+## 09/08/2026 — cortejo — Botão Sair no canto da Agenda não funciona no web/desktop
+
+**Erro:** Botão Sair no canto da Agenda não funciona no web/desktop
+
+**Contexto:** N/A
+
+**Causa:** AgendaHeaderActions usava Alert.alert com 2 botões — inconsistente no RN Web (mesmo padrão do bug de confirmar agendamento)
+
+**Solução:** Usar confirmDestructive (window.confirm na web) antes de logout
+
+**Arquivos:** components/AgendaHeaderActions.tsx
+
+**Tags:** web,desktop,logout,alert
+
+---

@@ -1,11 +1,19 @@
 # 📚 Índice — Base de Conhecimento Fábrica
 
-> Indexar com `indexar_rapido.py` · Data de revisão índice: **23/07/2026**
+> Indexar com `indexar_rapido.py` · Data de revisão índice: **05/08/2026**
 
 ## Notas criadas
 
+- [[erp-agente-modo-cursor]] — **modo agente ERP nível 1** (rule `erp-fabrica.mdc` + skills criar-modulo / revisar-pr) · `erp`, `cursor`, `agentes`
+- [[erp-ui-telas]] — **casca UX ERP** (List Report / Object Page / confirmação / permissões UI — baseado SAP Fiori) · `erp`, `ui`, `angular`, `fiori`
+- [[erp-modulo-produto]] — **módulo canônico Produto** (Material Master mínimo SAP MM) · `erp`, `produto`, `sap`
+- [[erp-modulo-estoque]] — **módulo canônico Estoque** (Goods Movements / saldo + ledger) · `erp`, `estoque`, `sap-mm`
+- `projetos/erp-baseline-prd.md` — **PRD escopo MVP** (v1: auth+tenant+produto+estoque; fase 2: vendas/financeiro; UI PT-BR) · `erp`, `prd`, `mvp`
+- [[erp-stack]] · [[erp-multitenancy-spring]] · [[erp-spring-camadas]] · [[erp-transacao-dominio]] · [[erp-postgres-schema]] · [[erp-migrations-flyway]] · [[erp-angular-estrutura]] · [[erp-testes-backend]] · [[erp-aws-rds]] · [[erp-auth-login]] — **padrões ERP-web** (Java/Spring/Angular/Postgres) · `erp`, `spring`, `postgres`
 - [[setmatch-rankings-clubes-padrao]] — **clubes + rankings + solicitação + feed social** (Setmatch jul/2026) · `setmatch`, `ranking`, `firestore`
 - [[setmatch-pagamentos-mercado-pago]] — **PIX/cartão 1x + setmatchId + regras aulas/ranking/torneio** (Setmatch jul/2026) · `setmatch`, `pagamentos`, `mercadopago`
+- [[setmatch-pagamentos-stripe]] — **Stripe Checkout + Connect Express** (Setmatch ago/2026) · `setmatch`, `stripe`, `pagamentos`
+- [[setmatch-aulas-torneios-proximos-padrao]] — **aulas online/presencial, professor, torneio dinâmico, perto de mim** (Setmatch ago/2026) · `setmatch`, `aulas`, `torneios`, `geolocalizacao`
 - [[auth-patterns]] — 10 seção(ões) · `firebase`, `auth`, `seguranca`
 - [[checklists-deploy]] — 11 seção(ões) · `checklist`, `deploy`, `qualidade`
 - [[firebase-deploy-checklist-padrao]] — **checklist Firebase deploy (functions/rules/hosting)** · `firebase`, `deploy`, `fluxo`
@@ -21,6 +29,10 @@
 - [[cortejo-modulos-jun2026-padrao]] — **assinatura dual RC+MP, trial 14d, sync Firestore iOS, msgUsage, OTA, auth** (Cortejo jun/2026) · `cortejo`, `assinatura`, `revenuecat`
 - [[mcps-cursor-padrao]] — **MCPs Cursor: fabrica-apps, mercadopago, revenuecat, appstore-connect, whatsapp, firebase** · `mcp`, `cursor`, `integracao`
 - [[excluir-conta-app-expo-padrao]] — **exclusão permanente de conta LGPD/App Store** (Cortejo/LashMatch) · `lgpd`, `lashmatch`, `cortejo`
+- [[setmatch-compliance-lojas-padrao]] — **termos/privacidade/suporte + excluirConta + consentimento** (Setmatch ago/2026) · `setmatch`, `lgpd`, `app-store`
+- [[setmatch-i18n-padrao]] — **idioma pt-BR / en-US / es + LocaleContext** (Setmatch ago/2026) · `setmatch`, `i18n`
+- [[setmatch-propagar-foto-perfil]] — **espalhar foto/nome denormalizados ao salvar perfil** (Setmatch ago/2026) · `setmatch`, `firestore`, `perfil`
+- [[setmatch-i18n-idiomas-padrao]] — **pt-BR / en-US / es com LocaleContext + LanguagePicker** (Setmatch ago/2026) · `setmatch`, `i18n`
 - [[outros]] — 76 seção(ões) · `geral`
 - [[padroes-fabrica]] — 18 seção(ões) · `padroes`, `fabrica`, `lashmatch`
 - [[zenpro-catalogo-variantes-capinha-padrao]] — **catálogo dinâmico modelo × variante (material/preço)** · `zenpro`, `capinha`, `personalizacao`, `firestore`
@@ -42,6 +54,7 @@
 - [[agenda-salao-expo-padrao]] — **aba Agenda, slots 30min, bloqueios, horário por profissional, busca cliente** (Cortejo jun/2026) · `agenda`, `cortejo`, `expo`
 - [[cortejo-schemas]] — **schema Firestore Cortejo** (salons, members, blockedPeriods) · `cortejo`, `firestore`
 - [[rag-protocolo-antes-de-codar]] — protocolo RAG + caso calendário sem consulta · `rag`, `agente`
+- [[rag-retrieval-fabrica]] — pipeline denso+BM25+meta+RRF+rerank, citações, `?projeto=` · `rag`, `retrieval`
 - [[react-native-calendars]] — lib calendário (Calendar, Agenda, markedDates) · `calendario`, `expo`
 - **SINAFLOR2** (`fabrica/sinaflor/`) — Angular 7 + Spring Boot legado IBAMA · ver [[sinaflor/INDEX]]
 - [[aws-rag-app-runner]] — **RAG HTTP na AWS (Docker + Terraform App Runner + S3/ECR)** · `rag`, `aws`, `docker`, `terraform`
@@ -69,6 +82,7 @@
 | Firebase (deploy, rules, functions) | **firebase** (plugin) |
 | WhatsApp Meta | **whatsapp** |
 | SINAFLOR / Angular 7 / Java legado | **fabrica-apps** | `fabrica/sinaflor/*.md` + `projetos/sinaflor-prd.md` |
+| ERP (Spring / Angular / Postgres) | **postgres** + **fabrica-apps** | `erp-*.md` + rule `erp-fabrica.mdc` |
 | GitHub, PR, memória, RAG | **fabrica-apps** |
 
 Guia completo: [[mcps-cursor-padrao]] — **sempre MCP do tema + `rag_buscar` antes de codar**.

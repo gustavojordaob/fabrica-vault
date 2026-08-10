@@ -133,4 +133,4 @@ Para edição de tela longa (otimista), use `@Version`:
 ```
 
 ## Links
-- [[erp-stack]] · [[erp-spring-camadas]] · [[erp-postgres-schema]]
+- [[erp-stack]] · [[erp-spring-camadas]] · [[erp-postgres-schema]] · [[erp-modulo-estoque]]

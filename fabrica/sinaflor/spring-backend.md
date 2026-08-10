@@ -195,3 +195,15 @@ Listagem em `LicenciamentoQueryService.findGestaoByCriteria`.
 - Nota: `fabrica/sinaflor/gestao-visibilidade-perfis.md`.
 
 ---
+
+## Tramitação — RN02 Tipo de Avaliação (Vistoria)
+
+*Atualizado em 03/08/2026*
+
+Script: `db/scripts/SPRINT_19/01_tb_tipo_avaliacao_lic_vistoria.sql` (VISTORIA_TECNICA, PREVIA, ACOMPANHAMENTO, POS_EXPLORATORIA, PMFS_AMAZONIA). `ANALISE_POA_AMAZONIA` também vale para Vistoria.
+
+- `GET .../tramitacao/tipos-avaliacao?idTipoTramite=` filtra pelo enum `TipoAvaliacaoLicEnum`.
+- Tipo Avaliação obrigatório para Análise (1) e Vistoria (2).
+- Finalizar: último item Vistoria → status `Em Vistoria do Projeto` (id 3).
+
+---

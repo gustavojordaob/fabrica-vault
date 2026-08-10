@@ -18,14 +18,14 @@ variable "image_tag" {
 
 variable "cpu" {
   type        = string
-  description = "CPU App Runner: 1024 = 1 vCPU"
-  default     = "1024"
+  description = "CPU App Runner: 1024 = 1 vCPU, 2048 = 2 vCPU (recomendado c/ rerank)"
+  default     = "2048"
 }
 
 variable "memory" {
   type        = string
-  description = "RAM App Runner: 2048 ou 4096 (recomendado 4096 p/ MiniLM+Chroma)"
-  default     = "4096"
+  description = "RAM: com rerank use 8192 (2 vCPU). 4096 estoura no warmup do bge."
+  default     = "8192"
 }
 
 variable "rag_api_key" {
@@ -38,6 +38,24 @@ variable "rag_api_key" {
 variable "rag_max_results" {
   type    = number
   default = 5
+}
+
+variable "rag_rerank" {
+  type        = string
+  description = "1 = CrossEncoder lazy na 1ª busca. 0 = só híbrido."
+  default     = "1"
+}
+
+variable "rag_rerank_model" {
+  type        = string
+  description = "Modelo CrossEncoder. No App Runner use bge-reranker-base (mais leve que v2-m3)."
+  default     = "BAAI/bge-reranker-base"
+}
+
+variable "rag_rerank_pool" {
+  type        = number
+  description = "Quantos candidatos passam pelo rerank (menor = menos RAM/CPU)."
+  default     = 12
 }
 
 variable "ecr_force_delete" {
