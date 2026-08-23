@@ -25,7 +25,7 @@ if (-not $Bucket -or -not $Region) {
 }
 
 if (-not $Bucket) { throw "Informe -Bucket ou rode terraform apply antes (output s3_bucket)." }
-if (-not $Region) { $Region = "sa-east-1" }
+if (-not $Region) { $Region = "us-east-1" }
 
 Write-Host "Root:   $Root"
 Write-Host "Bucket: $Bucket"

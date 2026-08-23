@@ -3,7 +3,7 @@ tags:
   - projeto
   - setmatch
   - estado
-atualizado_em: 2026-07-27
+atualizado_em: 2026-08-18
 firebase: setmatch-app-fabrica
 figma: SvZ8vsoadqyC0yz0uUQm6C
 repo: gustavojordaob/setmatch-app
@@ -12,6 +12,17 @@ maturidade: 99
 ---
 
 # Setmatch — estado do projeto
+
+## App Store review (ago/2026)
+
+- Recusa 1.0 (2): **5.1.1** purpose string; **3.1.1** aulas em vídeo pagas fora da IAP — corrigido no build **1.0 (5)**
+- Recusa 1.0 (5): **4.8** login de terceiro (Google) sem Sign in with Apple
+- Correção 4.8: **sem login social** — só email/senha
+- Binário: **1.0.0 (8)** enviado à ASC em 18/08/2026
+- Build: https://expo.dev/accounts/gabrieljorda0/projects/setmatch-app/builds/3bc7d0f6-7e22-4c70-97a4-620f45f07a98
+- Submit: https://expo.dev/accounts/gabrieljorda0/projects/setmatch-app/submissions/2631b790-37b9-4e12-944f-a84c2173b663
+- Gateway fábrica: [[compliance-lojas-apple-google-padrao]]
+- Aulas online sempre gratuitas; Stripe só serviço presencial
 
 ## Pagamentos — recorrência + promo por meio (jul/2026)
 
@@ -92,13 +103,11 @@ maturidade: 99
 - **Aba `/(tabs)/aulas`** — respeita `esporteAtivo` + `EsporteSwitcher` + busca
   - ONLINE: cards de **professor/curso** → `/aula/curso/[donoUid]` (módulos → aulas) → `/aula/[id]` (YouTube)
   - PRESENCIAL: clubes/quadras do esporte + matrículas + interesse
-- Admin/professor: `/clube/aulas-publicar` — upload Storage + marcar cada aula **paga/grátis** (`pago`, `valorOnline`) + cadeado na lista
-- Player: grátis ou com acesso assiste; paga bloqueia até pagamento/`aulaPublicadaId`
-- Em aula bloqueada (`/aula/[id]`): **Pagar aula** (MP) ou **Pedir liberação** (chat + `pagamentos` pendente)
-- Professor libera em `/clube/financeiro` (lista por `donoUid`, tip `aula_online`)
-- Coleção: `aulasPublicadas` com `videoUrl`, `videoStoragePath`, `pago`, `valorOnline`
+- Admin/professor: `/clube/aulas-publicar` — upload Storage; aula **online sempre grátis** (sem preço, cadeado ou checkout)
+- Player `/aula/[id]`: vídeo sempre liberado (nativo ou YouTube/Vimeo)
+- Coleção: `aulasPublicadas` com `videoUrl`, `videoStoragePath`; `pago`/`valorOnline` legado (forçados a `false`/`0`)
 - Role `professor` → mesmo painel `/clube/*`
-- Para aulas **pagas**: preferir upload (não YouTube público)
+- Cobrança Stripe: só aula **presencial** (mensalidade), ranking e torneio
 
 ## Feed social
 

@@ -14,6 +14,8 @@ tags:
 ---
 
 ## Alta prioridade
+- [ ] **[health-quadra-tech]** M8 Biblioteca de escalas e MBC — Ampliar escalas validadas além de GAD-7/PHQ-9 (BDI, EAT, escalas por abordagem) e reaplicar no tratamento (Measurement-Based Care completo). `19/08/2026`
+
 
 - [ ] **[Setmatch]** Tela de análise do oponente com VS card e probabilidade de vitória `24/05/2026`
 - [ ] **[Setmatch]** Sistema de desafios — enviar, aceitar e recusar `24/05/2026`
@@ -23,6 +25,14 @@ tags:
 ---
 
 ## Média prioridade
+- [ ] **[health-quadra-tech]** M11 Contas de supervisão — Psicólogo supervisor gera link de convite para supervisionados/estagiários se cadastrarem vinculados a ele (clínica-escola). `19/08/2026`
+
+- [ ] **[health-quadra-tech]** M10 Receita Saúde — Emissão de Receita Saúde integrada ao financeiro, além da NFS-e. `19/08/2026`
+
+- [ ] **[health-quadra-tech]** M9 Materiais e tarefas terapêuticas — Biblioteca de conteúdos/tarefas que o psicólogo envia ao paciente com um clique (hoje só texto livre em patient_tasks). `19/08/2026`
+
+- [ ] **[health-quadra-tech]** SOAP: estruturar/transcrever anotações com IA (humano revisa) — Pós-MVP. Brenda: transcrição/estruturação automática de anotações SOAP. Hoje só formulário manual (subjective, objective, assessment_plan). Desenho: 3 fases — (1) estruturar texto livre em SOAP via Edge Function + LLM, humano revisa; (2) ditado do psicólogo após a sessão (STT + estrutura, sem gravar o paciente); (3) gravação da sessão com consentimento CFP/LGPD. Nunca auto-salvar no prontuário. Áudio no bucket clinical-attachments; RLS igual sessions. Web+app juntos. Expo Go: expo-av ok; chave da IA só no servidor. `19/08/2026`
+
 
 - [ ] **[Setmatch]** Ranking de jogadores por esporte e região `24/05/2026`
 - [ ] **[Setmatch]** Feed de notícias do mundo do tênis `24/05/2026`

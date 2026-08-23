@@ -1543,3 +1543,579 @@
 **Tags:** web,desktop,logout,alert
 
 ---
+
+## 11/08/2026 —  — Tipo de Avaliação inválido para a tramitação selecionada — shouldFinalizarUmaTra
+
+**Erro:** Tipo de Avaliação inválido para a tramitação selecionada — shouldFinalizarUmaTramitacao usava codigo APR
+
+**Contexto:** LicenciamentoTramitacaoServiceTest.shouldFinalizarUmaTramitacao falhava em validarFila; UnnecessaryStubbing era efeito colateral.
+
+**Causa:** 
+
+**Solução:** Atualizar o teste para usar codigo válido do TipoAvaliacaoLicEnum para Análise, ex.: ANALISE_TEC_OBRIGATORIA. APR não existe mais no enum.
+
+**Arquivos:** N/A
+
+**Tags:** sinaflor,tramitacao,teste,junit,tipoavaliacao
+
+---
+
+## 12/08/2026 — lashmatch — LashMatch export:web SyntaxError app/index.tsx Unexpected token } chaves extras
+
+**Erro:** LashMatch export:web SyntaxError app/index.tsx Unexpected token } chaves extras
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** Remover chaves de fechamento órfãs no final de app/index.tsx (reapareceu antes do hosting deploy).
+
+**Arquivos:** N/A
+
+**Tags:** hosting,syntax,expo,web
+
+---
+
+## 12/08/2026 — lashmatch — LashMatch PWA Android isWhatsAppMetaSetupAllowed true + Pagamentos menu cai no H
+
+**Erro:** LashMatch PWA Android isWhatsAppMetaSetupAllowed true + Pagamentos menu cai no Home
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** isWhatsAppMetaSetupAllowed exige !isMobileWebBrowser. Tabs pagamento: remover href:null (usar tabBarButton null). MoreMenu push com delay; rota /pagamento.
+
+**Arquivos:** N/A
+
+**Tags:** pwa,whatsapp,navegacao,web
+
+---
+
+## 12/08/2026 — lashmatch — O domínio do host JSSDK é desconhecido Facebook LashMatch
+
+**Erro:** O domínio do host JSSDK é desconhecido Facebook LashMatch
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** No Meta App 990183433661795 → Login do Facebook → Configurações: adicionar Allowed Domains for JavaScript SDK e App Domains com lashmatch.com.br e lashmatch-627fd.web.app (e firebaseapp.com). Valid OAuth Redirect URIs: https://lashmatch.com.br/embedded-signup/ e https://lashmatch-627fd.web.app/embedded-signup/. Liga Login com SDK JS = Sim.
+
+**Arquivos:** N/A
+
+**Tags:** meta,facebook,jssdk,oauth,whatsapp
+
+---
+
+## 12/08/2026 — lashmatch — LashMatch Mais Pagamentos nao abre Android web PWA cai Home
+
+**Erro:** LashMatch Mais Pagamentos nao abre Android web PWA cai Home
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** MoreMenu no web usa window.location.assign apos fechar Modal; hrefs sem /(tabs)/; rota /pagamentos fora das tabs.
+
+**Arquivos:** N/A
+
+**Tags:** pwa,android,navegacao,pagamentos,web
+
+---
+
+## 12/08/2026 — lashmatch — LashMatch Android web tabs piscam planos e voltam Home location.assign
+
+**Erro:** LashMatch Android web tabs piscam planos e voltam Home location.assign
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** Remover window.location.assign(/) e assign no MoreMenu (remonta index→paywall→tabs). voltarParaInicio = replace /(tabs). Index/tabs: spinner até plano estável; debounce paywall 450ms.
+
+**Arquivos:** N/A
+
+**Tags:** pwa,android,navegacao,paywall,boot
+
+---
+
+## 12/08/2026 — lashmatch — LashMatch Android web Meu plano e Pagamentos abrem Home
+
+**Erro:** LashMatch Android web Meu plano e Pagamentos abrem Home
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** openAppRoute parseia ?stay=1 em params (Expo web ignora query string). MoreMenu navega ANTES de fechar Modal. planos.tsx fallback window.location.search. SW v7.
+
+**Arquivos:** N/A
+
+**Tags:** pwa,android,expo-router,planos,pagamentos
+
+---
+
+## 12/08/2026 — lashmatch — LashMatch Android web Pagamentos vai Home colisao tab pagamento
+
+**Erro:** LashMatch Android web Pagamentos vai Home colisao tab pagamento
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** Mover tela para /config/pagamentos (como whatsapp). /pagamentos e tab pagamento só Redirect. Menu/Perfil usam PAGAMENTOS_PATH. SW v8.
+
+**Arquivos:** N/A
+
+**Tags:** pwa,android,expo-router,pagamentos
+
+---
+
+## 12/08/2026 — lashmatch — LashMatch EAS Meu plano tela branca loading; Pagamentos nao abre no nativo
+
+**Erro:** LashMatch EAS Meu plano tela branca loading; Pagamentos nao abre no nativo
+
+**Contexto:** N/A
+
+**Causa:** planos.tsx ficava em spinner enquanto temAcessoEfetivo && !stay; stay falhava no EAS. MoreMenu no nativo navegava com Modal aberto e a navegacao era engolida.
+
+**Solução:** Assinante em /planos sempre verMeu plano (sem spinner eterno nem redirect Home). stay coerente (1/true). MoreMenu nativo: onClose + setTimeout 320ms depois openAppRoute; web mantem navigate-before-close. openAppRoute sempre injeta stay=1 para /planos.
+
+**Arquivos:** N/A
+
+**Tags:** eas,planos,pagamentos,expo-router,modal
+
+---
+
+## 12/08/2026 — lashmatch — Expo Go Meu plano tela branca Expo; Pagamentos nao abre em lugar nenhum
+
+**Erro:** Expo Go Meu plano tela branca Expo; Pagamentos nao abre em lugar nenhum
+
+**Contexto:** N/A
+
+**Causa:** 1) Menu Modal: push apos close engolia no nativo; openAppRoute forçava params em /planos e Expo Go ficava em loading branco. 2) Pagamentos em /config/pagamentos redirecionava para plano-escolha ou nao navegava; tela real consolidada em /assinatura.
+
+**Solução:** MoreMenu: pendingHref apos fechar Modal (nativo) / push antes (web). openAppRoute path simples. PAGAMENTOS_PATH=/assinatura com UI completa; legado /pagamentos e /config/pagamentos Redirect. Sem auto-Redirect plano-escolha. planos timeout 6s forceShow.
+
+**Arquivos:** N/A
+
+**Tags:** expo-go,planos,pagamentos,assinatura,modal
+
+---
+
+## 13/08/2026 — lashmatch — LashMatch Android web nao consegue cancelar assinatura Mercado Pago
+
+**Erro:** LashMatch Android web nao consegue cancelar assinatura Mercado Pago
+
+**Contexto:** N/A
+
+**Causa:** cancelamento.tsx e assinatura.tsx bloqueavam com canUseInAppSubscriptionCheckout() — false no Chrome Android (sem PWA). Usuário via só aviso use o app. Conta gustavojordaob123 já CANCELADO no MP; trial até 19/08 mantém acesso.
+
+**Solução:** Permitir cancelamento MP em qualquer plataforma web. Tela cancelamento mostra status se já CANCELADO. Pagamentos web: inline notice + botão cancelar/ver cancelamento.
+
+**Arquivos:** N/A
+
+**Tags:** assinatura,cancelamento,web,android,mercadopago
+
+---
+
+## 13/08/2026 — lashmatch — LashMatch iOS desloga ao fechar/reabrir o app
+
+**Erro:** LashMatch iOS desloga ao fechar/reabrir o app
+
+**Contexto:** N/A
+
+**Causa:** app/index.tsx iniciava webAuthTimedOut=true no nativo (Platform.OS !== 'web'). Enquanto loading e user ainda null (AsyncStorage restaurando), Redirect/replace para /Login — parecia deslogar ao reabrir o app.
+
+**Solução:** webAuthTimedOut começa false; timeout e force Login só em Platform.OS === 'web'. Nativo espera onAuthStateChanged (authReady).
+
+**Arquivos:** N/A
+
+**Tags:** ios,auth,persistence,boot,index
+
+---
+
+## 14/08/2026 — health-quadra-tech — Type error: Parameter 'cookiesToSet' implicitly has an 'any' type. (utils/supaba
+
+**Erro:** Type error: Parameter 'cookiesToSet' implicitly has an 'any' type. (utils/supabase/server.ts setAll)
+
+**Contexto:** primeiro deploy Next.js em produção (rootDirectory apps/web)
+
+**Causa:** strict: true no tsconfig; createServerClient do @supabase/ssr não infere o tipo de cookiesToSet no next build da Vercel. Localmente o next/plugin mascara o erro.
+
+**Solução:** Tipar cookiesToSet explicitamente e passar options com cast Parameters<typeof cookieStore.set>[2]
+
+**Arquivos:** apps/web/utils/supabase/server.ts
+
+**Tags:** typescript,supabase,ssr,vercel,nextjs
+
+---
+
+## 14/08/2026 — health-quadra-tech — Login Supabase volta para /login; GET /profiles HTTP 500
+
+**Erro:** Login Supabase volta para /login; GET /profiles HTTP 500
+
+**Contexto:** Usuário gustavo_j_14@hotmail.com autenticava na Vercel e a tela de login reaparecia.
+
+**Causa:** Policy profiles_select_self_or_clinic chama current_clinic_id()/current_role(), que faziam SELECT em profiles com SECURITY INVOKER → recursão RLS. PostgREST devolvia HTTP 500. Login 200 + bootstrap 200, mas getProfile falhava e requireProfile/login page mandavam de volta ao /login.
+
+**Solução:** Recriar current_clinic_id, current_role e current_professional_id como SECURITY DEFINER SET row_security = off; revoke anon/public; grant authenticated. Perfil do Hotmail já existia.
+
+**Arquivos:** supabase/migrations/20260814150000_fix_profile_rls_recursion.sql; fabrica/health-quadra-tech-schemas.md
+
+**Tags:** supabase,rls,recursion,login,trajeto
+
+---
+
+## 14/08/2026 — health-quadra-tech — Sessões SOAP invisíveis no celular após registrar; login espremido na metade do 
+
+**Erro:** Sessões SOAP invisíveis no celular após registrar; login espremido na metade do card
+
+**Contexto:** Usuário no celular (Chrome) depois de registrar sessão não achava as notas em lugar nenhum. Screenshot era a tela de login.
+
+**Causa:** Notas SOAP só existiam numa tabela larga dentro da ficha do paciente; após salvar não havia redirect. Agenda lista appointments, não sessions. Login mobile escondia .login-visual mas mantinha grid 1fr 1fr, formulário pela metade.
+
+**Solução:** Menu Sessões em /psico/sessoes; redirect após salvar; cards no histórico; notas no painel; login grid 1fr no mobile
+
+**Arquivos:** apps/web/app/(workspace)/psico/sessoes/page.tsx, AppShell.tsx, ClinicalForms.tsx, ManageRecords.tsx, LoginForm.tsx, globals.css
+
+**Tags:** trajeto,sessoes,mobile,login,soap
+
+---
+
+## 14/08/2026 — cortejo — Filtro de clientes não retorna resultados; Editar cadastro na ficha volta para a
+
+**Erro:** Filtro de clientes não retorna resultados; Editar cadastro na ficha volta para a lista sem abrir edição
+
+**Contexto:** app/config/clientes.tsx busca local; app/clientes/[id].tsx botão Editar cadastro
+
+**Causa:** Busca case-sensitive a acentos (José≠jose) e comparação de telefone com string vazia inconsistente; botão Editar fazia router.push('/config/clientes') sem editId
+
+**Solução:** filterClientsByQuery com normalizeForSearch (NFD) + match nome/sobrenome/telefone (digits>=2); Editar cadastro navega com params.editId e abre FormModalSheet automaticamente
+
+**Arquivos:** utils/client.ts, app/config/clientes.tsx, app/clientes/[id].tsx
+
+**Tags:** clientes,filtro,navegacao,ota
+
+---
+
+## 15/08/2026 — health-quadra-tech — Expo Go tela azul Something went wrong
+
+**Erro:** Expo Go tela azul Something went wrong
+
+**Contexto:** Usuário tentou abrir o app no Expo Go depois do eas update --branch preview.
+
+**Causa:** Dois caminhos: (1) QR do EAS Update/dashboard não abre no Expo Go; (2) apps/mobile sem .env — createClient('', '') lança supabaseUrl is required e o Expo Go mostra Something went wrong.
+
+**Solução:** Criar apps/mobile/.env com EXPO_PUBLIC_SUPABASE_*. Abrir só o QR do npx expo start em apps/mobile. Não usar o QR do expo.dev. Guard em createClient para não crashar sem env.
+
+**Arquivos:** apps/mobile/.env (local), apps/mobile/utils/supabase.ts, apps/mobile/metro.config.js, apps/mobile/babel.config.js
+
+**Tags:** expo-go, eas-update, supabase, env
+
+---
+
+## 15/08/2026 — health-quadra-tech — Project is incompatible with this version of Expo Go — This project requires a n
+
+**Erro:** Project is incompatible with this version of Expo Go — This project requires a newer version of Expo Go
+
+**Contexto:** Usuário abriu Trajeto no Expo Go do Android e viu Project is incompatible / requires a newer version.
+
+**Causa:** O app está no Expo SDK 57. O Expo Go da Play Store ainda é um SDK mais antigo (geralmente 54). Cada build do Expo Go só roda um SDK.
+
+**Solução:** No Android, instalar o Expo Go do SDK 57 em https://expo.dev/go (não esperar a Play Store). Depois npx expo start em apps/mobile. Na App Store o Expo Go para em SDK 54 — iPhone precisa de sign.expo.dev ou baixar o projeto para 54.
+
+**Arquivos:** — (orientação; sem mudança de SDK)
+
+**Tags:** expo-go, sdk-57, android
+
+---
+
+## 15/08/2026 — health-quadra-tech — Salvar nota SOAP no mobile apagava os campos e dizia que o subjetivo estava vazi
+
+**Erro:** Salvar nota SOAP no mobile apagava os campos e dizia que o subjetivo estava vazio
+
+**Contexto:** Aba Sessão do psicólogo. Usuário preenchia subjetivo e tocava Salvar nota.
+
+**Causa:** Após o insert o form zerava os campos e deixava attempted=true, então a validação mostrava Preencha o subjetivo. KeyboardAvoidingView height no Android e useFocusEffect resetando paciente pioravam o estado.
+
+**Solução:** Ler o texto via ref no save; não limpar o form; resetar attempted; ir para a lista de Sessões; KeyboardAvoidingView só no iOS; não resetar paciente selecionado no focus.
+
+**Arquivos:** apps/mobile/app/(psico)/sessao.tsx
+
+**Tags:** trajeto, expo, soap, sessao, mobile
+
+---
+
+## 15/08/2026 — health-quadra-tech — Expo Go tela azul / Something went wrong / Project is incompatible no Android e 
+
+**Erro:** Expo Go tela azul / Something went wrong / Project is incompatible no Android e iPhone
+
+**Contexto:** Trajeto estava em Expo SDK 57. Cortejo/LashMatch no 54. QR do dashboard EAS Update também não abre no Go.
+
+**Causa:** Expo Go da App Store e Play Store ficou no SDK 54. SDK 55+ não foi aprovado nas lojas. EAS Update exige build nativo com o mesmo runtime, não o Expo Go.
+
+**Solução:** Downgrade de apps/mobile para SDK 54 com expo-router ~6 (não ~54). Overrides no monorepo para não puxar expo 57 via @expo/vector-icons. Abrir só o QR do Metro (npx expo start).
+
+**Arquivos:** apps/mobile/package.json, package.json (overrides), apps/mobile/metro.config.js, apps/mobile/components/HatSwitch.tsx, useColorScheme.ts, BackBar.tsx
+
+**Tags:** expo, expo-go, sdk-54, trajeto
+
+---
+
+## 15/08/2026 — health-quadra-tech — Asset not found: apps/mobile/assets/icon.png
+
+**Erro:** Asset not found: apps/mobile/assets/icon.png
+
+**Contexto:** Depois do downgrade para SDK 54, Metro/Expo Go pedia assets/icon.png (template 54). O projeto só tinha assets/images/icon.png (template 57).
+
+**Causa:** Expo Go 54 solicita o ícone no caminho clássico ./assets/icon.png, independente do app.json apontar para ./assets/images/icon.png.
+
+**Solução:** Copiar icon.png e splash-icon.png para apps/mobile/assets/ e apontar app.json icon para ./assets/icon.png. Recarregar o Metro (r).
+
+**Arquivos:** apps/mobile/assets/icon.png, apps/mobile/assets/splash-icon.png, apps/mobile/app.json
+
+**Tags:** expo, expo-go, sdk-54, metro, assets
+
+---
+
+## 15/08/2026 — health-quadra-tech — Login demo Invalid login credentials / credencial inválida
+
+**Erro:** Login demo Invalid login credentials / credencial inválida
+
+**Contexto:** Usuários @trajeto.dev existiam e estavam confirmados, mas a senha gravada no Auth não era Trajeto123.
+
+**Causa:** Contas criadas no Auth com senha diferente da documentada para a demo.
+
+**Solução:** Reset de encrypted_password só nas 4 contas @trajeto.dev para Trajeto123. Contas pessoais Jordao não foram alteradas.
+
+**Arquivos:** auth.users (somente emails @trajeto.dev)
+
+**Tags:** supabase, auth, demo, trajeto
+
+---
+
+## 15/08/2026 — health-quadra-tech — Agenda mês: data, Hoje/Dia/Mês/Novo por cima do calendário
+
+**Erro:** Agenda mês: data, Hoje/Dia/Mês/Novo por cima do calendário
+
+**Contexto:** Tela (psico)/agenda no Expo Go. Calendário de agosto 2026 com botões sobrepostos às semanas 17–31.
+
+**Causa:** AgendaCalendar usava style.height 218. O Calendar do Wix não encolhe as células — a grade transborda e a dayBar fica no meio.
+
+**Solução:** Remover altura fixa. Tema compacto (fontes + margem de semana) como Cortejo. Barra do dia abaixo do mês, com fundo e zIndex.
+
+**Arquivos:** apps/mobile/components/agenda/AgendaCalendar.tsx, AgendaFrame.tsx, lib/calendarLocale.ts
+
+**Tags:** expo, agenda, react-native-calendars, layout
+
+---
+
+## 15/08/2026 — fabrica — indexar_rapido crash HNSW / 0xC0000005 (recorrência)
+
+**Erro:** indexar_rapido.py crasha ao abrir Chroma (HNSW / 0xC0000005) e o RAG remoto fica desatualizado
+
+**Contexto:** Windows + Chroma persistente `.chroma_db`. MCP tentava reindexar após cada decisão. Recorrência do incidente 08/08/2026.
+
+**Causa:** Índice HNSW inconsistente no disco. Dois `INDEX.md` (fábrica e sinaflor) se sobrescreviam porque o delete usava só o nome do arquivo.
+
+**Solução:** `python indexar_rapido.py --recriar-banco` (2387 chunks). Delete passou a usar `path`. `.\aws-rag\scripts\sync-push.ps1 -SkipIndex -Bucket fabrica-rag-084029330207-us-east-1 -Region us-east-1`. App Runner `/health` com `ready: true` e `chunks: 2387`.
+
+**Arquivos:** `indexar_rapido.py`, `fabrica/INDEX.md`, `fabrica/rag-retrieval-fabrica.md`, `fabrica/aws-rag-app-runner.md`
+
+**Tags:** rag, chroma, aws, hnsw
+
+---
+
+## 15/08/2026 — fabrica — indexar_rapido.py crasha ao abrir Chroma (HNSW / 0xC0000005) e o RAG remoto fica
+
+**Erro:** indexar_rapido.py crasha ao abrir Chroma (HNSW / 0xC0000005) e o RAG remoto fica desatualizado
+
+**Contexto:** Windows + Chroma persistente .chroma_db; MCP tentava reindexar após cada decisão
+
+**Causa:** Índice HNSW do Chroma corrompido no disco; dois arquivos INDEX.md se sobrescreviam porque o delete usava só o nome do arquivo
+
+**Solução:** python indexar_rapido.py --recriar-banco; delete por path; sync-push.ps1 -SkipIndex -Bucket fabrica-rag-084029330207-us-east-1 -Region us-east-1
+
+**Arquivos:** C:/Users/gusta/obsidian/indexar_rapido.py, fabrica/INDEX.md, fabrica/rag-retrieval-fabrica.md, fabrica/aws-rag-app-runner.md
+
+**Tags:** rag, chroma, aws, hnsw
+
+---
+
+## 19/08/2026 — lashmatch — Web/PWA: ao clicar 'Escolher outro tipo de WhatsApp' ou 'Mudar tipo de lembrete 
+
+**Erro:** Web/PWA: ao clicar 'Escolher outro tipo de WhatsApp' ou 'Mudar tipo de lembrete (WhatsApp)' em Pagamentos/Assinatura volta ao início e não carrega outros planos.
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** Em app/assinatura.tsx, para Platform.OS === 'web', ao clicar o botão de trocar tipo, navegar direto para /assinatura com params {estilo: ...} (alternando proprio/lashmatch) em vez de ir para /plano-escolha. Mantém comportamento antigo em nativo.
+
+**Arquivos:** app/assinatura.tsx,components/PlanoAccessRedirect.tsx
+
+**Tags:** 
+
+---
+
+## 19/08/2026 — lashmatch — Expo Go/nativo: trial ativo, ao clicar 'Meu plano' fica tudo branco (parece reca
+
+**Erro:** Expo Go/nativo: trial ativo, ao clicar 'Meu plano' fica tudo branco (parece recarregar/remount)
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** Atualizado hooks/usePlano.ts para normalizar trialFimEm vindo do Firestore como Timestamp/Date (toDate()) ou string para ISO string antes de calcular emPeriodoTrial/temAcessoEfetivo.
+
+**Arquivos:** hooks/usePlano.ts
+
+**Tags:** 
+
+---
+
+## 19/08/2026 — lashmatch — Expo Go (nativo): ao clicar 'Meu plano' a tela fica branca/volta pro splash ao i
+
+**Erro:** Expo Go (nativo): ao clicar 'Meu plano' a tela fica branca/volta pro splash ao invés de carregar /planos
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** Atualizado utils/openAppRoute.ts: quando pathname === '/planos' injeta params {stay:'1'} se não houver stay explícito, garantindo visualização explícita no app/planos.tsx.
+
+**Arquivos:** utils/openAppRoute.ts,app/planos.tsx,app/(tabs)/_layout.tsx,constants/moreMenuItems.ts
+
+**Tags:** 
+
+---
+
+## 19/08/2026 — lashmatch — Expo Go preview fica branco ao abrir Meu plano; caminho de navegação do botão de
+
+**Erro:** Expo Go preview fica branco ao abrir Meu plano; caminho de navegação do botão de trial usa router.push('/planos') sem stay=1
+
+**Contexto:** N/A
+
+**Causa:** 
+
+**Solução:** Atualizado app/(tabs)/index.tsx para navegar a /planos com params {stay:'1'} no botão de trial.
+
+**Arquivos:** app/(tabs)/index.tsx,utils/openAppRoute.ts
+
+**Tags:** 
+
+---
+
+## 19/08/2026 — health-quadra-tech — Next.js prerender /404 e /_not-found: TypeError Cannot read properties of null (
+
+**Erro:** Next.js prerender /404 e /_not-found: TypeError Cannot read properties of null (reading useContext) em pages/_error ou chunks do not-found
+
+**Contexto:** Deploy Vercel --prod do Trajeto falhou no prerender após o painel financeiro. Build local compilava e typecheck passava.
+
+**Causa:** Monorepo com Expo (react 19.1.0) + Next 15.5 que puxava react 19.2.8 em apps/web/node_modules. Duas cópias do React no mesmo app: dispatcher null. Alias webpack de react para a cópia client piorava: quebrava RSC (next/link useContext no /_not-found).
+
+**Solução:** 1) Pin react/react-dom 19.1.0 em apps/web/package.json. 2) Remover entradas apps/web/node_modules/react@19.2.8 do package-lock.json. 3) .npmrc legacy-peer-deps=true. 4) NÃO aliasar react no webpack. 5) Manter overrides do root.
+
+**Arquivos:** apps/web/package.json, package-lock.json, .npmrc, apps/web/next.config.ts
+
+**Tags:** next,react,vercel,prerender,monorepo
+
+---
+
+## 19/08/2026 — health-quadra-tech — Gráfico anual empilhava todos os recebimentos pagos no mês atual em vez de segui
+
+**Erro:** Gráfico anual empilhava todos os recebimentos pagos no mês atual em vez de seguir o vencimento do extrato
+
+**Contexto:** Ano 2026: extrato Fev R$100 + Ago R$300 + Ago R$200; gráfico mostrava só Ago R$600.
+
+**Causa:** Horizonte Passado agrupava por paid_at. Marcar Pago grava a data/hora de agora, então vencimentos de fevereiro iam para a barra de agosto.
+
+**Solução:** invoiceDay no passado usa due_date primeiro (depois paid_at/created_at). Texto do gráfico explica que a barra segue o vencimento.
+
+**Arquivos:** packages/shared/finance.ts, apps/web/components/finance/FinanceDashboard.tsx, apps/mobile/components/FinanceDashboard.tsx
+
+**Tags:** financeiro,grafico,due_date,paid_at
+
+---
+
+## 19/08/2026 — health-quadra-tech — Filtros do painel financeiro não refletiam no extrato; mês parecia ano; saída nã
+
+**Erro:** Filtros do painel financeiro não refletiam no extrato; mês parecia ano; saída não aparecia no gráfico
+
+**Contexto:** Mês agosto 2026: KPI R$500 (certo) mas eixo Jan–Dez e extrato com jan/fev/set. Futuro agosto zerado porque o a receber é setembro.
+
+**Causa:** buildSeries de mes usava os 12 meses do ano; InvoiceManager recebia a lista inteira; polyline do chart usava entradas de novo.
+
+**Solução:** filterInvoices no mesmo range/horizon. Série de mês = dias. Ano = 12 meses. Barras sage+ouro. Extrato via statement callback.
+
+**Arquivos:** packages/shared/finance.ts, FinanceDashboard web/mobile, CashflowChart, páginas financeiro
+
+**Tags:** financeiro,filtros,grafico,extrato
+
+---
+
+## 19/08/2026 — health-quadra-tech — Functions cannot be passed directly to Client Components (statement / detailHref
+
+**Erro:** Functions cannot be passed directly to Client Components (statement / detailHref) — digest 983912048 em /clinica/financeiro
+
+**Contexto:** Digest 983912048 em /clinica/financeiro e 621634256 em /clinica/pacientes após deploy --prod. /psico/financeiro e /psico/pacientes com o mesmo padrão.
+
+**Causa:** Páginas Server Component passavam função (statement, detailHref) para Client Components. Next não serializa função e quebra o RSC.
+
+**Solução:** FinanceWorkspace client monta o render prop internamente. PatientManager recebe detailBase string em vez de detailHref.
+
+**Arquivos:** apps/web/components/finance/FinanceWorkspace.tsx, clinica/psico financeiro pages, PatientManager detailBase
+
+**Tags:** next,rsc,financeiro,pacientes,vercel
+
+---
+
+## 19/08/2026 — health-quadra-tech — trajeto-notify CORS + POST 500: Daily exp was in the past rather than in the fut
+
+**Erro:** trajeto-notify CORS + POST 500: Daily exp was in the past rather than in the future
+
+**Contexto:** Psicóloga clicou Entrar na consulta na agenda web (Ana Prado, 08:00 Online) às ~22h.
+
+**Causa:** ensureDailyRoom usava exp = starts_at + 6h. Na sessão das 08:00, ao entrar à noite o exp já estava no passado. Daily recusou, a função lançou exceção não tratada, o gateway devolveu 500 sem CORS. No mobile não há CORS, mas o mesmo 500 impedia abrir a sala.
+
+**Solução:** exp = max(início+6h, agora+4h); try/catch com CORS em todo 500; ação ensure_video_room só para vídeo; web e Expo Go usam o mesmo helper ao entrar.
+
+**Arquivos:** supabase/functions/trajeto-notify/index.ts; apps/web/lib/notify.ts; apps/mobile/lib/notify.ts; AgendaBoard; JoinCallButton; psico/patient web+mobile
+
+**Tags:** daily,cors,edge-function,agenda,expo
+
+---
+
+## 20/08/2026 — health-quadra-tech — Android Bundling failed: Cannot find module 'react-refresh/babel' (babel-preset-
+
+**Erro:** Android Bundling failed: Cannot find module 'react-refresh/babel' (babel-preset-expo)
+
+**Contexto:** expo start no Expo Go Android. Metro falhou ao bundlar expo-router/entry.js no monorepo apps/web (Next) + apps/mobile (Expo SDK 54).
+
+**Causa:** babel-preset-expo faz require('react-refresh/babel') como peer. No workspace npm o pacote ficou aninhado em expo/react-native e não na raiz, então o Babel não resolvia.
+
+**Solução:** Adicionar react-refresh ^0.14.2 como dependência de @trajeto/mobile e npm install na raiz. Confirmado require.resolve a partir de babel-preset-expo.
+
+**Arquivos:** apps/mobile/package.json, package-lock.json
+
+**Tags:** expo, expo-go, babel, metro, react-refresh, monorepo
+
+---
+
+## 20/08/2026 — health-quadra-tech — Unable to resolve ../../../packages/shared/messaging from apps/mobile/app/(patie
+
+**Erro:** Unable to resolve ../../../packages/shared/messaging from apps/mobile/app/(patient)/index.tsx
+
+**Contexto:** expo start Android Expo Go após o fix do react-refresh. Metro bundlou 1630 modules e parou no import relativo.
+
+**Causa:** O caminho ../../../packages/shared a partir de app/(patient) resolve para apps/packages/shared, não para a raiz. Imports relativos quebram em rotas aninhadas do Expo Router.
+
+**Solução:** Dependência @trajeto/shared no mobile; imports iguais à web (@trajeto/shared/messaging etc.); metro extraNodeModules + package exports; tsconfig paths.
+
+**Arquivos:** apps/mobile/package.json, metro.config.js, tsconfig.json, app/(patient)/index.tsx, app/cadastro.tsx, app/(psico)/paciente/[id].tsx, components/PatientWhatsAppPanel.tsx, components/PatientsPanel.tsx, lib/dates.ts, agenda.ts, finance.ts, report.ts, quizRequest.ts
+
+**Tags:** expo, metro, monorepo, shared
+
+---

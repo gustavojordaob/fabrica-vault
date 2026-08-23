@@ -31,6 +31,8 @@ Eu não “pergunto pro ChatGPT e copio código”. Montei uma **fábrica**: o C
 
 **Sempre** consultar RAG **antes de qualquer coisa** — pergunta simples ou complexa.
 
+**App (Expo/RN):** a primeira nota é [[compliance-lojas-apple-google-padrao]] (Apple 4.8 / 3.1.1 / 5.1.1 + Play).
+
 ### Fluxo em todo turno
 
 ```mermaid

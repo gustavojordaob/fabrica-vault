@@ -140,7 +140,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Impacto:** 
 - **Quem decidiu:** 
 
-### 09/06/2026 — cortejo — undefined
+### 09/06/2026 — cortejo
 
 - **Decisão:** App Cortejo scaffold completo via MCP staging com 53 arquivos: Expo Router, design tokens marrom café, multi-tenant artifacts/cortejo/salons, Zustand+React Query, paywall free/pro, Cloud Functions para booking público, WhatsApp, MP
 - **Motivo:** A definir
@@ -149,7 +149,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 10/06/2026 — cortejo — Firestore rules — bootstrap do primeiro owner
 
 - **Decisão:** isSalonOwner(salonId) permite read do salão e create do doc members/{uid} com role owner na primeira configuração
@@ -230,7 +229,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 15/06/2026 — fabrica — undefined
+### 15/06/2026 — fabrica
 
 - **Decisão:** Módulo ajuda/suporte padrão: constants/support.ts + utils/supportContact.ts + tela ajuda + menu; só WhatsApp sem botão ligar; documentado em modulo-ajuda-suporte-expo.md
 - **Motivo:** A definir
@@ -239,7 +238,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 18/06/2026 — cortejo — Bloqueio de agenda por profissional e horário
 
 - **Decisão:** blockedPeriods no documento do salão com professionalUid, startTime/endTime; lógica em utils/blockedPeriodsLogic.ts; slots filtrados por profissional; Cloud Functions availableSlots e publicBooking deployadas
@@ -280,7 +278,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 18/06/2026 — cortejo — undefined
+### 18/06/2026 — cortejo
 
 - **Decisão:** Login automático no site /assinar via código ws de uso único (10 min): app chama assinarWebSessionCreate com Bearer, abre URL com ?ws=; site troca em assinarWebSessionExchange por customToken Firebase; persistência LOCAL mantém sessão no mesmo navegador
 - **Motivo:** Usuário vindo do app iOS não deve digitar senha de novo; app e Safari não compartilham cookies nativamente
@@ -289,8 +287,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 18/06/2026 — lashmatch — undefined
+### 18/06/2026 — lashmatch
 
 - **Decisão:** LashMatch: excluir conta implementado igual Cortejo — hook useDeleteAccount, services/account.ts, Cloud Function excluirConta (cancel MP + Firestore + Storage + Auth), botão em perfilUsuario.tsx. Doc: obsidian/fabrica/excluir-conta-app-expo-padrao.md
 - **Motivo:** A definir
@@ -299,7 +296,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 20/06/2026 — cortejo — Admin templates WhatsApp via Cloud Functions
 
 - **Decisão:** Tela TemplatesAdminScreen (owner) + listWhatsAppTemplates/createWhatsAppTemplate HTTP com Auth Bearer, WABA de salon.whatsapp.wabaId ou WHATSAPP_BUSINESS_ID fallback, token só no backend
@@ -330,7 +326,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 20/06/2026 — cortejo — undefined
+### 20/06/2026 — cortejo
 
 - **Decisão:** Downgrade WhatsApp Meta direto (Cloud API): metaWhatsappWebhook.ts com X-Hub-Signature-256, mapa account_update/quality/review, debounce 3 falhas envio, health check Graph API 6h, integrado com downgradeWhatsAppConnection/promote existentes. Path functions/SRC/ (não src/).
 - **Motivo:** A definir
@@ -339,7 +335,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 21/06/2026 — cortejo — Documentação fábrica WhatsApp salão multi-tenant
 
 - **Decisão:** Nota canônica whatsapp-salao-expo-padrao.md na Obsidian fabrica: dois fluxos (compartilhado vs Embedded Signup Coexistence), schema salon.whatsapp, setup Meta OAuth (domínio + SDK JS + CONFIG_ID), arquivos copiáveis, erros #131008/#132008, checklist novo projeto. Espelho em cortejo/docs/whatsapp-business-api.md
@@ -360,7 +355,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 21/06/2026 — cortejo — undefined
+### 21/06/2026 — cortejo
 
 - **Decisão:** Planos tiered mensais (plano1/planomensal2-4) com limite WhatsApp msgUsage; RevenueCat 4 packages; planoAnual removido
 - **Motivo:** Pacotes de mensagens por tier; anual descontinuado; iOS IAP + Android MP
@@ -369,8 +364,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 21/06/2026 — cortejo — undefined
+### 21/06/2026 — cortejo
 
 - **Decisão:** Calendário AgendaCalendar: key={visibleMonthKey} no Calendar para remount ao navegar mês com data selecionada. Cliente: useFocusEffect + confirmed conta visita após start. Público /agendar: salonHasActiveSubscription respeita planExpiresAt/grace CANCELLED + sync RevenueCat API quando Firestore stale iOS.
 - **Motivo:** A definir
@@ -379,8 +373,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 22/06/2026 — cortejo — undefined
+### 22/06/2026 — cortejo
 
 - **Decisão:** msgUsage usa periodStart/periodEnd (não month). Lazy reset no resolveSender/prepareTenantForWhatsAppSend. blocked para Pro no limite (não envia shared). Apenas confirmação+D7+D24 contam. notify 80%/100% com notifiedAt80/100. RevenueCat INITIAL/RENEWAL reset período; PRODUCT_CHANGE mantém sent. UI PlanTierCard + badge lembrete pausado.
 - **Motivo:** A definir
@@ -389,7 +382,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 22/06/2026 — cortejo — Documentação jun/2026 + página suporte App Store
 
 - **Decisão:** Página pública /suporte no Firebase Hosting; doc consolidada cortejo-modulos-jun2026-padrao.md na fábrica; assinatura dual RevenueCat (iOS) + MP (Android); trial 16d; msgUsage por período.
@@ -440,7 +432,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 22/06/2026 — cortejo — undefined
+### 22/06/2026 — cortejo
 
 - **Decisão:** salonHasActiveSubscription: checar planExpiresAt/currentPeriodEnd ANTES de bloquear CANCELLED do MP; RevenueCatBootstrap e shareSalonBookingLink sincronizam Firestore via revenueCatSyncSubscription quando iOS tem entitlement ativo
 - **Motivo:** A definir
@@ -449,7 +441,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 22/06/2026 — cortejo — Doc assinatura trial 14d + sync Firestore iOS + regra Cursor
 
 - **Decisão:** Atualizada fabrica/cortejo-modulos-jun2026-padrao.md e mercadopago-assinatura-ota-padroes.md com seção Firestore×RevenueCat, trial TRIAL_DAYS=14 espelhado app/functions, RC API V2, elegibilidade trial. Criada regra cortejo/.cursor/rules/rag-assinatura-padrao.mdc. Erros registrados em erros-e-solucoes.md.
@@ -489,17 +480,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 22/06/2026 — undefined — undefined
-
-- **Decisão:** undefined
-- **Motivo:** A definir
-- **Alternativa rejeitada:** N/A
-- **Impacto:** A definir
-- **Quem decidiu:** Ambos
-
----
-
-### 23/06/2026 — lashmatch — undefined
+### 23/06/2026 — lashmatch
 
 - **Decisão:** LashMatch paywall iOS: rota /assinatura fora das tabs (PlanoAccessRedirect) porque (tabs)/pagamento era bloqueado pelo TabsLayout quando !temAcessoEfetivo. ASC: 3/4 IAPs MISSING_METADATA.
 - **Motivo:** A definir
@@ -508,8 +489,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 23/06/2026 — lashmatch — undefined
+### 23/06/2026 — lashmatch
 
 - **Decisão:** App Store Connect LashMatch: product IDs renomeados para lashmatch_mensal, lashmatch_mensal2, lashmatch_mensal3, lashmatch_mensal4. Código types/purchase.ts + revenueCatSubscription.ts atualizados; aliases legados planomensal* mantidos.
 - **Motivo:** A definir
@@ -518,8 +498,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 23/06/2026 — lashmatch — undefined
+### 23/06/2026 — lashmatch
 
 - **Decisão:** RevenueCat lashmatch offering: packages $rc_monthly..$rc_monthly_4 apontam para lashmatch_mensal..mensal4. Deploy revenuecatWebhook + revenueCatSyncSubscription OK.
 - **Motivo:** A definir
@@ -528,8 +507,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 23/06/2026 — lashmatch — undefined
+### 23/06/2026 — lashmatch
 
 - **Decisão:** Removidos aliases legados iOS (planomensal*, anual, lashmatch_plano1). RevenueCat: 4 produtos lashmatch_mensal..mensal4 apenas; legados arquivados no RC.
 - **Motivo:** A definir
@@ -538,7 +516,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 23/06/2026 — cortejo — WhatsApp Embedded Signup reativado na UI
 
 - **Decisão:** Reativado Embedded Signup Meta na UI: whatsapp.tsx e WhatsAppStatusCard usam runEmbeddedSignupFlow novamente; removido utils/whatsappOwnNumber.ts
@@ -729,7 +706,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 01/07/2026 — zenpro — undefined
+### 01/07/2026 — zenpro
 
 - **Decisão:** Zenpro fatia 1 multi-tenant: coleções lojas (slug, donoUid, config), usuarios com papel marca|revendedor, produtos e modelos_celular centrais, pedidos em lojas/{lojaId}/pedidos. Rules: marca tudo, revendedor só minhaLoja(), catálogo read público write marca. Seed tsx + testes emulator. Sem admin UI.
 - **Motivo:** A definir
@@ -738,7 +715,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 01/07/2026 — capinhas — Fundacao multi-tenant validada com teste de isolamento
 
 - **Decisão:** Multi-tenant de revendedores: produtos/modelos centrais (marca), pedidos por loja (lojas/{id}/pedidos), papeis marca|revendedor em usuarios/{uid}. Isolamento nas Security Rules do Firestore, testado no emulador (test:rules:multitenant): revendedor nao le pedido de outra loja, marca ve tudo. 3 cenarios PASS.
@@ -799,7 +775,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 02/07/2026 — zenpro — undefined
+### 02/07/2026 — zenpro
 
 - **Decisão:** Multitenant sob Next output:export: rota dinamica /[slug] de revendedor resolvida com casca generica (slug 'loja' pre-renderizado em /loja, /loja/carrinho, /loja/checkout, /loja/personalizar) + rewrites no Firebase Hosting ('/*/personalizar','/*/carrinho','/*/checkout','/*') apontando para os HTMLs da casca. O client descobre o slug real via usePathname (LojaLayoutClient), nao pelo param pre-renderizado. Assim revendedores novos (ex.: /leozao) funcionam sem redeploy. /zenpro redireciona para '/' (marca nao e revendedor).
 - **Motivo:** output:export exige params conhecidos em build-time; resolvia o erro 'Page /[slug]/page is missing param in generateStaticParams'
@@ -808,8 +784,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 02/07/2026 — zenpro — undefined
+### 02/07/2026 — zenpro
 
 - **Decisão:** Duas features multitenant reutilizaveis: (1) 'Meus pedidos' do cliente — indice pessoal em usuarios/{uid}/pedidos (ponteiro gravado no checkout via criarPedidoLoja) + leitura do status ao vivo em lojas/{lojaId}/pedidos (rules: cliente le o proprio pedido por clienteUid). Status ganhou 'entregue' e 'cancelado'. (2) Reposicao de estoque revendedor->dono: colecao pedidos_reposicao/{id} (lojaId, revendedorUid, itens, total, status solicitado|aprovado|enviado|recebido|cancelado). Rules: revendedor cria/le/cancela o proprio; marca le tudo e muda status. Pagina /admin/reposicao serve os dois papeis.
 - **Motivo:** Cliente precisa acompanhar pedidos; revendedor precisa abastecer a loja pedindo ao dono
@@ -818,7 +793,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 02/07/2026 — zenpro — Dimensões do modelo definem aspecto da capa + molde por modelo na arte de produção
 
 - **Decisão:** A proporção (aspecto) da capa passa a derivar de larguraPx×alturaPx do modelo em toda a pipeline: CaseEditor, CasePreview, PreviewCapaModal e exportCaseArt usam a MESMA base (getCaseLayout(280, larguraPx, alturaPx)), então molduraW=280 fixo e molduraH proporcional. As dimensões e o molde (maskUrl) são resolvidos em resolverVisualPersonalizacao (a partir de modelos/{id}) e persistidos na Personalizacao/config para que carrinho, checkout e admin reconstruam a mesma proporção sem o provider. Na arte de produção, o recorte usa o maskUrl do próprio modelo (Storage) via loadImageForCanvasExport (evita canvas taint); fallback = máscara iPhone.
@@ -939,26 +913,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 04/07/2026 — undefined — undefined
-
-- **Decisão:** Zenpro editor capinha: canvas fixo 1080x1920 (9:16 Stories), mock da capa/câmera varia por modelo; até 4 fotos; export retangulo full canvas; vitrine só Firestore sem mock; error handling no editor
-- **Motivo:** Pedido do usuário + fix permission hang
-- **Alternativa rejeitada:** N/A
-- **Impacto:** caseGeometry, CaseEditor, exportCaseArt, PersonalizarEditor, catalogoProdutos
-- **Quem decidiu:** Ambos
-
----
-
-### 04/07/2026 — undefined — undefined
-
-- **Decisão:** Zenpro: editor clip moldura celular + drag sem re-render; expandirFotoPara916 no upload; pedido revendedor espelha em lojas/zenpro/pedidos com filaProducaoMarca
-- **Motivo:** Performance drag, UX formato celular, fill 9:16, fila producao marca
-- **Alternativa rejeitada:** N/A
-- **Impacto:** CaseEditor, expandirFotoPara916, criarPedidoLoja, admin pedidos
-- **Quem decidiu:** Ambos
-
----
-
 ### 04/07/2026 — zenpro — Layout automático multi-foto capinha
 
 - **Decisão:** Presets de layout por quantidade (1=página inteira, 2=empilhado vertical, 3=2+1, 4=grade 2x2) em fotoLayoutPresets.ts; auto-aplica ao mudar contagem; botão Reorganizar fotos; cada FotoLayer usa areaSlot própria para fit/clamp.
@@ -1029,7 +983,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 06/07/2026 — cortejo — undefined
+### 06/07/2026 — cortejo
 
 - **Decisão:** Paywall WhatsApp em duas telas: (1) /config/plano-escolha pergunta Cortejo vs próprio com prós/contras; (2) /config/plano?estilo=cortejo|proprio mostra só os planos compatíveis (4 tiers ou planowpp). Assinantes bloqueados redirecionam para escolha primeiro.
 - **Motivo:** UX solicitada pelo usuário — não misturar todos os planos numa tela só.
@@ -1038,7 +992,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 06/07/2026 — cortejo — planowpp sem fallback Cortejo e msgs ilimitadas
 
 - **Decisão:** Plano planowpp (WhatsApp Próprio): resolveSender nunca retorna shared — bloqueia com own_billing_required/own_not_connected/own_not_ready. Sem limite planMsgLimit=0 (Meta cobra por msg). Sem fallback template 132001 nem retry 131042 via número Cortejo. UI/copy deixa claro custo Meta ~R$0,10/msg.
@@ -1069,7 +1022,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 06/07/2026 — lashmatch — undefined
+### 06/07/2026 — lashmatch
 
 - **Decisão:** LashMatch WhatsApp Próprio: espelhado Embedded Signup Meta do Cortejo — tenant usuarios/{uid}, plano mensalProprio, CF embeddedSignup + metaWhatsappWebhook, tela /whatsapp, hosting /embedded-signup/
 - **Motivo:** A definir
@@ -1078,20 +1031,9 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 07/07/2026 — undefined — undefined
-
-- **Decisão:** undefined
-- **Motivo:** A definir
-- **Alternativa rejeitada:** N/A
-- **Impacto:** A definir
-- **Quem decidiu:** Ambos
-
----
-
 ### 07/07/2026 — lashmatch — LashMatch WhatsApp próprio — template v5 no envio
 
-- **Decisão:** undefined
+- **Decisão:** LashMatch WhatsApp próprio — template v5 no envio
 - **Motivo:** A definir
 - **Alternativa rejeitada:** N/A
 - **Impacto:** A definir
@@ -1099,7 +1041,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 08/07/2026 — zenpro — undefined
+### 08/07/2026 — zenpro
 
 - **Decisão:** Zen Pro — Mercado Pago checkout (loja B2C + reposição B2B), webhook confirma pagamento antes de envio/estoque, rastreio e NF (Focus NFe opcional + manual admin). Parcelamento até 12x com 2x sem juros via Checkout Pro.
 - **Motivo:** A definir
@@ -1108,8 +1050,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 08/07/2026 — zenpro — undefined
+### 08/07/2026 — zenpro
 
 - **Decisão:** Zen Pro estoque: loja oficial zenpro (MARCA_LOJA_ID) incluída no dropdown Admin/Estoque — marca vende na raiz e precisa alocar estoque em lojas/zenpro/estoque, não só revendedores. Estoque central continua em produtos.estoqueCentral.
 - **Motivo:** A definir
@@ -1118,7 +1059,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 09/07/2026 — zenpro — CEP origem envio por tipo de pedido e loja
 
 - **Decisão:** Personalizada sempre expede da Zen Pro (lojas/zenpro.config.expedicao). Produto pronto expede da loja do pedido (zenpro ou revendedor). CEP não é env var única — resolverOrigemExpedicaoPedido() lê config.expedicao da loja. Pedido misto centraliza na Zen Pro.
@@ -1129,7 +1069,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 09/07/2026 — zenpro — undefined
+### 09/07/2026 — zenpro
 
 - **Decisão:** Zen Pro MP: webhook aceita GET IPN (?topic=&id=) e merchant_order; callable sincronizarPagamentoMercadoPago busca payment por id ou external_reference; retorno checkout e botão Meus pedidos sincronizam status quando webhook falha.
 - **Motivo:** A definir
@@ -1138,8 +1078,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 10/07/2026 — cortejo — undefined
+### 10/07/2026 — cortejo
 
 - **Decisão:** Cortejo: corrigido falso positivo de assinatura — MP status pending não libera Pro; mpSync só vincula preapproval com external_reference do salonId; removido auto-sync ao abrir paywall; isSalonSubscriptionActive não usa mais plan=pro sozinho.
 - **Motivo:** Usuário ia para home sem assinar — sync puxava preapproval antigo/pending do mesmo e-mail
@@ -1148,8 +1087,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 10/07/2026 — lashmatch — undefined
+### 10/07/2026 — lashmatch
 
 - **Decisão:** LashMatch análise: seletor de modelo (Gatinho/Boneca/Esquilo), tom dos fios via tintColor, fotoComCiliosUrl também na web, mapa 6 combinações corrigidas + dual Boneca/Esquilo, textos curvatura e colorimetria marrons
 - **Motivo:** Pedido da dona do app — trocar modelo após IA, preview marrom, histórico com cílios aplicados
@@ -1158,8 +1096,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 11/07/2026 — lashmatch — undefined
+### 11/07/2026 — lashmatch
 
 - **Decisão:** LashMatch paridade planos Cortejo: PlanTierCard com msgs/mês e barra de uso (msgUsage no Firestore usuarios/{uid}); backend msgUsage.ts + incremento em envios pelo número LashMatch; MetaBillingHelpPanel (copiar link, desktop, suporte) em LashMatch e Cortejo; telefone suporte 19989631786 nos dois apps.
 - **Motivo:** A definir
@@ -1168,7 +1105,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 14/07/2026 — zenpro — Preço revendedor + blur editor + IA sem camera + filtros admin
 
 - **Decisão:** Campo precoRevendedorCentavos no produto (B2B reposição); fallback no precoBaseCentavos. CaseEditor com blur cover no fundo. Prompt IA vazio com placeholder; INSTRUCOES proíbem módulo/bump de câmera na arte. Filtros de busca em produtos/modelos/marcas.
@@ -1199,7 +1135,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 14/07/2026 — undefined — zenpro — borda dual CASE_BORDER + trocar foto substitui ativa
+### 14/07/2026 — zenpro — borda dual CASE_BORDER + trocar foto substitui ativa
 
 - **Decisão:** Borda do mockup em 2 strokes (outer claro + inner escuro) via CASE_BORDER em caseVisualConstants, usada em CaseEditor/CasePreview/caseFrame. Botão Trocar foto usa substituir:"ativa" (revoga blob da foto alvo); Adicionar foto empilha até MAX. Evitar substituir:false no Trocar (empilhava fotos).
 - **Motivo:** A definir
@@ -1208,7 +1144,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 14/07/2026 — zenpro — Preço revendedor obrigatório com faixas e pedido mínimo no admin
 
 - **Decisão:** ProdutoFormPageClient e CapinhaNovaPageClient exigem precoRevendedorCentavos (number), pedidoMinimoRevendedorCentavos (0 se vazio) e faixasPrecoRevendedor validadas (faixasDraftParaDocs + validarFaixasPrecoRevendedor) no submit e na criação via upload de imagem.
@@ -1259,7 +1194,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 14/07/2026 — zenpro — undefined
+### 14/07/2026 — zenpro
 
 - **Decisão:** StoreHeader: EntrarComoRevendedorLink no lugar do hard link /revendedor; Painel admin gated por podeAcessarPortalRevendedor (revendedor/marca) no site comum e no B2B; no portal isB2b mostra Site comum + Painel admin.
 - **Motivo:** Link inteligente redireciona login/aviso conforme papel; painel admin so aparece para quem pode acessar o portal.
@@ -1268,7 +1203,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 14/07/2026 — zenpro — Fix acesso /revendedor + ranking mês/vendedor + benefícios no checkout B2B
 
 - **Decisão:** Corrigir race de papel (papelResolvido + Guard sem bounce para aviso). EntrarComoRevendedorLink sempre vai a /revendedor se logado. Admin button via podeAcessarPortalRevendedor. Ranking admin com month picker e filtro vendedor. Checkout/carrinho B2B aplica desconto do nível (useBeneficiosCheckoutB2b) e grava beneficioNivel no pedido.
@@ -1459,7 +1393,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 18/07/2026 — sinaflor — undefined
+### 18/07/2026 — sinaflor
 
 - **Decisão:** HU130 backend: domínio próprio de tramitação de licenciamento (TB_TRAMITE_LIC + catálogos por CD_*, destinatários, anexos, rascunho). Status Em Análise (id=2). Analista vê por destinatário ativo; GO respeita FL_MANTER_ABERTO_UNIDADE. Scripts em SPRINT_19.
 - **Motivo:** Implementar HU130 sem acoplar ao tb_situacao_auto de Autorizações, alinhado à Revisão 2 do documento de arquitetura.
@@ -1468,8 +1402,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 18/07/2026 — sinaflor — undefined
+### 18/07/2026 — sinaflor
 
 - **Decisão:** HU130 listar analistas via SCA2 GET api/unidadeibama/pessoa-orgao?idUnidadeIbama= (unidadeIbama ou idOrgaoAmbiental do processo). Login = CPF ou CNPJ.
 - **Motivo:** Usuário forneceu a API oficial do SCA2 que retorna pessoas do órgão.
@@ -1478,7 +1411,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 18/07/2026 — zenpro — Melhor Envio — app Zen pro Client ID 27245 + token v4
 
 - **Decisão:** Credenciais Melhor Envio atualizadas no Secret Manager: MELHOR_ENVIO_TOKEN v4, MELHOR_ENVIO_CLIENT_ID=27245 (app "Zen pro"), MELHOR_ENVIO_CLIENT_SECRET v2. Redeploy de calcularFreteMelhorEnvio, processarEnvioOutbox e reprocessarEnvioMelhorEnvio para pegar o token novo.
@@ -1790,7 +1722,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ### 22/07/2026 — cortejo — Cortejo web: WhatsApp do salão na sidebar desktop
 
-- **Decisão:** undefined
+- **Decisão:** Cortejo web: WhatsApp do salão na sidebar desktop
 - **Motivo:** A definir
 - **Alternativa rejeitada:** N/A
 - **Impacto:** A definir
@@ -1798,7 +1730,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 22/07/2026 — sinaflor — undefined
+### 22/07/2026 — sinaflor
 
 - **Decisão:** 403 é Access Denied do @Secured: finalizar exige GERENTE_OPERACIONAL, GERENTE_AUTORIZADOR ou ANALISTA_TECNICO. CONSULTA_GERAL e ATUACAO_FEDERAL só leem. Não relaxar @Secured em produção; em login-automatico local incluir as roles de escrita da gestão de licenciamento.
 - **Motivo:** A definir
@@ -1807,10 +1739,9 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 22/07/2026 — cortejo — Cortejo WhatsApp: Vincular cartão + aviso 24h no Conectado
 
-- **Decisão:** undefined
+- **Decisão:** Cortejo WhatsApp: Vincular cartão + aviso 24h no Conectado
 - **Motivo:** A definir
 - **Alternativa rejeitada:** N/A
 - **Impacto:** A definir
@@ -1858,7 +1789,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 23/07/2026 — sinaflor — undefined
+### 23/07/2026 — sinaflor
 
 - **Decisão:** Gestão de licenciamento: default de situação do Analista Técnico = Em Análise do Projeto; opções do filtro carregam todas de TB_STATUS_LIC via GET /api/licenciamento/gestao/situacoes
 - **Motivo:** A definir
@@ -1867,7 +1798,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 23/07/2026 — cortejo+lashmatch — WhatsApp Meta setup só no computador
 
 - **Decisão:** Bloquear Embedded Signup e abertura de links de faturamento Meta no celular (Platform.OS !== web). No app mobile: banner obrigatório + copiar link do painel web; botões Conectar/Resolver/Vincular cartão só no web. LashMatch alinhado ao Cortejo: botão Vincular cartão na Meta + MetaBillingHelpPanel quando número live conectado.
@@ -1938,7 +1868,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 24/07/2026 — sinaflor — undefined
+### 24/07/2026 — sinaflor
 
 - **Decisão:** 1) Restaurar checkbox Todos em Tipos e Situação. 2) Alternar Meus/Todos não altera situações. 3) Meus do Gerente Operacional = destinatário OU unidade com FL_MANTER_ABERTO=S.
 - **Motivo:** A definir
@@ -1947,7 +1877,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 24/07/2026 — cortejo — Opt-out WhatsApp por agendamento
 
 - **Decisão:** Campo appointment.enviarWhatsAppCliente (default true). Se false: UI no criar agendamento + CF pula confirmação (marca confirmacaoPuladaEm) e lembretes 7d/1d. Confirmação online pending também grava o flag.
@@ -1978,57 +1907,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 24/07/2026 — undefined — undefined
-
-- **Decisão:** Modelos RockB2B usam cameraFrameUrl (PNG processado do frame image, sem fundo preto/vermelho) como overlay de câmera no CaseEditor/CasePreview, com prioridade sobre SVG. Mapeamento de preset: Redmi/Xiaomi antes de match genérico 'note' (que apontava para galaxy-s21). Assets em public/molduras/rock/{id}-camera.png; regenerar com scripts/process-rockb2b-camera-frames.mjs + generate-rockb2b-modelos.mjs.
-- **Motivo:** A definir
-- **Alternativa rejeitada:** N/A
-- **Impacto:** A definir
-- **Quem decidiu:** Ambos
-
----
-
-### 24/07/2026 — undefined — undefined
-
-- **Decisão:** RockB2B H5 não tem SVG — moldes são PNG image/floorImage. Zen Pro usa cameraFrameUrl processado; com frame, camera=sem-camera e CasePreview/Editor não geram SVG (evita fantasma iPhone). Capinha nova grava id do preset Rock + cameraFrameUrl para não perder o molde ao criar produto com nome custom.
-- **Motivo:** A definir
-- **Alternativa rejeitada:** N/A
-- **Impacto:** A definir
-- **Quem decidiu:** Ambos
-
----
-
-### 24/07/2026 — undefined — undefined
-
-- **Decisão:** Mock 2D da loja Zen Pro volta ao SVG polido (cameraModules), sem overlay PNG Rock. Rock H5 serve para catálogo de modelos/dims/presets; PNG frames não substituem o mockup. caseFrame radius 0.11; SPEC_REDMI compacto; resolver ignora sem-camera e cai no preset do aparelho.
-- **Motivo:** A definir
-- **Alternativa rejeitada:** N/A
-- **Impacto:** A definir
-- **Quem decidiu:** Ambos
-
----
-
-### 24/07/2026 — undefined — undefined
-
-- **Decisão:** Mock Zen Pro: geometria da ilha vem do molde RockB2B H5 (contorno normalizado pelo phone); lentes/flash do preset SVG polido remapeados para dentro da ilha. Arquivo rockb2bCameraSpecs.json + extract-rockb2b-camera-specs.mjs. Não usa PNG Rock no preview.
-- **Motivo:** A definir
-- **Alternativa rejeitada:** N/A
-- **Impacto:** A definir
-- **Quem decidiu:** Ambos
-
----
-
-### 24/07/2026 — undefined — undefined
-
-- **Decisão:** Câmera do mock Zen Pro = PNG extraído do molde H5 RockB2B (image) para todos os 101 modelos: crop no phone, platô da ilha + lentes fotorealistas do H5, sem SVG remap. cameraFrameUrl em rockb2bPersonalizacao (?v=4).
-- **Motivo:** A definir
-- **Alternativa rejeitada:** N/A
-- **Impacto:** A definir
-- **Quem decidiu:** Ambos
-
----
-
-### 24/07/2026 — undefined — Zen Pro cameras H5 hardware-tight
+### 24/07/2026 — Zen Pro cameras H5 hardware — tight
 
 - **Decisão:** Cameras de mock personalizacao: extrair do PNG RockB2B H5 com platao apertado no bbox do hardware (lentes/flash), nao no bleed vermelho de impressao. Cor do platao por luminancia media (claro iPhone / escuro Android). Assets em public/molduras/rock/*-camera.png?v=5; cameraPresetId=sem-camera quando ha frame.
 - **Motivo:** A definir
@@ -2037,8 +1916,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 24/07/2026 — undefined — Zen Pro H5 punch foto sob camera
+### 24/07/2026 — Zen Pro H5 punch foto sob camera
 
 - **Decisão:** Padrao personalizacao Zen Pro: molde H5 RockB2B e autoridade. cameraFrameUrl (PNG extraido do frameImage) faz destination-out na arte (foto/texto nao cobrem o modulo) e depois overlay por cima. Mesmo pipeline em CaseEditor, CasePreview e exportCaseArt. Nao usar SVG inventado quando ha frame H5.
 - **Motivo:** A definir
@@ -2047,7 +1925,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 24/07/2026 — zenpro — Mockup de câmera com profundidade sem contaminar a arte
 
 - **Decisão:** Renderizar no CaseEditor e CasePreview a sombra de contato e o filete claro usando o alpha do PNG H5; manter o exportCaseArt apenas com o punch da câmera.
@@ -2068,7 +1945,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 25/07/2026 — setmatch — undefined
+### 25/07/2026 — setmatch
 
 - **Decisão:** Setmatch: rankings de clubes com solicitação (Winner = ranking próximo em que o usuário já é membro após aceite). Schema clubes/rankings/classificacao/solicitacoes/posts. Wizard idade min 5 + digitável; peso digitável; foto upload imediato com botão Avançar. Feed social + notícias na Home. Seed Firestore (Winner, partidas ranking/amistoso, post). Rules+indexes deployados.
 - **Motivo:** Pedido do usuário: lógica completa de cadastro em ranking, clubes para donos de academia, seed real, feed com espaço e notícias.
@@ -2077,7 +1954,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 25/07/2026 — setmatch — Roles admin_clube vs jogador + social amigos
 
 - **Decisão:** Separar login admin de clube (role admin_clube) do jogador; só admin cria clube/ranking/torneio. Jogador tem endereço no wizard, filtro global de esporte (EsporteContext), amizades + feed Amigos + chat amigo/clube. Criar ranking removido do fluxo comum.
@@ -2568,16 +2444,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 03/08/2026 — undefined — undefined
-
-- **Decisão:** PromocoesStrip: campanha única = título + descrição + CTA Ver ofertas (ouro); várias = grid de cards com CTA. Header mantém link dourado.
-- **Motivo:** Faixa anterior ficava vazia e repetia o nav sem ação clara.
-- **Alternativa rejeitada:** N/A
-- **Impacto:** src/components/loja/PromocoesStrip.tsx
-- **Quem decidiu:** Ambos
-
----
-
 ### 03/08/2026 — sinaflor — Tramitação — RN02 tipos avaliação Vistoria
 
 - **Decisão:** RN02 Vistoria: inserts SPRINT_19 (5 tipos VISTORIA_*). ANALISE_POA_AMAZONIA compartilhada. API tipos-avaliacao?idTipoTramite= filtra via TipoAvaliacaoLicEnum. Front libera tramite id=2 e reutiliza formulário com Tipo Avaliação obrigatório. Finalizar define status Em Vistoria quando último item é Vistoria.
@@ -2585,56 +2451,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Alternativa rejeitada:** Reutilizar só os tipos de Análise no dropdown de Vistoria
 - **Impacto:** SPRINT_19/01_tb_tipo_avaliacao_lic_vistoria.sql, TipoAvaliacaoLicEnum, LicenciamentoTramitacaoService/Resource, gestao-tramitacao + tramitacao-analise-projeto, tramitacao.service.ts
 - **Quem decidiu:** Usuário + agente
-
----
-
-### 03/08/2026 — undefined — undefined
-
-- **Decisão:** Categoria de vitrine acessorios (películas, chaveiros etc.) além de capinhas/termicos/personalizadas. Rota /c/acessorios, header, home e select no admin via CATEGORIAS_VITRINE.
-- **Motivo:** Produtos que não são case/térmico/personalizada precisam de vitrine própria.
-- **Alternativa rejeitada:** N/A
-- **Impacto:** categoriasVitrine.ts, types.ts, StoreHeader, HomeLojaPageContent, generateStaticParams via CATEGORIA_VITRINE_IDS
-- **Quem decidiu:** Ambos
-
----
-
-### 04/08/2026 — undefined — undefined
-
-- **Decisão:** Admin marcas/modelos/tipos: botão Excluir na listagem com confirm + excluir*Admin (deleteDoc). Rules já permitem delete para isMarca.
-- **Motivo:** Cadastro incompleto sem remoção de itens errados/duplicados.
-- **Alternativa rejeitada:** N/A
-- **Impacto:** marcaAdminService, modeloAdminService, tipoAdminService, Marcas/Modelos/TiposAdminPageClient
-- **Quem decidiu:** Ambos
-
----
-
-### 04/08/2026 — undefined — undefined
-
-- **Decisão:** Cadastro de produto: campo Tipo removido da UI. tipoId derivado da categoria (capinhas/personalizadas→capinha; demais→pronta). personalizavel só com categoria personalizadas.
-- **Motivo:** Admin confundia tipo (motor de personalização) com categoria da vitrine.
-- **Alternativa rejeitada:** N/A
-- **Impacto:** ProdutoFormPageClient, produtoCentralService.sincronizarFlagsCategoria, catalogo/types.tipoIdPorCategoriaVitrine, seed TIPO_PRONTA
-- **Quem decidiu:** Ambos
-
----
-
-### 04/08/2026 — undefined — undefined
-
-- **Decisão:** Categorias: personalizadas = arte pronta (sem editor); personalizaveis = cliente personaliza (personalizavel=true). Migração: personalizadas+personalizavel legado → personalizaveis. Admin: botão Selecionar todos / Limpar em modelos compatíveis.
-- **Motivo:** Separar vitrine de temas prontos do fluxo de personalização com foto.
-- **Alternativa rejeitada:** N/A
-- **Impacto:** categoriasVitrine, catalogoProdutos, produto form/service, StoreHeader, Home, CapinhaNova, CategoriaPage
-- **Quem decidiu:** Ambos
-
----
-
-### 05/08/2026 — undefined — undefined
-
-- **Decisão:** Home mobile: produtos em carrossel horizontal 2 por vista + setas (ProdutosVitrineFaixa); categorias continuam empilhadas. Listagem /c e promo: grid-cols-2 no celular. Desktop inalterado.
-- **Motivo:** No celular 1 produto por linha ficava longo; usuário pediu lado a lado com seta.
-- **Alternativa rejeitada:** N/A
-- **Impacto:** ProdutosVitrineFaixa.tsx, VitrineCategoriaPreview, CategoriaPageClient, PromocaoPageClient, CatalogProductCard
-- **Quem decidiu:** Ambos
 
 ---
 
@@ -2828,7 +2644,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 07/08/2026 — setmatch — undefined
+### 07/08/2026 — setmatch
 
 - **Decisão:** Aula online paga: aluno paga via MP (tipo aula_online + aulaPublicadaId) ou pede liberação (pagamento pendente + chat). Professor libera no financeiro por donoUid. Feed: foto, comentarios subcoleção, compartilhar in-app (chat) e fora (gate instalar app / deep link post).
 - **Motivo:** Usuario pediu fluxo de pedir/pagar aula, descoberta de proximos, e feed com comentario/foto/share externo exigindo app.
@@ -2837,8 +2653,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 07/08/2026 — setmatch — undefined
+### 07/08/2026 — setmatch
 
 - **Decisão:** Aula online paga: aluno paga via MP (tipo aula_online + aulaPublicadaId) ou pede liberação (pagamento pendente + chat). Professor libera no financeiro por donoUid. Feed: foto, comentarios, compartilhar in-app e fora (instalar app).
 - **Motivo:** Usuario pediu fluxo pedir/pagar aula, proximos e feed social completo.
@@ -2847,8 +2662,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 07/08/2026 — setmatch — undefined
+### 07/08/2026 — setmatch
 
 - **Decisão:** Feed social + aula online: pagar MP ou pedir liberacao; proximos na Home; post com foto/comentario/share externo exige app
 - **Motivo:** Pedido do usuario sobre liberar/pagar aula, achar pessoas/quadras e feed completo
@@ -2857,8 +2671,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
-### 07/08/2026 — setmatch — undefined
+### 07/08/2026 — setmatch
 
 - **Decisão:** Torneio single-elim vivo em torneios/{id}/confrontos (sorteio+byes+avançar). Perfil com H2H/histórico/badges. Busca avançada /buscar. VS com probabilidade logistic (win rate+H2H+nível). Rules: confrontos + onlyStatsBump V/D.
 - **Motivo:** Pedido do usuario com padrao de mercado tennis/padel (chave de clube, perfil competitivo, matchup %).
@@ -2867,7 +2680,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 07/08/2026 — setmatch — Admin vê torneios; aluno sem VS; matrículas sempre visíveis
 
 - **Decisão:** 1) /clube/torneios lista torneios por donoUid. 2) Aba Aulas PRESENCIAL lista todas as matrículas do jogador (sem filtro esportes do clube). 3) /clube/alunos usa FlatList única com formulário no header (scroll contínuo). 4) Perfil do aluno via clube abre com contexto=aluno_clube e esconde VsCard/H2H/convidar.
@@ -2938,7 +2750,7 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 
 ---
 
-### 08/08/2026 — undefined — Setmatch i18n — telas onboarding/wizard/tabs com useT
+### 08/08/2026 — Setmatch i18n — telas onboarding/wizard/tabs com useT
 
 - **Decisão:** Migração de strings user-facing para useT() com chaves de i18n/locales/pt-BR.ts. BottomNav já pronto. Onboarding passou a guardar keys no constants/onboarding.ts. Esportes traduzidos no call site (esporte.*). WizardLayout defaults Continuar/whyInfo via t(). Strings sem chave correspondente foram mantidas em PT.
 - **Motivo:** A definir
@@ -2947,7 +2759,6 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Quem decidiu:** Ambos
 
 ---
-
 ### 08/08/2026 — setmatch — Migração telas auth/perfil/painel para useT i18n
 
 - **Decisão:** Telas perfil, login, cadastro, admin-login, esqueci-senha, AuthSocialRow e clube/painel usam useT() com chaves de i18n/locales/pt-BR.ts. Sem inventar keys — strings sem chave ficam hardcoded.
@@ -3034,6 +2845,735 @@ Quando tomar uma nova decisão, salva aqui automaticamente via `salvar_decisao`.
 - **Motivo:** Telas baixas cortavam Configurações/Links do menu lateral.
 - **Alternativa rejeitada:** N/A
 - **Impacto:** Hosting cortejo-app; mobile nativo sem mudança
+- **Quem decidiu:** Ambos
+
+---
+
+### 12/08/2026 — LashMatch — Web: Meu plano/Pagamentos com volta + guia PDF só pós-assinatura
+
+- **Decisão:** 1) PlanoAccessRedirect não trata /planos?stay=1 como paywall — só plano-escolha força replace tabs. Meu plano e Pagamentos usam voltarParaInicio (replace /(tabs)), não router.back(). 2) WhatsAppProprioPlanExplainer (paywall) sem link do guia PDF; guia só em StatusCard/ConnectGuide com ownPlan=true. Mesmo padrão no Cortejo.
+- **Motivo:** Na web, histórico vazio faz back falhar; redirect global expulsava assinante de Meu plano. Guia completo não deve aparecer antes de assinar WhatsApp próprio.
+- **Alternativa rejeitada:** Manter router.back() e redirect em qualquer /planos; mostrar guia no Explainer do paywall
+- **Impacto:** LashMatch web navegação Meu plano/Pagamentos; LM+Cortejo copy/UI WhatsApp próprio
+- **Quem decidiu:** usuario+agente
+
+---
+
+### 12/08/2026 — LashMatch — Link PC WhatsApp = LashMatch web /config/whatsapp
+
+- **Decisão:** shareWebAppLoginLink no LashMatch copia WEB_APP_WHATSAPP_SETUP_URL = {PUBLIC_WEB_BASE}/config/whatsapp (produção: https://lashmatch.com.br/config/whatsapp). Copy Meta orienta: abrir no PC → LashMatch web na seção WhatsApp do studio → terminar conexão/cartão.
+- **Motivo:** Usuária deve acessar o web do LashMatch e concluir na seção WhatsApp do salão, não um link genérico ou da Meta.
+- **Alternativa rejeitada:** Copiar só a home do web sem deep link
+- **Impacto:** Mobile → PC setup WhatsApp próprio
+- **Quem decidiu:** usuario+agente
+
+---
+
+### 12/08/2026 — LashMatch — Meta setup só desktop + Pagamentos não cai no Home
+
+- **Decisão:** isWhatsAppMetaSetupAllowed = web E !isMobileWebBrowser (PWA/Android web bloqueados). Banner usa setupAllowed. Pagamentos: Tabs sem href:null (tabBarButton null); MoreMenu push atrasado; href /pagamento; voltarOuInicio.
+- **Motivo:** PWA Android era tratado como computador; menu Pagamentos caía no Home por linking.
+- **Alternativa rejeitada:** Tratar qualquer Platform.OS===web como PC; href:null nas tabs ocultas
+- **Impacto:** LashMatch web mobile + Cortejo WhatsApp setup
+- **Quem decidiu:** usuario+agente
+
+---
+
+### 12/08/2026 — LashMatch — Pagamentos fora das tabs (/pagamentos)
+
+- **Decisão:** Tela de Pagamentos fora das tabs em app/pagamentos.tsx (stack), como /planos. Menu e Perfil apontam /pagamentos. (tabs)/pagamento só Redirect. Menu sempre mostra Pagamentos (web sem checkout → aviso use o app).
+- **Motivo:** No web, rota nas tabs ocultas caía no Home ao abrir Pagamentos.
+- **Alternativa rejeitada:** Manter pagamento só como tab com href null/tabBarButton null
+- **Impacto:** Navegação web LashMatch
+- **Quem decidiu:** usuario+agente
+
+---
+
+### 12/08/2026 — sinaflor — Ajustes UX tramitação Vistoria/Análise
+
+- **Decisão:** 1) Ordem tipos avaliação na Vistoria: POA Amazônia por último via sort em listarTiposAvaliacao(idTipoTramite=2). 2) Botão Finalizar no formulário de cadastro/edição (salva + modal + gestao-projetos). 3) Mensagem ATENÇÃO única (texto da análise técnica obrigatória) para Análise e Vistoria. 4) Checkbox manter processo aberto herda da última tramitação e sincroniza todas do rascunho.
+- **Motivo:** Alinhamento com protótipo/imagem e regras de UX pedidas pelo usuário.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Backend: LicenciamentoTramitacaoService. Front: gestao-tramitacao, tramitacao-analise-projeto, tramitacao-arquivamento.
+- **Quem decidiu:** usuario+agente
+
+---
+
+### 12/08/2026 — sinaflor — Situação múltipla na gestão de projetos
+
+- **Decisão:** Situação na gestão de licenciamento passa a listar todos os status gerados pelas tramitações ativas (únicos, ordem cronológica), com reticências e tooltip no padrão dos RTs. No finalizar, cada item grava seu próprio statusNovo; statusLic do processo permanece o último para regras/ações.
+- **Motivo:** Pedido do cliente: não usar só o último status na coluna Situação.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** LicenciamentoTramitacaoService, GestaoLicenciamentoResource, TramiteLicRepository, LicenciamentoExploracaoListagemDTO.situacoes, gestao-licenciamento-exploracao (coluna Situação).
+- **Quem decidiu:** cliente
+
+---
+
+### 12/08/2026 — sinaflor — Sync manter aberto no histórico finalizado
+
+- **Decisão:** Ao finalizar tramitação, FL_MANTER_ABERTO_UNIDADE do lote é propagado a todas as tramitações ativas. Ao listar histórico, alinha pelo flag da mais recente (exceto Desarquivar), corrigindo inconsistências já gravadas.
+- **Motivo:** Cliente: se a última não mantém aberto, as anteriores não podem continuar com tag MANTER ABERTO.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** LicenciamentoTramitacaoService + TramiteLicRepository.findAtivosByLicenciamento
+- **Quem decidiu:** cliente
+
+---
+
+### 12/08/2026 — LashMatch — MoreMenu web: location.assign para Pagamentos
+
+- **Decisão:** No web, menu Mais navega com window.location.assign(href). Hrefs limpos (/pagamentos, /estoque…). Pagamentos em stack /pagamentos.
+- **Motivo:** push pós-Modal no Chrome Android descartava a rota e voltava ao Home.
+- **Alternativa rejeitada:** router.push apos Modal com delay curto
+- **Impacto:** LashMatch Android web/PWA
+- **Quem decidiu:** usuario+agente
+
+---
+
+### 12/08/2026 — LashMatch — Android web: sem location.assign; sem flash de planos no boot
+
+- **Decisão:** Navegação SPA com router.replace/push. assign(/) e assign no MoreMenu removidos — causavam remount, flash plano-escolha e volta ao Home. Boot: spinner até plano estável; tabs debouncem paywall 450ms.
+- **Motivo:** Reload completo reavaliava auth lento e redirecionava paywall→home.
+- **Alternativa rejeitada:** window.location.assign para forçar navegação no Android web
+- **Impacto:** LashMatch Android web/PWA
+- **Quem decidiu:** usuario+agente
+
+---
+
+### 12/08/2026 — lashmatch — Meu plano e Pagamentos no EAS nativo
+
+- **Decisão:** /planos com assinante sempre mostra Meu plano (nao depende de stay). MoreMenu nativo fecha Modal e navega apos 320ms; web continua navigate-before-close. Pagamentos em /config/pagamentos.
+- **Motivo:** EAS: spinner eterno (temAcesso && !stay) e navegacao engolida pelo Modal.
+- **Alternativa rejeitada:** Continuar exigindo stay=1 e navegar com Modal aberto no nativo
+- **Impacto:** OTA production corrige Meu plano e Pagamentos no app instalado via EAS Update.
+- **Quem decidiu:** Ambos
+
+---
+
+### 12/08/2026 — lashmatch — Pagamentos = /assinatura; menu Modal pendingHref
+
+- **Decisão:** Menu Pagamentos aponta para /assinatura (tela completa). /config/pagamentos e /pagamentos só Redirect. MoreMenu nativo navega após Modal fechar via pendingHref.
+- **Motivo:** Rota /config/pagamentos + Modal + params stay quebravam abertura no nativo/Expo Go.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Pagamentos abre no Expo Go, EAS e web; Meu plano não trava loading branco no Expo Go.
+- **Quem decidiu:** Ambos
+
+---
+
+### 13/08/2026 — lashmatch — EAS build+submit LashMatch 13/08/2026
+
+- **Decisão:** Build production iOS+Android EAS concluídos (build 18 iOS / versionCode 6 Android). Submit iOS App Store OK. Android submit bloqueado sem Google Service Account em non-interactive.
+- **Motivo:** Pedido do usuário: build e submit LashMatch
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 13/08/2026 — lashmatch — Versão store 1.0.5 + rebuild
+
+- **Decisão:** Bump LashMatch para 1.0.5 (app.json version + android runtimeVersion/versionName/strings, package.json). Regenerar ícones do brand master. Novo build+submit iOS.
+- **Motivo:** Train 1.0.4 fechado na Apple; usuário pediu 1.0.5 + ícone nas lojas
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 13/08/2026 — sinaflor — HU135 Solicitar Pagamento de Taxa/Guia
+
+- **Decisão:** HU135 Solicitar Pagamento de Taxa/Guia (tipo 5): reusa tramitacao-arquivamento modo solicitar-pagamento; status AGUARDANDO_PAGAMENTO_TAXA; e-mail ON default; sem manter aberto; alerta RN16; disponível GO/GA/Analista em processo não arquivado.
+- **Motivo:** Documento HU135 — acrescentar tramitação mantendo padrão existente.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** LicenciamentoTramitacaoService, GestaoLicenciamentoResource, gestao-tramitacao, tramitacao-arquivamento. Nota fabrica/tramitacao-solicitar-pagamento-taxa.md
+- **Quem decidiu:** usuario+agente
+
+---
+
+### 13/08/2026 — lashmatch — Native release 1.0.6
+
+- **Decisão:** Bump LashMatch para 1.0.6 e EAS build+submit nativo (iOS auto-submit; Android build).
+- **Motivo:** Usuário pediu nova versão nativa; 1.0.5 já submetida à Apple
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 14/08/2026 — health-quadra-tech — Trajeto: dois clientes (Next.js + Expo) e um Supabase
+
+- **Decisão:** Produto Trajeto no repo health-quadra-tech. Web = Next.js App Router em apps/web (Vercel) para gestor e psicólogo. Mobile = Expo Router em apps/mobile (Expo Go) para paciente (primário) e psicólogo em campo. Pacote compartilhado de tokens/tipos. Backend único Supabase (Auth + Postgres RLS + Storage). Papel em tabela profiles, nunca em user_metadata. Gestor vê só KPIs operacionais, não conteúdo clínico.
+- **Motivo:** PRD original era web-only; stakeholder pediu app nativo desde o início. Dashboard clínico é denso (tabelas, gráficos, sidebar) — Next.js. Paciente usa o celular (quiz, agendar, evolução). Expo-only no web degradaria o painel. Firebase fora da stack do projeto.
+- **Alternativa rejeitada:** Expo único (web+mobile) ou só web sem app. Firebase/Firestore (proibido neste repo).
+- **Impacto:** Monorepo apps/web + apps/mobile + packages/shared + supabase/. Vercel rootDirectory = apps/web. Schema e RLS desenhados para os dois clientes.
+- **Quem decidiu:** Gustavo + agente (pedido explícito de app nativo)
+
+---
+
+### 14/08/2026 — health-quadra-tech — Supabase shoutloud + Vercel health-quadra-tech ligados ao Trajeto
+
+- **Decisão:** Trajeto usa o único projeto Supabase da org shoutloud (ref slaexnytybmgphknwbat, us-west-2). Schema + RLS aplicados via MCP apply_migration. Web Vercel continua o projeto já linkado health-quadra-tech (prj_iFLoaS9YVo87wCyXGZMLfS8QFONd, team shoutloud) via CLI — MCP Vercel não listou projetos.
+- **Motivo:** Usuário confirmou MCP Vercel e Supabase conectados. Projeto remoto estava vazio e saudável.
+- **Alternativa rejeitada:** Criar outro projeto Supabase só para Trajeto; depender só do MCP Vercel (list_projects vazio nesta conta).
+- **Impacto:** Env NEXT_PUBLIC_SUPABASE_* no app web; EXPO_PUBLIC_* no mobile. Root Directory Vercel precisa apontar para apps/web no próximo deploy.
+- **Quem decidiu:** Gustavo (MCP conectado) + agente
+
+---
+
+### 14/08/2026 — health-quadra-tech — Vercel Root Directory apps/web em produção
+
+- **Decisão:** Produção Vercel do Trajeto aponta para Next.js em apps/web: framework nextjs, rootDirectory apps/web, sourceFilesOutsideRootDirectory true, env NEXT_PUBLIC_SUPABASE_URL e ANON_KEY. Alias https://health-quadra-tech-shoutloud.vercel.app
+- **Motivo:** O deploy anterior servia o HTML placeholder da raiz (0ms). O painel é Next.js.
+- **Alternativa rejeitada:** Manter HTML estático na raiz; ou vercel.json com propriedade rootDirectory (inválida no schema da CLI)
+- **Impacto:** CLI deploy --prod sobe o app (login, clínica, psico). GitHub shoutlouddev/health-quadra-tech continua ligado; push em main dispara rebuild. MCP Vercel ainda não lista o projeto.
+- **Quem decidiu:** Gustavo
+
+---
+
+### 14/08/2026 — health-quadra-tech — Auth Supabase ligado em todas as telas web e mobile
+
+- **Decisão:** Web e Expo usam a mesma conta Supabase: login/signup, RPC bootstrap_workspace e claim_patient_invite, telas leem/gravam Postgres com RLS, botão Voltar em todas as telas. Papel só em profiles. router.replace após login. Gestor no app é um aviso para usar a web.
+- **Motivo:** Usuário pediu para sair do mock/localStorage e ligar auth + banco + navegação.
+- **Alternativa rejeitada:** Manter mock + login por persona sem Auth; Firebase Auth.
+- **Impacto:** apps/web (middleware, lib/auth, telas), apps/mobile (supabase persist, BackBar), RPCs no projeto slaexnytybmgphknwbat. Produção Vercel só atualiza após novo deploy.
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 14/08/2026 — health-quadra-tech — Confirmação de e-mail: Site URL Vercel + emailRedirectTo /auth/callback
+
+- **Decisão:** Signup web e mobile passam emailRedirectTo para https://health-quadra-tech-shoutloud.vercel.app/auth/callback. A rota troca code/token_hash e chama finishSignup (bootstrap_workspace ou claim_patient_invite a partir de user_metadata). Site URL e Redirect allow list no dashboard Auth precisam apontar para a Vercel — o MCP não altera GoTrue. O remetente "Supabase Auth" só muda com SMTP customizado (Resend). Mobile nunca usa exp:// no redirect do e-mail.
+- **Motivo:** Sem emailRedirectTo o GoTrue usa Site URL padrão localhost:3000. Sem allow list, o redirect customizado é ignorado.
+- **Alternativa rejeitada:** Desligar confirmação de e-mail (inseguro). Firebase Auth (fora da stack).
+- **Impacto:** apps/web/app/auth/callback, LoginForm, CadastroForm, mobile login/cadastro, NEXT_PUBLIC_SITE_URL, EXPO_PUBLIC_SITE_URL
+- **Quem decidiu:** Cursor + Gustavo
+
+---
+
+### 14/08/2026 — health-quadra-tech — RLS helpers SECURITY DEFINER para evitar recursão em profiles
+
+- **Decisão:** Helpers current_clinic_id/current_role/current_professional_id passam a SECURITY DEFINER com row_security off para a policy de profiles não recursar.
+- **Motivo:** SELECT profiles via PostgREST retornava 500 mesmo com linha existente.
+- **Alternativa rejeitada:** Desligar RLS em profiles ou confirmar e-mail no SQL.
+- **Impacto:** Login web deixa de voltar para /login após senha correta. Migration 20260814150000.
+- **Quem decidiu:** Cursor + Gustavo
+
+---
+
+### 14/08/2026 — health-quadra-tech — Nav por papel + fontes next/font e loading nas rotas
+
+- **Decisão:** next/font no layout, React.cache em getProfile, loading.tsx nas rotas autenticadas. Menu do psicólogo passa a Pacientes e evolução.
+- **Motivo:** Login e menus lentos: fonte bloqueante + roundtrip us-west-2 sem feedback. Screenshot do protótipo HTML mistura os 3 papéis; o app logado mostra só o papel da conta.
+- **Alternativa rejeitada:** Manter @import do Google Fonts e navegar sem loading.tsx.
+- **Impacto:** apps/web layout, globals.css, lib/auth.ts, loading.tsx, AppShell
+- **Quem decidiu:** Cursor + Gustavo
+
+---
+
+### 14/08/2026 — health-quadra-tech — Supabase Trajeto em São Paulo (sa-east-1)
+
+- **Decisão:** Novo projeto Supabase `trajeto` (ref fzttsuuzfauqkagscrwc) em sa-east-1. Schema reaplicado (core + insert + bootstrap + fix RLS). App/web/Vercel passam a usar esta URL. Contas do projeto Oregon não foram copiadas: usuário recria login. Projeto Oregon permanece como arquivo.
+- **Motivo:** Região do projeto é imutável. Usuários no Brasil; us-west-2 era a maior causa de lentidão restante.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Latência BR cai; login antigo (Hotmail/Outlook/Gmail no Oregon) não vale no projeto novo. Site URL do Auth precisa ser setada no dashboard do projeto novo.
+- **Quem decidiu:** Gustavo
+
+---
+
+### 14/08/2026 — health-quadra-tech — Signup clínica vs autônomo sem default
+
+- **Decisão:** Cadastro de clínica exige escolha explícita (sem default autônomo). Papel vai em user_metadata.trajeto_role porque `role` conflita com o JWT. Sem papel válido, não assume psicólogo.
+- **Motivo:** Formulário nascia com autônomo selecionado; nome da clínica preenchido não mudava o papel. Fallback finishSignup virava psicólogo se metadata.role se perdesse.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Conta clínica entra em /clinica (gestão). Autônomo entra em /psico. Conta Gmail atual já era gestor.
+- **Quem decidiu:** Gustavo
+
+---
+
+### 14/08/2026 — health-quadra-tech — Vercel gru1 + shell persistente no Trajeto
+
+- **Decisão:** Funções Vercel em gru1 (São Paulo) e layout (workspace) com menu persistente. Páginas só trocam o conteúdo.
+- **Motivo:** Cada navegação era RSC da página inteira (AppShell no page) rodando em iad1 contra banco sa-east-1.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Clique no menu não remonta o chrome; roundtrip função↔Supabase fica na mesma região.
+- **Quem decidiu:** Gustavo
+
+---
+
+### 14/08/2026 — health-quadra-tech — Trajeto — datas BR, validação visível e CRUD
+
+- **Decisão:** Datas sempre dd/mm/aaaa (pt-BR). Formulários com noValidate e erro visível por campo obrigatório. CRUD editar/excluir em invoices, fee_schedules, professionals, appointments, patients e sessions. Migration 20260814160000 com policies DELETE.
+- **Motivo:** Pedido do usuário: padrão brasileiro, validação visível e editar/excluir não só em recebimentos/convênios/profissionais.
+- **Alternativa rejeitada:** Só HTML required + tooltip nativo; listas só com insert
+- **Impacto:** apps/web forms+listas, apps/mobile cadastro/login/sessao/agendar, packages/shared/dates.ts, supabase 20260814160000_record_deletes.sql
+- **Quem decidiu:** Usuário + agente
+
+---
+
+### 14/08/2026 — health-quadra-tech — Trajeto — web celular com menu e layout empilhado
+
+- **Decisão:** Web no celular: botão ☰ abre o menu lateral, overlay fecha, campos empilham, tabelas rolam na horizontal. Lançamento a receber vira recebido pelo botão Recebido (ou Editar → Pago).
+- **Motivo:** Usuário acessando Vercel no Chrome Android: menu sumia, campos flutuavam, tabela cortava Status.
+- **Alternativa rejeitada:** Sidebar off-canvas sem botão — menu invisível no celular
+- **Impacto:** apps/web/components/AppShell.tsx, globals.css, layout viewport, InvoiceManager
+- **Quem decidiu:** Usuário + agente
+
+---
+
+### 14/08/2026 — health-quadra-tech — Agenda web Trajeto no layout Dia/Mês da fábrica
+
+- **Decisão:** A agenda do psicólogo em /psico/agenda replica o layout Cortejo/LashMatch (DayStrip + DayHourTimeline no modo Dia; calendário compacto + lista no modo Mês), implementado em HTML/CSS Next.js com tokens sage/gold do Trajeto — sem react-native-calendars e sem paleta LashMatch. Grade em packages/shared/agenda.ts: passo 30 min, sessão 50 min, semana 8h–19h, sábado até 13h, domingo fechado. Toque no slot vazio abre o formulário com data/hora preenchidas.
+- **Motivo:** Pedido para usar o mesmo layout de agenda dos outros projetos da fábrica, mantendo a identidade visual Trajeto.
+- **Alternativa rejeitada:** Tabela semanal do protótipo HTML; lista simples de próximos horários; instalar react-native-calendars na web.
+- **Impacto:** apps/web/components/agenda/AgendaBoard.tsx, packages/shared/agenda.ts, globals.css. Agendamento público do paciente (/p/agendar) ainda é lista de slots.
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 14/08/2026 — health-quadra-tech — Ícones do mockup Trajeto no menu e nas tabs
+
+- **Decisão:** Ícones do prototipo Trajeto (SVG stroke 1.6) viraram o set único: web `components/Icon.tsx` na sidebar, menu do paciente, Voltar/Sair, agenda Dia/Mês e CTAs; app Expo usa os mesmos traços via react-native-svg (Expo Go) nas tabs e no BackBar.
+- **Motivo:** O mockup já trazia ícones no menu; a UI real estava só com texto.
+- **Alternativa rejeitada:** FontAwesome / ícones genéricos fora do mockup.
+- **Impacto:** apps/web/components/Icon.tsx, AppShell, PatientShell, AgendaBoard, login/quiz/cadastro; apps/mobile/components/Icon.tsx + tabs.
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 14/08/2026 — health-quadra-tech — Lista de sessões SOAP separada da agenda
+
+- **Decisão:** Notas SOAP têm rota /psico/sessoes no menu Sessões. Depois de salvar a nota, o app vai para essa lista. Também aparecem no painel do psicólogo e na ficha do paciente (#sessoes). Agenda só mostra horários (appointments), não notas. Login mobile usa grid 1fr para o card não ficar pela metade.
+- **Motivo:** No celular o usuário registrava sessão e não via em lugar nenhum: o histórico só existia numa tabela larga dentro da ficha, sem redirect. O login escondia o painel visual mas mantinha grid 1fr 1fr.
+- **Alternativa rejeitada:** Só mostrar sessões na ficha do paciente, ou misturar notas SOAP na grade da agenda.
+- **Impacto:** Menu psicólogo: item Sessões. UX login no celular. Cards no lugar da tabela de sessões.
+- **Quem decidiu:** Gustavo + agente Cursor
+
+---
+
+### 14/08/2026 — health-quadra-tech — Gráfico SVG GAD-7/PHQ-9 na carteira e na ficha
+
+- **Decisão:** Gráfico de evolução é SVG no visual do mockup (GAD-7 ferrugem, PHQ-9 sage), em /psico/pacientes e na ficha. Eixo Y: escore alto embaixo (melhora sobe). Sem lib extra.
+- **Motivo:** A lista não mostrava gráfico; a ficha só listava escores. Um ponto não desenha trajetória.
+- **Alternativa rejeitada:** Lista de números sem SVG, ou lib de chart (recharts).
+- **Impacto:** Pacientes e evolução deixa de ser só lista. Demo: série semanal no paciente Gabriel.
+- **Quem decidiu:** Gustavo + agente Cursor
+
+---
+
+### 14/08/2026 — cortejo
+
+- **Decisão:** Cortejo clientes: busca via filterClientsByQuery com normalizeForSearch (acentos); Editar cadastro usa /config/clientes?editId= e abre modal
+- **Motivo:** Filtro vazio por acentos; botão Editar só listava clientes sem abrir ficha de edição
+- **Alternativa rejeitada:** N/A
+- **Impacto:** utils/client.ts, app/config/clientes.tsx, app/clientes/[id].tsx; OTA production 79daf281; EAS build+submit em andamento
+- **Quem decidiu:** Ambos
+
+---
+### 14/08/2026 — health-quadra-tech — Agenda desktop semana de trabalho (estilo Teams, cores Trajeto)
+
+- **Decisão:** Na web, /psico/agenda passa a ter duas UIs: abaixo de 1100px permanece Dia/Mês (DayStrip + timeline). A partir de 1100px, semana de trabalho (segunda a sexta) com trilho de mini-calendário à direita do menu ink, grade horária 8h–19h, linha do agora em ouro Trajeto, eventos em sage. Clique no vazio abre o compositor; clique no bloco abre o detalhe em gaveta. O menu lateral continua sendo a borda esquerda da tela — a grade não passa por baixo.
+- **Motivo:** Pedido do usuário para deixar a agenda igual ao Calendário do Teams só em computador com tela grande, sem mudar o fluxo no telefone.
+- **Alternativa rejeitada:** Usar react-native-calendars ou copiar o tema roxo do Teams. Também rejeitado aplicar a grade de semana no celular.
+- **Impacto:** apps/web/components/agenda/AgendaDesktop.tsx + CSS em globals.css (@media min-width 1100px). Helpers mondayOf/workWeekKeys/layoutBlockOnWorkWeek em packages/shared/agenda.ts. Celular inalterado.
+- **Quem decidiu:** Gustavo
+
+---
+
+### 15/08/2026 — health-quadra-tech — EAS Update só a partir de apps/mobile
+
+- **Decisão:** EAS Update/Build do Trajeto rodam em apps/mobile. O app.json da raiz foi removido. Slug Expo alinhado ao projeto EAS já criado (@shoutloud/health-quadra-tech). expo-updates vive no workspace mobile, não na raiz.
+- **Motivo:** eas update na raiz usou expo/AppEntry.js e procurou ../../App, que não existe. O app é Expo Router em apps/mobile.
+- **Alternativa rejeitada:** Deixar EAS na raiz do monorepo ou criar um App.tsx falso só para o AppEntry.
+- **Impacto:** Comando: cd apps/mobile; eas update --branch preview. Expo Go não recebe OTA — precisa de development/preview build.
+- **Quem decidiu:** Gustavo
+
+---
+
+### 15/08/2026 — health-quadra-tech — eas update na raiz redireciona para apps/mobile
+
+- **Decisão:** app.config.js na raiz do monorepo: se eas update/expo export rodar na raiz, redireciona o export para apps/mobile e grava dist na raiz. extra.eas.projectId vem do app.json do mobile — o CLI não recria um app Expo vazio.
+- **Motivo:** O usuário roda eas update na raiz; o Metro usava expo/AppEntry e procurava App.tsx.
+- **Alternativa rejeitada:** Criar App.tsx falso na raiz.
+- **Impacto:** eas update --branch preview na raiz deixa de falhar com Unable to resolve ../../App. Comando canônico continua cd apps/mobile.
+- **Quem decidiu:** Gustavo
+
+---
+
+### 15/08/2026 — health-quadra-tech — Mobile paridade web psico + clinica
+
+- **Decisão:** O app Expo deixou de ter só Hoje/Sessão e um aviso para o gestor. Psicólogo tem abas Hoje, Agenda, Pacientes, Sessões e Financeiro (mais ficha e nota SOAP). Gestor entra em (clinica) com Painel, Equipe, Pacientes, Financeiro e Config. Mesmas tabelas Supabase da web.
+- **Motivo:** Usuário pediu as mesmas funcionalidades do web no mobile para psicólogo e clínica.
+- **Alternativa rejeitada:** Manter gestão só no computador e sessão rápida no celular.
+- **Impacto:** EAS Update preview 8724d912-24a3-426f-aa95-85ff15354032. Login gestor vai para /(clinica).
+- **Quem decidiu:** Usuário + agente
+
+---
+
+### 15/08/2026 — health-quadra-tech — Mobile grafico evolucao e menu do mockup
+
+- **Decisão:** Mobile do psicólogo autônomo tem Painel, Agenda, Pacientes, Ficha & evolução (gráfico SVG GAD-7/PHQ-9) e Mais com Registrar sessão, Sessões e Financeiro. Gestor continua só com Painel, Equipe, Pacientes, Financeiro e Config — sem notas clínicas.
+- **Motivo:** Mockup 07 Ficha & evolução e menu da imagem; autônomo não gerencia equipe.
+- **Alternativa rejeitada:** Só números GAD-7 → PHQ-9 sem gráfico; misturar equipe na conta autônoma.
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 15/08/2026 — health-quadra-tech — Abas Registrar sessao e Ficha evolucao
+
+- **Decisão:** Abas do psicólogo no mobile: Painel, Agenda, Pacientes, Ficha & evolução, Registrar sessão. Ficha & evolução tem menu de pacientes (item dourado) + gráfico + pré-ficha + histórico, como o mockup 07.
+- **Motivo:** Usuário pediu que onde era Sessão fosse Registrar sessão e menu igual ao mockup de Ficha & evolução.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 15/08/2026 — health-quadra-tech — Gestor atende + convite de psicólogo + agenda da clínica
+
+- **Decisão:** O dono (gestor) ganha linha em professionals (bootstrap + ensure_gestor_professional + backfill) e acessa o chapéu Psicólogo na web e no app, com RLS clínico ainda em current_professional_id(). Psicólogo da equipe entra por professionals.invite_token + claim_professional_invite (não cria clínica nova). Agenda consolidada em /clinica/agenda e (clinica)/agenda.
+- **Motivo:** Caso brasileiro: dono também atende; adicionar profissional não criava login; gestor precisa ver horários de todos sem ler SOAP alheio.
+- **Alternativa rejeitada:** Mudar o papel JWT ou deixar gestor ler sessions da clínica. Recusar: quebra sigilo. Segundo perfil/auth por chapéu: excesso para MVP.
+- **Impacto:** Migration 20260815180000; web AppShell dual-nav; /equipe/cadastro; mobile HatSwitch + cadastro-equipe; EAS preview.
+- **Quem decidiu:** produto + agente
+
+---
+
+### 15/08/2026 — health-quadra-tech — Convite de profissional com papel Psicólogo ou Gestor
+
+- **Decisão:** Tela Profissionais (web e app) usa o card Adicionar novo profissional do mockup: Nome completo, CRP, Papel de acesso (Psicólogo / Gestor) e botão Enviar convite de acesso. Coluna professionals.invite_role persiste o papel; claim_professional_invite cria profiles.role a partir dela.
+- **Motivo:** O mockup pedia o formulário à direita com escolha de papel; convite de gestor não podia continuar gravando sempre psicologo.
+- **Alternativa rejeitada:** Só mudar o visual e ignorar o papel Gestor; ou reusar specialty em vez de invite_role.
+- **Impacto:** Migration 20260815200000 aplicada no projeto trajeto. Web /clinica/profissionais em duas colunas. App (clinica)/profissionais com o mesmo formulário.
+- **Quem decidiu:** Usuário + agente
+
+---
+
+### 15/08/2026 — health-quadra-tech — Relatório clínico e operacional + seed demo
+
+- **Decisão:** Relatório clínico (ficha + GAD-7/PHQ-9 + quiz + SOAP) só para o psicólogo da carteira; relatório da clínica só com KPIs/equipe/financeiro, sem SOAP. Texto canônico em packages/shared/report.ts. Web: página + window.print(). Mobile: tela com cards + Share.share (Expo Go, sem lib nativa de PDF). Seed demo em supabase/seed_demo_clientes.sql para Marina, Clara, Pedro e Ana.
+- **Motivo:** Mostrar ficha, evolução e exportar relatório na reunião com o cliente, no mesmo padrão visual web/app, sem quebrar o Expo Go nem o sigilo clínico do gestor.
+- **Alternativa rejeitada:** PDF nativo (expo-print / react-native-html-to-pdf) — exige dev build. Relatório único com SOAP para o gestor — viola RLS e a regra de dois chapéus.
+- **Impacto:** Rotas /psico/pacientes/[id]/relatorio e /clinica/relatorio na web; (psico)/relatorio e (clinica)/relatorio no app. Contas @trajeto.dev passam a ter sessões, escalas, quiz, agenda e invoices.
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 15/08/2026 — health-quadra-tech — Agenda mobile no padrão fábrica Dia/Mês
+
+- **Decisão:** Agenda nativa do Trajeto no padrão fábrica: react-native-calendars (Calendar, firstDay=1, multi-dot, LocaleConfig pt-BR) + DayStrip + DayHourTimeline (slots 30 min / sessão 50 min de packages/shared/agenda.ts). Visão Dia/Mês, card único, tokens gold/sage. Psicólogo agenda no slot vazio; gestor só vê; paciente escolhe dia no calendário + horários livres. Sem Wix Timeline.
+- **Motivo:** Só o mobile estava fora do padrão Cortejo/LashMatch (lista de chips). A web já tinha Dia/Mês.
+- **Alternativa rejeitada:** Manter faixa de dias + lista; ou usar o componente Agenda/Timeline da Wix (não gera slots vazios no passo 30 min).
+- **Impacto:** Telas (psico)/agenda, (clinica)/agenda e (patient)/agendar. Dependência react-native-calendars (Expo Go).
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 15/08/2026 — health-quadra-tech — Trajeto mobile volta para Expo SDK 54
+
+- **Decisão:** apps/mobile usa Expo SDK 54 (expo-router ~6.0.24, RN 0.81.5, React 19.1.0). Overrides no package.json da raiz travam expo/react-native no 54. expo-router NUNCA ~54.x neste SDK.
+- **Motivo:** Expo Go da App Store e Play Store continua no SDK 54. SDK 57 não abre no iPhone nem no Android da loja; o QR da EAS Update também não é Expo Go. Alinhar com Cortejo/LashMatch para o mesmo fluxo: npx expo start + QR.
+- **Alternativa rejeitada:** Manter SDK 57 e pedir Expo Go 57 (Android APK do Go / eas go + TestFlight no iOS) ou build preview APK do Trajeto.
+- **Impacto:** Metro QR abre no Expo Go da loja em iPhone e Android, igual aos outros apps da fábrica. Updates EAS antigos do runtime 57 não servem mais para Go.
+- **Quem decidiu:** Gustavo
+
+---
+
+### 15/08/2026 — fabrica — RAG Chroma recriado e sync AWS us-east-1 (2026-08-15)
+
+- **Decisão:** Banco Chroma local recriado com indexar_rapido.py --recriar-banco (2387 chunks) e enviado ao S3/App Runner via sync-push.ps1 -SkipIndex -Region us-east-1. INDEX.md (catálogo/rank das notas), Trajeto e rankings Setmatch entram no índice. Delete de chunks passou a usar path para não colidir dois INDEX.md.
+- **Motivo:** HNSW local estava corrompido (crash no indexar). App Runner consome o dump do S3 em us-east-1; sa-east-1 não tem App Runner.
+- **Alternativa rejeitada:** Só indexar incremental sem recriar, ou sync com região default sa-east-1 do script
+- **Impacto:** MCP rag_buscar volta a refletir notas atuais da fábrica e do Trajeto após warmup do App Runner
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 17/08/2026 — setmatch — App Store 5.1.1 + 3.1.1 sem IAP
+
+- **Decisão:** Corrigir recusa App Store 5.1.1 com purpose string da galeria (exemplo: foto de perfil em Edit Profile / post na Home). Para 3.1.1 sem IAP: no iOS ocultar aulas online pagas (preço, cadeado, chat para liberar). Stripe permanece para serviço presencial (clube, ranking, torneio).
+- **Motivo:** Apple rejeitou 1.0 (2): purpose string genérica e vídeo pago fora da IAP. Usuário não quer outro meio de pagamento.
+- **Alternativa rejeitada:** Adicionar Apple In-App Purchase para vídeos pagos
+- **Impacto:** app.json infoPlist + expo-image-picker; utils/storeCompliance.ts; aulas.tsx, aula/[id], aula/curso; buildNumber 3 (precisa binary novo, não OTA)
+- **Quem decidiu:** Ambos
+
+---
+
+### 17/08/2026 — setmatch — Aula online sempre gratuita — sem IAP nem Stripe de vídeo
+
+- **Decisão:** Remover do app inteiro (iOS, Android e web) cobrança de aula online: sem preço, cadeado, checkout aula_online, pedir liberação ou switch 'aula paga'. Vídeo sempre assiste. Stripe fica só para mensalidade presencial, ranking e torneio.
+- **Motivo:** Guideline Apple 3.1.1 — conteúdo digital não pode ser cobrado fora da IAP. Usuário pediu para tirar a feature, não só ocultar no iOS.
+- **Alternativa rejeitada:** IAP da Apple; ou só esconder aulas pagas no iOS e manter venda no Android.
+- **Impacto:** app/aula/[id].tsx, aulas-publicar, aulasPublicadas.ts, i18n, seed, storeCompliance removido, docs compliance/project
+- **Quem decidiu:** Usuário + agente
+
+---
+
+### 17/08/2026 — setmatch — Aula online sempre gratuita
+
+- **Decisão:** Aula online sempre grátis no app inteiro. Sem IAP. Stripe só presencial (mensalidade, ranking, torneio).
+- **Motivo:** Apple 3.1.1; usuário pediu remover cobrança de vídeo, não só ocultar no iOS.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 17/08/2026 — setmatch — iOS 1.0.0 (5) build+submit ASC
+
+- **Decisão:** EAS iOS production 1.0.0 build 5 (buildNumber 4→5 via autoIncrement) + auto-submit ASC. Android versionCode 2 no app.json, sem submit Play.
+- **Motivo:** Resubmit após recusa 5.1.1 e 3.1.1 (aula online paga + purpose string).
+- **Alternativa rejeitada:** N/A
+- **Impacto:** app.json ios.buildNumber 5; binary em processamento no App Store Connect 6799449067
+- **Quem decidiu:** Usuário
+
+---
+
+### 18/08/2026 — setmatch — Login só email/senha (Guideline 4.8)
+
+- **Decisão:** Remover login Google/Apple/Facebook do Setmatch (UI + AuthContext). App Store 4.8: só email/senha. buildNumber 6.
+- **Motivo:** Recusa Apple 4.8 no 1.0 (5). Usuário optou por tirar login de terceiro em vez de Sign in with Apple.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Usuário
+
+---
+
+### 19/08/2026 — lashmatch — Templates WhatsApp padronizados em v5
+
+- **Decisão:** Configuração das Functions atualizada para usar agendamento_confirmado_salao_v5 e lembrete_agendamento_salao_v5 (WABA Lash Match).
+- **Motivo:** Evitar envio de copy legado v3 no WhatsApp compartilhado do app.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Confirmações e lembretes novos passam a usar template v5 aprovado.
+- **Quem decidiu:** Ambos
+
+---
+
+### 19/08/2026 — lashmatch — Templates WhatsApp v5 ativos
+
+- **Decisão:** Functions configuradas com WHATSAPP_TEMPLATE_CONFIRMACAO=agendamento_confirmado_salao_v5 e WHATSAPP_TEMPLATE_LEMBRETE=lembrete_agendamento_salao_v5.
+- **Motivo:** Eliminar envio com copy legado v3 no WhatsApp compartilhado do app.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Novos envios de confirmação/lembrete usam template v5 aprovado.
+- **Quem decidiu:** Ambos
+
+---
+
+### 19/08/2026 — lashmatch — Permitir /plano-escolha para assinante
+
+- **Decisão:** PlanoAccessRedirect não deve redirecionar assinantes para tabs ao abrir /plano-escolha.
+- **Motivo:** Botões de Pagamentos para trocar tipo de WhatsApp/lembrete estavam voltando para início em vez de abrir a tela de escolha.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** Fluxo de troca de tipo de plano funciona em Android web/PWA e iOS sem reset de navegação.
+- **Quem decidiu:** Ambos
+
+---
+
+### 19/08/2026 — health-quadra-tech — Painel financeiro com gráfico, períodos e ranking por psicólogo
+
+- **Decisão:** Painel financeiro com saldo, Passado/Futuro, filtros Dia/Semana/Mês/Trimestre/Semestre/Ano + intervalo, gráfico SVG sage/ouro e ranking de rentabilidade por psicólogo (gestor). Lógica em packages/shared/finance.ts; web /clinica/financeiro e /psico/financeiro; mobile (clinica)/financeiro e (psico)/financeiro.
+- **Motivo:** Pedido de painel com balanço, gráfico, períodos e ranking, no visual Trajeto, web e app.
+- **Alternativa rejeitada:** Copiar UI de banco (rosa/azul) ou instalar recharts — quebraria Expo Go e a identidade Trajeto
+- **Impacto:** Gestor vê quem mais gera resultado para a clínica; psicólogo vê o próprio líquido. Sem tabela nova.
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 19/08/2026 — health-quadra-tech — React único 19.1.0 no workspace web — não aliasar no webpack
+
+- **Decisão:** O app web (@trajeto/web) deve usar exatamente react/react-dom 19.1.0 (mesmo override do monorepo Expo). Remover cópias aninhadas em apps/web/node_modules e não criar webpack alias de react/react-dom.
+- **Motivo:** Duas versões (19.2.8 aninhado + 19.1.0 hoist) quebravam o prerender do Next (/404 e /_not-found) com TypeError useContext of null. Alias webpack de react para a cópia client também quebrava RSC: next/link chama useContext no dispatcher de servidor.
+- **Alternativa rejeitada:** Alias webpack forcando um único path de react — resolve dual package no client mas quebra React Server Components no prerender.
+- **Impacto:** Build Next passa (incluindo /_not-found). Deploy Vercel de apps/web precisa do lockfile sem apps/web/node_modules/react@19.2.8.
+- **Quem decidiu:** agente
+
+---
+
+### 19/08/2026 — health-quadra-tech — Gráfico financeiro agrupa por vencimento, não por paid_at
+
+- **Decisão:** No horizonte Passado, a série do gráfico usa due_date (depois paid_at/created_at). O extrato já lista vencimento.
+- **Motivo:** Marcar como pago grava paid_at = agora. Três lançamentos (fev R$100 + ago R$300 + ago R$200) viravam uma barra de R$600 em agosto e fevereiro zerado.
+- **Alternativa rejeitada:** Manter cashflow por paid_at e mostrar coluna Pago em — certo para caixa, mas contradiz o extrato que o usuário lê.
+- **Impacto:** Ano/mês passam a bater com as linhas do extrato.
+- **Quem decidiu:** usuário + agente
+
+---
+
+### 19/08/2026 — health-quadra-tech — Financeiro: extrato segue filtros; gráfico mês=dias; entrada e saída
+
+- **Decisão:** Filtros Passado/Futuro + período valem no gráfico e no extrato. Mês desenha dias do mês; Ano desenha jan–dez. Gráfico com barra sage (entrada) e ouro (saída/repasse).
+- **Motivo:** O filtro Mês ainda plotava 12 meses, o extrato ignorava o recorte, e a linha ouro repetia a entrada.
+- **Alternativa rejeitada:** Manter extrato completo e série anual no filtro Mês — confundia com bug de agrupamento.
+- **Impacto:** Em agosto+Passado o extrato mostra só os pagos daquele mês. Jan/fev aparecem no recorte Ano. Futuro em agosto não lista o a receber de setembro.
+- **Quem decidiu:** usuário
+
+---
+
+### 19/08/2026 — health-quadra-tech — Cadastro do paciente pede CPF e convênio (web + app)
+
+- **Decisão:** No cadastro pelo convite (web /p/cadastro e app /cadastro) o paciente informa CPF obrigatório (máscara + dígito verificador) e se possui convênio (Sim/Não; nome opcional). Colunas patients.cpf, has_convenio, convenio_name. Unique (clinic_id, cpf). RPC claim_patient_invite ganhou p_cpf, p_has_convenio, p_convenio_name. Ficha e relatório no psicólogo (web+app) leem/editam os mesmos campos. Gráfico financeiro já espelhado no app.
+- **Motivo:** Pedido do produto: dados fiscais/operacionais no preenchimento do paciente, não só na ficha. Paridade web/app é regra do Trajeto.
+- **Alternativa rejeitada:** Só pedir CPF na ficha do psicólogo, ou usar fee_schedules como convênio do paciente (fee_schedules é tabela de preços da clínica).
+- **Impacto:** Migration 20260819180000 aplicada em fzttsuuzfauqkagscrwc. Convites antigos passam a exigir CPF no cadastro.
+- **Quem decidiu:** usuario + agente
+
+---
+
+### 19/08/2026 — health-quadra-tech — HOLD D3 quiz até justificativa das notas baixas
+
+- **Decisão:** HOLD no diferencial D3 (quiz → pré-ficha). As 4 notas (2×5/5, 1/5 e 2/5) não têm justificativa — não dá para iterar. Não copiar o HTML de exemplo para produção. Próxima evidência: ≥10 pessoas com “por quê” obrigatório se nota ≤3 (instrumento em docs/research/quiz-triagem-psicologia.html). Único ajuste de código: copy do app de “8 minutos” para “2 minutos” (5 perguntas).
+- **Motivo:** Risco de adoção no diferencial, não item de escopo. Sem o porquê, polarização n=4 é ruído. O HTML anexo é o instrumento de pesquisa (nota + justificação), não o próximo UI.
+- **Alternativa rejeitada:** Tratar as notas 1/5 e 2/5 como pedido de feature (estrelas, matching, quiz novo do HTML) e continuar investindo em D3.
+- **Impacto:** Agenda/financeiro/D1 seguem; quiz não ganha matching, estrela nem pergunta extra até a rodada qualitativa.
+- **Quem decidiu:** usuario
+
+---
+
+### 19/08/2026 — health-quadra-tech — Reenviar quiz + cadastro visível após convite
+
+- **Decisão:** Clínica e psicólogo (web+app) veem o cadastro completo (CPF, convênio, nascimento, motivo) depois que o paciente aceita o convite. Botão Enviar quiz novamente grava patients.quiz_requested_at e compartilha /p/quiz; o painel do paciente mostra o pedido até ele responder. SOAP continua só no chapéu psicólogo.
+- **Motivo:** Pedido do produto: reenviar quiz pelo app e ver todos os dados do cadastro após o convite. Paridade web/app.
+- **Alternativa rejeitada:** Só copiar o link do quiz sem gravar pedido, ou mostrar SOAP da casa inteira para o gestor.
+- **Impacto:** Migration 20260819190000 (quiz_requested_at) em fzttsuuzfauqkagscrwc. Rotas /clinica/pacientes/[id] e (clinica)/paciente/[id]. Lista do psico no app filtrada por professional_id.
+- **Quem decidiu:** usuario
+
+---
+
+### 19/08/2026 — health-quadra-tech — EAS update Trajeto exige conta shoutloud
+
+- **Decisão:** eas update --branch preview do Trajeto só funciona logado como shoutloud. A CLI nesta máquina estava gabrieljorda0 e recebeu Entity not authorized no AppEntity 7ba50e12. Web Vercel --prod sobe independente disso.
+- **Motivo:** O projeto EAS é da org shoutloud; RegularUserViewerContext do gabrieljorda0 não tem READ no app.
+- **Alternativa rejeitada:** Publicar OTA com a conta gabrieljorda0 ou criar outro projeto EAS.
+- **Impacto:** Depois de eas login shoutloud, em apps/mobile: eas update --branch preview. Expo Go precisa estar logado na mesma conta.
+- **Quem decidiu:** Gustavo
+
+---
+
+### 19/08/2026 — health-quadra-tech — WhatsApp Cloud API + Daily no browser + quiz periódico
+
+- **Decisão:** M7 no Trajeto via Edge Functions trajeto-notify (JWT) e trajeto-cron (CRON_SECRET). Teleconsulta Daily no browser (mental-health.daily.co) para permanecer no Expo Go. WhatsApp Cloud API com templates UTILITY trajeto_sessao_confirmada, trajeto_lembrete_sessao e trajeto_quiz_triagem; fallback wa.me no padrão Cortejo/LashMatch enquanto a Meta não aprova. Cadência de quiz em quiz_schedules (weekly/biweekly/monthly). Secrets só no dashboard Supabase, nunca no Git. PHONE_ID 1347928901727664; Id do portfólio 1012313901775778 não é WABA.
+- **Motivo:** Pedido do Gustavo: lembrete/confirmação/quiz no WhatsApp, agendar online vs presencial com link da sala, templates prontos e quiz automático — sem sair do Expo Go.
+- **Alternativa rejeitada:** WebRTC nativo Daily no app (exige EAS dev build) e Z-API. M8–M11 (escalas, tarefas, Receita Saúde, supervisão) ficam para depois.
+- **Impacto:** Agendar cria sala Daily se online e tenta WhatsApp; ficha do paciente ganha painel de templates; paciente confirma/remarca no painel. Envio automático só depois de secrets + templates APPROVED.
+- **Quem decidiu:** Gustavo + agente
+
+---
+
+### 19/08/2026 — health-quadra-tech — Templates Trajeto no WABA + WhatsApp obrigatório no paciente
+
+- **Decisão:** O envio automático usa só trajeto_sessao_confirmada, trajeto_lembrete_sessao e trajeto_quiz_triagem (UTILITY pt_BR, mesmo formato Graph v23.0 do curl que funcionou). patients.phone passou a NOT NULL e os formulários de convite/cadastro/ficha exigem WhatsApp com DDD.
+- **Motivo:** O exemplo lembrete_agendamento confirma que o ID 1012313901775778 é WABA válido, mas o código já monta 5–6 parâmetros. Sem número na ficha o template não sai.
+- **Alternativa rejeitada:** Reusar o template de teste lembrete_agendamento (2 variáveis) no envio automático — o texto e as vars não batem com trajeto-notify.
+- **Impacto:** WABA 1012313901775778; Edge Functions trajeto-notify/cron; cadastro web+app; migration 20260819220000
+- **Quem decidiu:** Agente + usuário
+
+---
+
+### 19/08/2026 — health-quadra-tech — Painel do paciente lista sessões com link Daily
+
+- **Decisão:** Painel do paciente (web /p e app (patient)) lista as próximas sessões com modalidade, status e botão Entrar na chamada (Daily no browser) quando houver video_join_url.
+- **Motivo:** Paciente precisa ver agendamentos futuros e o link da teleconsulta depois do login, não só o próximo horário.
+- **Alternativa rejeitada:** Manter só a próxima sessão no painel do paciente
+- **Impacto:** apps/web/app/p/page.tsx e apps/mobile/app/(patient)/index.tsx
+- **Quem decidiu:** Usuário + agente
+
+---
+
+### 19/08/2026 — health-quadra-tech — Link Daily no painel da agenda do psicólogo
+
+- **Decisão:** O botão Entrar na consulta fica no card de detalhe do horário em /psico/agenda (clique no bloco). Se ainda não houver video_join_url, o clique cria a sala Daily e abre no navegador.
+- **Motivo:** A psicóloga agenda pela grade e esperava o link no mesmo card; produção só tinha status/excluir.
+- **Alternativa rejeitada:** Só mostrar Entrar no painel Hoje quando o URL já existisse.
+- **Impacto:** AgendaBoard AppointmentDetail + CSS agenda-join; painel /psico com fallback Abrir na agenda.
+- **Quem decidiu:** Gustavo
+
+---
+
+### 19/08/2026 — health-quadra-tech — Filtro de evolução Todos ou um paciente
+
+- **Decisão:** Em Pacientes e evolução o padrão continua Todos os pacientes; dá para filtrar um nome e ver só o GAD-7/PHQ-9 dele. Web: select. Mobile: lista Todos + nomes.
+- **Motivo:** Pedido do Gustavo: mostrar evolução de 1 paciente ou deixar como estava.
+- **Alternativa rejeitada:** Só um gráfico agregado da carteira, ou forçar sempre um paciente.
+- **Impacto:** apps/web/components/EvolutionBoard.tsx, psico/pacientes page, apps/mobile/(psico)/pacientes.tsx
+- **Quem decidiu:** Gustavo
+
+---
+
+### 19/08/2026 — fabrica — Chroma staging + lock para não corromper HNSW
+
+- **Decisão:** Indexação em staging (.chroma_db.build) com lock exclusivo; incremental não escreve se a porta 7332 estiver aberta; sync-push default us-east-1. Recriado 2507 chunks e enviado ao S3. Script reparar-chroma.ps1.
+- **Motivo:** HNSW no Windows corrompe com dois processos no mesmo PersistentClient; fallback sa-east-1 do sync era perigoso.
+- **Alternativa rejeitada:** Continuar indexando no mesmo .chroma_db com o servidor 7332 aberto (causa o 0xC0000005).
+- **Impacto:** obsidian/chroma_lock.py, indexar_rapido.py, indexar_obsidian_chroma.py, sync-push.ps1, reparar-chroma.ps1, Dockerfile (COPY chroma_lock.py)
+- **Quem decidiu:** Gustavo
+
+---
+
+### 19/08/2026 — fabrica — Chroma staging + lock para não corromper HNSW
+
+- **Decisão:** Indexação em staging (.chroma_db.build) com lock exclusivo; incremental não escreve se a porta 7332 estiver aberta; sync-push default us-east-1. Recriado 2507 chunks e enviado ao S3. Script reparar-chroma.ps1.
+- **Motivo:** HNSW no Windows corrompe com dois processos no mesmo PersistentClient; fallback sa-east-1 do sync era perigoso.
+- **Alternativa rejeitada:** Continuar indexando no mesmo .chroma_db com o servidor 7332 aberto (causa o 0xC0000005).
+- **Impacto:** obsidian/chroma_lock.py, indexar_rapido.py, indexar_obsidian_chroma.py, sync-push.ps1, reparar-chroma.ps1, Dockerfile (COPY chroma_lock.py)
+- **Quem decidiu:** Gustavo
+
+---
+
+### 20/08/2026 — health-quadra-tech — Jitsi próprio no VPS; Daily até o domínio responder
+
+- **Decisão:** Jitsi self-host no VPS São Paulo (Docker stable + Let's Encrypt + coturn). App segue abrindo URL no browser (Expo Go). Daily permanece até VIDEO_PROVIDER=jitsi + JITSI_BASE_URL. Pacote em infra/jitsi.
+- **Motivo:** Custo baixo (VPS/mês, R$ 0 por chamada), dados de mídia no servidor próprio, mesma UX de Entrar na consulta.
+- **Alternativa rejeitada:** meet.jit.si público, WebRTC na mão, ou SDK nativo/EAS só por vídeo.
+- **Impacto:** infra/jitsi (setup.sh, TURN, README). trajeto-notify aceita VIDEO_PROVIDER=jitsi sem mudar web/mobile. Daily default.
+- **Quem decidiu:** Gustavo
+
+---
+
+### 20/08/2026 — health-quadra-tech — Teleconsulta Trajeto no Jitsi próprio
+
+- **Decisão:** Produção usa Jitsi em https://call.jordaob.com.br. trajeto-notify v5: padrão VIDEO_PROVIDER=jitsi e JITSI_BASE_URL=https://call.jordaob.com.br. Daily só se VIDEO_PROVIDER=daily. URLs antigas daily.co no banco foram reescritas.
+- **Motivo:** Teste de ligação em dois dispositivos deu certo; custo por minuto do Daily sai do produto.
+- **Alternativa rejeitada:** Manter Daily como padrão até secrets manuais no dashboard
+- **Impacto:** Entrar na consulta abre call.jordaob.com.br. VPS Vultr SP continua ligado. Rollback: secret VIDEO_PROVIDER=daily.
+- **Quem decidiu:** usuario
+
+---
+
+### 20/08/2026 — health-quadra-tech — Templates WhatsApp Trajeto na WABA Gerenciador S
+
+- **Decisão:** Templates Trajeto criados na WABA 1012313901775778 (nome Gerenciador S), que é a conta do PHONE_ID 1347928901727664. Portfólio empresarial 3566050263560437. Nomes: trajeto_sessao_confirmada, trajeto_lembrete_sessao, trajeto_quiz_triagem (UTILITY pt_BR, PENDING).
+- **Motivo:** O número não tinha os 3 modelos do app; só existia o teste lembrete_agendamento.
+- **Alternativa rejeitada:** Criar template no phone_number_id; o modelo vive na WABA, não no telefone
+- **Impacto:** Envio automático só depois de APPROVED na Meta. Até lá o app segue wa.me.
+- **Quem decidiu:** usuario
+
+---
+
+### 20/08/2026 — sinaflor — HU136 Encaminhar outro órgão/unidade
+
+- **Decisão:** Tipo 3: formulário próprio (Finalidade/Esfera/UF/Município/Órgão + despacho + e-mail ON); sem analistas/anexos/manter aberto; só GO; status do processo não muda; ao finalizar atualiza LicenciamentoDadosGerais (órgão/unidade/competência) para permanente e temporária (retorno temporário = fluxo futuro).
+- **Motivo:** HU136 RN21 e campos distintos das demais tramitações; destino precisa receber o processo na gestão via filtro de órgão/unidade.
+- **Alternativa rejeitada:** Reaproveitar tramitacao-arquivamento ou exigir analistas como na narrativa genérica da HU
+- **Impacto:** Script SQL SPRINT_19/03 necessário; componente tramitacao-encaminhar-orgao; acoesDisponiveis inclui 3
+- **Quem decidiu:** Ambos
+
+---
+
+### 23/08/2026 — cortejo — Agenda semana Cortejo: empilhar blocos curtos sem chip especial
+
+- **Decisão:** Na visão Semana do Cortejo, stackWeekBlocks empurra o próximo cartão para baixo quando o curto precisa de altura mínima legível — todos com o mesmo estilo accentSoft, sem borda/sombra de seleção. LashMatch: removido só o apptBrief da última alteração; resto intacto.
+- **Motivo:** Chip branco com borda fazia o 9:20 parecer selecionado e flutuar por cima; usuário pediu um embaixo do outro, visível, sem marcação especial.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
+- **Quem decidiu:** Ambos
+
+---
+
+### 23/08/2026 — fabrica — Limpeza RAG: duplicata i18n + decisoes undefined + ponte schemas
+
+- **Decisão:** Auditoria RAG fabrica 23/08: removida duplicata setmatch-i18n-idiomas-padrao (canônico = setmatch-i18n-padrao); firestore-schemas virou ponte para schemas por app; limpeza de títulos/entradas undefined em decisoes.md; outros.md já era excluído do indexar_rapido.
+- **Motivo:** Duplicatas e stubs undefined diluem retrieval do Chroma/App Runner.
+- **Alternativa rejeitada:** N/A
+- **Impacto:** A definir
 - **Quem decidiu:** Ambos
 
 ---

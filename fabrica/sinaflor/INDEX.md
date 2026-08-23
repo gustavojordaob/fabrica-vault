@@ -22,6 +22,8 @@ atualizado_em: 2026-06-12
 | [[mapeamento-frontend-backend]] | Services ↔ Resources |
 | [[gestao-visibilidade-perfis]] | Painel gestão: Meus/Todos por GO e Analista |
 | [[tramitacao-arquivar-desarquivar]] | HU133/HU134 — Arquivar e Desarquivar |
+| [[tramitacao-solicitar-pagamento-taxa]] | HU135 — Solicitar Pagamento de Taxa/Guia |
+| [[tramitacao-encaminhar-orgao]] | HU136 — Encaminhar para outro Órgão/Unidade |
 
 ## Atualizar
 

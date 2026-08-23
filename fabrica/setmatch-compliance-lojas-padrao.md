@@ -5,7 +5,7 @@ tags:
   - app-store
   - play-store
   - expo
-atualizado_em: 2026-08-08
+atualizado_em: 2026-08-18
 ---
 
 > **Agente Cursor — use MCP antes de codar**
@@ -38,6 +38,19 @@ Arquivos: `public/privacy|terms|suporte/index.html` · copiados por `scripts/cop
 | Hook | `hooks/useDeleteAccount.ts` + `services/account.ts` |
 | Idade mín. | `IDADE_MINIMA_APP = 13` no wizard |
 | iOS encryption | `app.json` → `ITSAppUsesNonExemptEncryption: false` |
+| Photo library purpose string | `NSPhotoLibraryUsageDescription` + plugin `expo-image-picker` — exemplo: foto de perfil em Editar perfil / post na Home |
+| Aulas online | **Sempre gratuitas** no app (sem IAP). Stripe só serviço presencial |
+| Login | Só **email/senha** (sem Google/Apple/Facebook) — Guideline 4.8 |
+
+## App Store 4.8 (ago/2026)
+
+Com login de terceiro (Google) a Apple exige Sign in with Apple. Setmatch **removeu** os botões sociais: cadastro/login só com email e senha. Novo build nativo obrigatório.
+
+## App Store 3.1.1 (ago/2026)
+
+Sem In-App Purchase: o app **não cobra vídeo/aula online** em nenhuma plataforma. Removido preço, cadeado, “mensagem para liberar” e checkout `aula_online`. Mensalidade de aula **presencial**, ranking e torneio (serviço na quadra) seguem no Stripe.
+
+Build iOS precisa ser **nativo** (purpose string não vai em OTA). `ios.buildNumber` incrementado.
 
 ## Cloud Function
 

@@ -29,6 +29,8 @@ if hasattr(sys.stdout, "reconfigure"):
 
 import os
 
+from chroma_lock import limpar_pid_servidor, registrar_servidor
+
 CHROMA_PATH = Path(
     os.environ.get("RAG_CHROMA_PATH", "C:/Users/gusta/obsidian/.chroma_db")
 )
@@ -319,10 +321,13 @@ def iniciar_servidor(porta=7332, device="cpu"):
     sys.stdout.flush()
 
     threading.Thread(target=_warmup, name="rag-warmup", daemon=True).start()
+    registrar_servidor()
     try:
         servidor.serve_forever()
     except KeyboardInterrupt:
         print("\n⛔  Servidor encerrado")
+    finally:
+        limpar_pid_servidor()
 
 
 def _resolver_device(s: str) -> str:

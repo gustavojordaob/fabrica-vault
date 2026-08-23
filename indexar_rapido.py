@@ -8,6 +8,15 @@ import re
 from datetime import datetime
 from pathlib import Path
 
+from chroma_lock import (
+    CHROMA_PATH as LOCK_CHROMA_PATH,
+    acquire_index_lock,
+    fechar_cliente_chroma,
+    parar_servidor_local,
+    porta_em_uso,
+    release_index_lock,
+)
+
 if hasattr(sys.stdout, "reconfigure"):
     try:
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -21,9 +30,7 @@ VAULT_PATH = Path(
 PROJETOS_PATH = Path(
     os.environ.get("RAG_PROJETOS_PATH", "C:/Users/gusta/obsidian/projetos")
 )
-CHROMA_PATH = Path(
-    os.environ.get("RAG_CHROMA_PATH", "C:/Users/gusta/obsidian/.chroma_db")
-)
+CHROMA_PATH = Path(os.environ.get("RAG_CHROMA_PATH", str(LOCK_CHROMA_PATH)))
 COLLECTION = "fabrica-knowledge"
 MODEL_NAME = os.environ.get(
     "RAG_MODEL_NAME", "paraphrase-multilingual-MiniLM-L12-v2"
@@ -90,10 +97,12 @@ def infer_projeto(md: Path, fm: dict | None = None) -> str:
         pass
     for p in (
         "sinaflor", "lashmatch", "cortejo", "erp", "setmatch", "zenpro",
-        "whatsapp", "firebase", "mercadopago",
+        "whatsapp", "firebase", "mercadopago", "trajeto", "health-quadra-tech",
     ):
         if nome.startswith(p) or f"-{p}" in nome or f"{p}-" in nome:
             return p
+    if "health-quadra" in nome or "trajeto" in nome:
+        return "trajeto"
     if md.parent.name == "projetos":
         stem = md.stem.lower().replace("-prd", "").replace("_prd", "")
         return stem.split("-")[0] if stem else "projetos"
@@ -137,21 +146,24 @@ def chunks(texto, arquivo):
         inicio = fim - OVERLAP
     return partes
 
-def abrir_chroma():
-    CHROMA_PATH.mkdir(parents=True, exist_ok=True)
-    print(f"Abrindo Chroma em {CHROMA_PATH}...")
+def abrir_chroma(path: Path | None = None):
+    destino = path or CHROMA_PATH
+    destino.mkdir(parents=True, exist_ok=True)
+    print(f"Abrindo Chroma em {destino}...")
     sys.stdout.flush()
-    client = chromadb.PersistentClient(path=str(CHROMA_PATH))
+    client = chromadb.PersistentClient(path=str(destino))
     col = client.get_or_create_collection(COLLECTION, metadata={"hnsw:space": "cosine"})
     return client, col
 
 
-def recriar_banco():
+def publicar_banco_novo(build_path: Path):
     if CHROMA_PATH.exists():
         stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
         dest = CHROMA_PATH.with_name(f".chroma_db.bak-{stamp}")
         print(f"Banco antigo movido para {dest}")
         shutil.move(str(CHROMA_PATH), str(dest))
+    shutil.move(str(build_path), str(CHROMA_PATH))
+    print(f"Banco novo publicado em {CHROMA_PATH}")
 
 
 def indexar_arquivo(col, model, md: Path) -> int:
@@ -164,11 +176,14 @@ def indexar_arquivo(col, model, md: Path) -> int:
     except ValueError:
         rel_path = md.name
 
-    chks = chunks(texto, md.name)
+    chks = chunks(texto, rel_path)
     try:
-        col.delete(where={"arquivo": md.name})
+        col.delete(where={"path": rel_path})
     except Exception:
-        pass
+        try:
+            col.delete(where={"arquivo": md.name})
+        except Exception:
+            pass
     for cid, txt, idx in chks:
         emb = model.encode([txt], normalize_embeddings=True)[0].tolist()
         col.upsert(
@@ -221,7 +236,7 @@ def main():
     parser.add_argument(
         "--recriar-banco",
         action="store_true",
-        help="Move .chroma_db antigo e cria banco novo (use se o script crashar ao abrir)",
+        help="Para o servidor local, indexa em .chroma_db.build e só então substitui o banco (evita HNSW 0xC0000005)",
     )
     parser.add_argument(
         "--somente",
@@ -230,11 +245,29 @@ def main():
         help="Indexa só estes .md (rápido). Ex: --somente cortejo-modulos-jun2026-padrao.md erros-e-solucoes.md",
     )
     args = parser.parse_args()
+    acquire_index_lock()
 
+    if not args.recriar_banco and porta_em_uso():
+        print(
+            "Servidor RAG local (porta 7332) está aberto no mesmo .chroma_db.\n"
+            "Indexação incremental pulada para não corromper o HNSW.\n"
+            "Para reindexar de verdade: python indexar_rapido.py --recriar-banco\n"
+            "Depois: .\\aws-rag\\scripts\\sync-push.ps1 -SkipIndex -Region us-east-1"
+        )
+        release_index_lock()
+        return
+
+    build_path = None
+    chroma_path = CHROMA_PATH
     if args.recriar_banco:
-        recriar_banco()
+        parar_servidor_local()
+        build_path = CHROMA_PATH.with_name(".chroma_db.build")
+        if build_path.exists():
+            shutil.rmtree(build_path)
+        chroma_path = build_path
+        print(f"Indexando em staging {build_path} (só troca o banco se terminar ok).")
 
-    _, col = abrir_chroma()
+    client, col = abrir_chroma(chroma_path)
 
     from sentence_transformers import SentenceTransformer
 
@@ -261,8 +294,15 @@ def main():
             n = indexar_arquivo(col, model, md)
             print(f"[{i}/{len(arquivos)}] {md.name} — {n} chunks ✅")
 
-    print(f"\nPronto! {col.count()} chunks no banco.")
+    total = col.count()
+    print(f"\nPronto! {total} chunks no banco.")
+    fechar_cliente_chroma(client, col)
+    if build_path:
+        publicar_banco_novo(build_path)
+        print(f"Publicado. {total} chunks em {CHROMA_PATH}")
     print("Servidor RAG (só consulta): python indexar_obsidian_chroma.py --server")
+    print("AWS: .\\aws-rag\\scripts\\sync-push.ps1 -SkipIndex -Region us-east-1")
+    release_index_lock()
 
 
 if __name__ == "__main__":

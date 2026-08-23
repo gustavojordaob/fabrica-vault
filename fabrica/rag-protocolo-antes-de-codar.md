@@ -23,6 +23,7 @@ fonte: incidente Cortejo 09/06/2026
 | Situação | Ação MCP |
 |----------|----------|
 | **Qualquer pergunta ou pedido** | `rag_buscar` + `buscar_historico` |
+| **App mobile / Expo / loja** | **GATEWAY** `rag_buscar("compliance lojas apple google")` → [[compliance-lojas-apple-google-padrao]] |
 | Erro / bug | + `buscar_solucao` |
 | `npx expo install` + UI | `rag_buscar("<pacote>")` + guia em `fabrica/` |
 | Calendário / agenda | ver tabela abaixo |
@@ -94,7 +95,7 @@ Arquivo: `obsidian/fabrica/react-native-calendars.md`
 | Mercado Pago | `mercadopago-integration.md` |
 | Firebase | `firebase-setup-patterns.md` |
 | WhatsApp Meta | `whatsapp-business-api.md` |
-| Expo Router | `expo-router-navegacao.md` |
+| Expo / loja Apple-Google | `compliance-lojas-apple-google-padrao.md` |
 | Cloud Functions | `cloud-functions-patterns.md` |
 
 Se o pacote não estiver na tabela: `rag_buscar("<nome>")` — pode haver seção em `padroes-fabrica.md` ou nota do projeto.

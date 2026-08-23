@@ -1,6 +1,10 @@
 # 📚 Índice — Base de Conhecimento Fábrica
 
-> Indexar com `indexar_rapido.py` · Data de revisão índice: **05/08/2026**
+> Indexar com `indexar_rapido.py` · Data de revisão índice: **23/08/2026**
+
+## GATEWAY — Aplicativos (ler PRIMEIRO)
+
+- [[compliance-lojas-apple-google-padrao]] — **obrigatório** antes de auth social, pagamento digital, permissões, `eas build`/`submit` · Apple **4.8 / 3.1.1 / 5.1.1** + Play Billing · `app-store`, `play-store`, `compliance`
 
 ## Notas criadas
 
@@ -22,7 +26,7 @@
 - [[context-api-estado]] — 6 seção(ões) · `estado`, `context`, `react`
 - [[expo-router-navegacao]] — 31 seção(ões) · `expo`, `router`, `navegacao`
 - [[firebase-setup-patterns]] — 29 seção(ões) · `firebase`, `firestore`, `setup`
-- [[firestore-schemas]] — 10 seção(ões) · `firestore`, `schema`, `dados`
+- [[firestore-schemas]] — **ponte legado** → usar [[cortejo-schemas]] / [[lashmatch-schemas]] · `firestore`, `schema`
 - [[mercadopago-integration]] — 5 seção(ões) · `pagamentos`, `mercadopago`, `assinatura`
 - [[mercadopago-assinatura-ota-padroes]] — **assinatura MP tokenizada, cancel/sync, paywall, erros reais Cortejo** (jun/2026) · `mercadopago`, `preapproval`, `cortejo`
 - [[modulo-ajuda-suporte-expo]] — **tela Ajuda + WhatsApp suporte + página pública App Store** (Cortejo/LashMatch) · `suporte`, `expo`
@@ -32,8 +36,8 @@
 - [[setmatch-compliance-lojas-padrao]] — **termos/privacidade/suporte + excluirConta + consentimento** (Setmatch ago/2026) · `setmatch`, `lgpd`, `app-store`
 - [[setmatch-i18n-padrao]] — **idioma pt-BR / en-US / es + LocaleContext** (Setmatch ago/2026) · `setmatch`, `i18n`
 - [[setmatch-propagar-foto-perfil]] — **espalhar foto/nome denormalizados ao salvar perfil** (Setmatch ago/2026) · `setmatch`, `firestore`, `perfil`
-- [[setmatch-i18n-idiomas-padrao]] — **pt-BR / en-US / es com LocaleContext + LanguagePicker** (Setmatch ago/2026) · `setmatch`, `i18n`
-- [[outros]] — 76 seção(ões) · `geral`
+- ~~[[setmatch-i18n-idiomas-padrao]]~~ — **removido 23/08/2026** (duplicata de [[setmatch-i18n-padrao]])
+- `outros.md` — **não indexado** no Chroma (`indexar_rapido` ignora; dump legado do curso) · `geral`
 - [[padroes-fabrica]] — 18 seção(ões) · `padroes`, `fabrica`, `lashmatch`
 - [[zenpro-catalogo-variantes-capinha-padrao]] — **catálogo dinâmico modelo × variante (material/preço)** · `zenpro`, `capinha`, `personalizacao`, `firestore`
 - [[zenpro-portal-revendedor-b2b]] — **portal único /revendedor + faixas de preço** · `zenpro`, `revendedor`, `b2b`
@@ -61,6 +65,11 @@
 - [[arquitetura-fabrica-ia]] — **como a fábrica funciona (doc canônico)** · estado jul/2026: Cortejo+LashMatch · `fabrica`, `arquitetura`, `rag`
 - [[guia-completo-usuario-fabrica]] — **guia para humano: começar, arquitetura, adicionar especialidade (AWS/Postgres)** · `fabrica`, `guia`, `onboarding`
 - `projetos/cortejo-project.md` · `projetos/lashmatch-project.md` — refs técnicas dos apps (RAG)
+- `projetos/health-quadra-tech-project.md` · `projetos/health-quadra-tech-prd.md` — **Trajeto** (Expo SDK 54 + Expo Go, Next/Vercel, Supabase) · `trajeto`, `expo`, `supabase`
+- [[trajeto-financeiro-painel-padrao]] — painel financeiro (períodos, gráfico SVG, ranking de rentabilidade) · `trajeto`, `financeiro`
+- [[trajeto-quiz-triagem-risco-adocao]] — **HOLD D3:** notas polarizadas sem justificativa; não investir no quiz até evidência qualitativa · `trajeto`, `quiz`, `risco`
+- [[trajeto-jitsi-self-host-padrao]] — VPS SP + Docker Jitsi + TURN; Daily até o domínio; `VIDEO_PROVIDER` · `trajeto`, `jitsi`, `video`
+- [[health-quadra-tech-schemas]] — schema Postgres/RLS do Trajeto (quando existir em `fabrica/`) · `trajeto`, `supabase`
 
 ## Como usar no RAG
 
@@ -130,3 +139,6 @@ Guia completo: [[mcps-cursor-padrao]] — **sempre MCP do tema + `rag_buscar` an
 - `#whatsapp`
 - `#meta`
 - `#zapi` (legado — ver [[whatsapp-business-api]])
+- `#trajeto`
+- `#supabase`
+- `#ranking`

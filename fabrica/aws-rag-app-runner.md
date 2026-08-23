@@ -6,7 +6,7 @@ tags:
   - docker
   - terraform
   - app-runner
-atualizado_em: 2026-07-29
+atualizado_em: 2026-08-15
 autor: Gustavo
 status: ativo
 ---
@@ -105,3 +105,7 @@ Env App Runner: `RAG_RERANK=1` (Terraform `var.rag_rerank`). Desligar: `rag_rera
 - Chroma 1.0.x no Docker + dump 1.5.x do Windows → panic SQLite; alinhar versão
 - **OOM / "internal system error"** — CrossEncoder no warmup estoura RAM; e **CRLF no `entrypoint.sh`** no Windows faz o container morrer na hora (`exec ... no such file or directory`). Sempre LF + `sed` no Dockerfile.
 - UI em `/` (HTML); stats em `/health` (`chunks`, `rerank`, `pools`, `ui`)
+- **HNSW corrompido no Windows** (`Error loading hnsw index` / crash `0xC0000005` no `indexar_rapido.py`) → `.\aws-rag\scripts\reparar-chroma.ps1` (recria em staging, trava exclusiva, sincroniza S3 **us-east-1**). Nunca deixar o fallback do script ir para `sa-east-1`.
+- Indexação incremental **não escreve** se a porta 7332 estiver aberta no mesmo `.chroma_db` (é isso que corrompia o HNSW).
+- `indexar_rapido.py --recriar-banco` indexa em `.chroma_db.build` e só troca o banco se terminar.
+- Reindex 2026-08-15: **2361 chunks** (inclui `INDEX.md`, Trajeto, rankings Setmatch).

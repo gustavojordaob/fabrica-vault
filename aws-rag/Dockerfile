@@ -36,6 +36,7 @@ RUN pip install --no-cache-dir torch --index-url https://download.pytorch.org/wh
     && python -c "from sentence_transformers import SentenceTransformer, CrossEncoder; SentenceTransformer('${RAG_MODEL_NAME}'); CrossEncoder('${RAG_RERANK_MODEL}', max_length=512)"
 
 COPY rag_retrieval.py /app/rag_retrieval.py
+COPY chroma_lock.py /app/chroma_lock.py
 COPY indexar_obsidian_chroma.py /app/indexar_obsidian_chroma.py
 COPY indexar_rapido.py /app/indexar_rapido.py
 COPY aws-rag/static /app/static

@@ -391,3 +391,20 @@ No **Expo Go** (a partir do SDK 53), notificações **push remotas** foram remov
 ### 26.3 Instalação no app Expo
 
 ```bash
+## MoreMenu Modal + Meu plano (nativo vs web)
+
+*Atualizado em 12/08/2026*
+
+## MoreMenu / Modal (Expo Router)
+
+- **Web (incl. Android Chrome):** `openAppRoute` **antes** de `onClose` — push depois de fechar Modal é descartado.
+- **Nativo (EAS):** `onClose()` e só depois `setTimeout(..., 320)` + `openAppRoute` — Modal aberto engole a navegação.
+
+## Meu plano (`/planos`)
+
+- Assinante (`temAcessoEfetivo`) **sempre** vê a tela — não usar spinner `temAcesso && !stay` (stay falha no EAS).
+- Paywall forçado = só `plano-escolha` (`PlanoAccessRedirect`).
+- `openAppRoute('/planos')` injeta `params: { stay: '1' }`.
+- Pagamentos: path `/config/pagamentos` (evitar colisão com tab `pagamento`).
+
+---

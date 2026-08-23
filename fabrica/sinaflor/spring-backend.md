@@ -198,12 +198,29 @@ Listagem em `LicenciamentoQueryService.findGestaoByCriteria`.
 
 ## Tramitação — RN02 Tipo de Avaliação (Vistoria)
 
-*Atualizado em 03/08/2026*
+*Atualizado em 12/08/2026*
 
 Script: `db/scripts/SPRINT_19/01_tb_tipo_avaliacao_lic_vistoria.sql` (VISTORIA_TECNICA, PREVIA, ACOMPANHAMENTO, POS_EXPLORATORIA, PMFS_AMAZONIA). `ANALISE_POA_AMAZONIA` também vale para Vistoria.
 
 - `GET .../tramitacao/tipos-avaliacao?idTipoTramite=` filtra pelo enum `TipoAvaliacaoLicEnum`.
+- **Ordem na Vistoria** (não usar só `NU_ORDEM` do banco): Técnica → Prévia → Acompanhamento → Pós-Exploratória → PMFS Amazônia → **POA Amazônia por último**. `LicenciamentoTramitacaoService.listarTiposAvaliacao(2)` aplica sort especial (`ANALISE_POA_AMAZONIA` ordem efetiva 16).
 - Tipo Avaliação obrigatório para Análise (1) e Vistoria (2).
 - Finalizar: último item Vistoria → status `Em Vistoria do Projeto` (id 3).
+
+### UX cadastro/edição (front)
+
+- Botão **Finalizar** no formulário (Análise/Vistoria/Arquivar): valida → salva no rascunho → abre modal de confirmação → ao confirmar navega para gestão de projetos.
+- Mensagem ATENÇÃO (Análise e Vistoria): *“A análise técnica obrigatória é indispensável para a tramitação final do projeto no órgão ambiental, independente da realização de outros tipos de análise/vistoria.”*
+- Checkbox **Manter processo aberto na unidade atual**: nova tramitação herda o valor da última (rascunho ou histórico); ao alterar, sincroniza todas as do rascunho.
+- Ao **finalizar**, o flag do lote é propagado para **todas** as tramitações ativas do processo (`FL_MANTER_ABERTO_UNIDADE`), para o histórico ficar consistente (ex.: desmarcar na última remove “MANTER ABERTO” das anteriores).
+- **HU135** Solicitar Pagamento de Taxa/Guia (id=5): ver `tramitacao-solicitar-pagamento-taxa.md` — status `AGUARDANDO_PAGAMENTO_TAXA`, form reusa arquivamento (`solicitar-pagamento`).
+
+### Situação múltipla na gestão de projetos
+
+*Atualizado em 12/08/2026*
+
+- Ao finalizar, **cada item** grava seu próprio `statusNovo` (Análise→Em Análise, Vistoria→Em Vistoria, etc.); o `statusLic` do processo continua sendo o **último** (regras/ações).
+- Coluna **Situação** na gestão lista **todas** as situações das tramitações ativas (únicas, ordem cronológica), com resumo + `...` e tooltip no padrão dos RTs (`gestao-licenciamento-exploracao`).
+- Enrichment: `GestaoLicenciamentoResource.enriquecerSituacoesComTramitacoes` + `TramiteLicRepository.findStatusDescricoesAtivasByLicenciamentoIds`.
 
 ---

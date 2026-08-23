@@ -335,3 +335,20 @@ npx firebase-tools deploy --only "functions:availableSlots,functions:publicBooki
 ---
 
 *Origem: sessão Cortejo jun/2026 — agenda, slots, bloqueios, horário por profissional, busca cliente.*
+
+## Adaptação web Next.js (Trajeto)
+
+*Atualizado em 14/08/2026*
+
+Quando o produto é **web** (Next.js), não instalar `react-native-calendars`. Recriar o mesmo layout Dia/Mês em HTML/CSS com os **tokens do projeto**.
+
+**Trajeto** (`health-quadra-tech`, ago/2026):
+- `packages/shared/agenda.ts` — `buildDayHourGrid`, `layoutBlockOnGrid`, `buildMonthCells` (segunda como primeiro dia), passo 30 min, sessão 50 min
+- `apps/web/components/agenda/AgendaBoard.tsx` — DayStrip + timeline + calendário compacto
+- **Mobile (ago/2026):** `apps/mobile/components/agenda/` — `AgendaFrame` + `react-native-calendars` (`LocaleConfig` pt-BR, `firstDay=1`, `markingType=multi-dot`, tema gold/sage). Dia = DayStrip + DayHourTimeline; Mês = Calendar + lista. Paciente: Calendar + slots do dia.
+- Selecionado: fundo gold `#B8874B` / texto `#241705` (não branco do Cortejo)
+- Blocos: sage-soft + borda sage (confirmado); gold-soft (pendente); rust-soft (faltou/cancelado)
+- Toque no slot vazio → formulário com horário pré-preenchido
+
+
+---

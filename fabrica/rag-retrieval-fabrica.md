@@ -63,4 +63,6 @@ Warmup carrega corpus + BM25 + reranker (se ligado). Primeira subida pode demora
 - [x] Query com `sinaflor` / `lashmatch` ativa 3ª recall de projeto  
 - [x] `/buscar` devolve `citacao` + `trecho` + `projeto` + `path`  
 - [x] Chroma recriado (2075 chunks) após HNSW corrompido — 2026-08-07  
+- [x] Chroma recriado após HNSW corrompido no Windows — `indexar_rapido.py --recriar-banco` (staging `.chroma_db.build` + lock) + `reparar-chroma.ps1` → S3 **us-east-1**. Incremental não escreve com o servidor 7332 aberto.  
+- [x] `INDEX.md` (catálogo/rank das notas) + Trajeto (`health-quadra-tech-*`) + `setmatch-rankings-*` no índice  
 - [ ] Agente no Cursor: preferir citar `citacao` + `trecho` nas respostas  

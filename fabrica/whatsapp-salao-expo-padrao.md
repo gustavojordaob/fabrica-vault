@@ -217,12 +217,15 @@ Caminho: **App → Login do Facebook para Empresas → Configurações** (não �
 
 ### Campos
 
-| Campo | Valor Cortejo |
-|-------|---------------|
-| **Domínios permitidos para o SDK do JavaScript** | `cortejo-app.web.app` (sem `https://`) |
-| **URIs de redirecionamento OAuth válidos** | `https://cortejo-app.web.app/embedded-signup/` |
+| Campo | Valor |
+|-------|--------|
+| **Domínios permitidos para o SDK do JavaScript** | Cortejo: `cortejo-app.web.app` · LashMatch: `lashmatch.com.br` **e** `lashmatch-627fd.web.app` (sem `https://`) |
+| **URIs de redirecionamento OAuth válidos** | `https://cortejo-app.web.app/embedded-signup/` · `https://lashmatch.com.br/embedded-signup/` · `https://lashmatch-627fd.web.app/embedded-signup/` |
+| **Domínios do app** (Configurações → Básico) | mesmos hosts acima |
 
 Salvar alterações no final da página.
+
+**Erro “O domínio do host JSSDK é desconhecido”:** o host da barra de endereço (ex. `lashmatch.com.br`) **não** está em Domínios permitidos do SDK JS — adicionar e salvar; pode levar alguns minutos.
 
 ### Configuration Embedded Signup (META_CONFIG_ID)
 
@@ -235,7 +238,7 @@ Salvar alterações no final da página.
 
 ## 6. Fluxo Embedded Signup (passo a passo — o que a cliente vê)
 
-> **Regra jul/2026 (Cortejo + LashMatch):** conectar WhatsApp e vincular cartão Meta **só no computador** (`Platform.OS === 'web'`). No celular: banner obrigatório + copiar link do painel web; **não** liberar botões Conectar / Resolver / Vincular cartão / abrir Business Manager. Motivo: Meta falha com frequência no telefone (“conteúdo não disponível”). Helper: `isWhatsAppMetaSetupAllowed()`.
+> **Regra jul/2026 (Cortejo + LashMatch):** conectar WhatsApp e vincular cartão Meta **só no computador**. Helper: `isWhatsAppMetaSetupAllowed()` = `Platform.OS === 'web'` **e** **não** mobile UA / PWA (`!isMobileWebBrowser`). No celular (nativo ou web app): banner + copiar link; **não** liberar Conectar / Vincular cartão.
 
 > **Agendamento (Cortejo jul/2026):** `enviarWhatsAppCliente: false` = só **pula confirmação** WhatsApp; lembretes 7d/1d seguem se houver telefone. App: opção **só nome** (`source: walk_in`, sem `clientId`) ou cadastrar/escolher cliente.
 
@@ -647,5 +650,7 @@ Hosting rewrite: `/api/completeEmbeddedSignupWeb` → function.
 - **Jun/2026:** Cortejo multi-tenant, templates 10 vars, downgrade Meta direto
 - **20/06/2026:** Embedded Signup Coexistence sem BSP; fix OAuth deep link; fix template params #131008/#132018; META_CONFIG_ID configurado; domínio OAuth validado
 - **23/06/2026:** Feature flag `platformConfig.whatsappSalonEnabled`; guia `WhatsAppConnectGuide`; fix mobile OAuth "Feche esta aba" + `completeEmbeddedSignupWeb`; app Meta teste vs prod documentado; listener onSnapshot; incidentes permissions/Invalid App ID/caminho Firestore errado documentados
+- **12/08/2026:** Guia PDF (`WhatsAppProprioGuiaLink`) **só após assinar** WhatsApp próprio (`ownPlan`) — não no `WhatsAppProprioPlanExplainer` do paywall. LashMatch + Cortejo. LashMatch web: `/planos?stay=1` não é expulsado; Meu plano/Pagamentos usam `voltarParaInicio` (não `router.back()`).
+- **12/08/2026:** LashMatch — link “Copiar link do PC” = `{PUBLIC_WEB}/config/whatsapp` (ex. `https://lashmatch.com.br/config/whatsapp`): abrir no Chrome/Edge → login → terminar WhatsApp do studio nessa tela.
 
 **Espelho repo:** `cortejo/docs/whatsapp-business-api.md`

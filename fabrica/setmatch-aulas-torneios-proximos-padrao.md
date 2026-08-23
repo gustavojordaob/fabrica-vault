@@ -5,7 +5,7 @@ tags:
   - aulas
   - torneios
   - geolocalizacao
-atualizado_em: 2026-08-07
+atualizado_em: 2026-08-17
 ---
 
 # Setmatch — Aulas online/presencial, torneio dinâmico e perto de mim
@@ -40,6 +40,8 @@ ativo, criadoEm
 
 - Admin: `app/clube/aulas-publicar.tsx`
 - Player: `app/(tabs)/aulas.tsx` (toggle ONLINE/PRESENCIAL) + `app/aula/[id].tsx`
+- **Aula online é sempre gratuita** (Guideline 3.1.1, sem IAP). Sem preço, cadeado ou checkout. Stripe só mensalidade presencial / ranking / torneio.
+- Campos legado `pago` / `valorOnline` são forçados a `false` / `0` na publicação e ao abrir o painel do dono.
 
 ## Torneio admin dinâmico
 
